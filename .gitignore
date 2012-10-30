@@ -1,3 +1,4 @@
+
 lib-cov
 *.seed
 *.log
@@ -13,3 +14,7 @@ results
 
 node_modules
 npm-debug.log
+
+
+# tilde is used by many text editors such as Emacs to mark temporary files
+*~
