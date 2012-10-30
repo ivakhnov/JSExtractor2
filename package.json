@@ -1,12 +1,19 @@
 {
-  "name": "JSExtractor2",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node app"
+  "name"    : "JSExtractor2",
+  "version" : "0.0.1",
+  "author"  : "Evgeni Ivakhnov <ivachnov@hotmail.com>",
+  "description": "http://soft.vub.ac.be/soft/edu/mscprojects/2012_2013/js_extractor",
+  "private" : true,
+  "scripts" : {
+    "start" : "node app"
   },
-  "dependencies": {
-    "express": "3.0.0",
-    "jade": "*"
+  "repository"  : {
+    "type"      : "git",
+    "url"       : "https://github.com/ivakhnov/JSExtractor2.git"
+  },
+  "dependencies"  : {
+    "express"     : "3.0.0",
+    "jade"        : "*",
+    "request"     : "https://github.com/mikeal/request/tarball/master"
   }
 }
