@@ -14,6 +14,7 @@
   "dependencies"  : {
     "express"     : "3.0.0",
     "jade"        : "*",
-    "request"     : "https://github.com/mikeal/request/tarball/master"
+    "request"     : "https://github.com/mikeal/request/tarball/master",
+    "jsdom"       : "https://github.com/tmpvar/jsdom/tarball/master"
   }
 }
