@@ -25,11 +25,9 @@ Dependency Installation
 You can install the required libraries at once:
 
 
-`
-git clone https://github.com/ivakhnov/JSExtractor2.git
-cd JSExtractor2
-npm install
-`
+`git clone https://github.com/ivakhnov/JSExtractor2.git`
+`cd JSExtractor2`
+`npm install`
 
 And then run the application:
 
