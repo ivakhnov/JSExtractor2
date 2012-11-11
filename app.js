@@ -34,13 +34,19 @@ app.configure(function(){
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
-
-
+/////////////////////////////////////////////////////////////
+/**
+ * All the GET requests.
+ */
 app.get('/', routes.index);
-
+/**
+ * All the POST requests.
+ */
 app.post('/extract', extractor.extract);
-
-
+////////////////////////////////////////////////////////////////
+/**
+ * Finelly create the server, and print in console the used port.
+ */
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
