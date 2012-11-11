@@ -1,5 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+	h1= title
+	p Welcome to #{title}
+
+	form(name='input', action='/extract', method='post')
+		| URL:
+		input(name='url', type='text', value='webmail.ulb.ac.be', size=100) -# placeholder="bla bla bla" for disappearing default value
+		br
+		input(type='submit', value='Extract')
+	p
+		| If you click the "Submit" button, all the JavaScript from that page will be extracted.
