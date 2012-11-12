@@ -1,27 +1,44 @@
+/**
+ * Module dependencies
+ */
 var request = require('request');
 var jsdom = require('jsdom');
 
 
 
-/*
- * POST the url from which JS code will be extracted.
+/**
+ * Setup the routes and request handlers.
+ */
+module.exports = function(app){
+
+    app.post('/extract', function(req, res){
+      var url = req.body.url;
+      extract(res, url);
+    });
+
+    //other routes..
+};
+
+/***********************
+ * Controller functions.
  */
 
 /**
  * Makes a request to the given url to get the HTML of that page.
  * Creates a DOM with JDOM. Creates an array of all the extracted
  * code encapsulated between <script>..</script> tags.
+ *
+ * @param {object} res Is the respond object from the request handler.
+ * @param {string} url The given url can be not normalized, meaning not containing 'http://'
  */
-exports.extract = function(req, res){
-	var url = req.body.url;
+var extract = function(res, url){
 	url = addHttp(url);
-    console.log("De gegeven url is: " + url);
 
-    request(url, function(error, response, body) {
-      var window = jsdom.jsdom(body).createWindow();
-		  var scripts = window.document.getElementsByTagName('script');
-		  res.render('js_list.jade', { title: 'Extracted JS code:', scripts: scripts });
-	});
+  request(url, function(error, response, body) {
+    var window = jsdom.jsdom(body).createWindow();
+	  var scripts = window.document.getElementsByTagName('script');
+	  res.render('js_list.jade', { title: 'Extracted JS code', scripts: scripts });
+  });
 };
 
 /**

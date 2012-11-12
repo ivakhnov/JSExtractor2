@@ -2,22 +2,17 @@
 /**
  * Module dependencies.
  */
-
-
 var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
-var extractor = require('./routes/extractor');
 var http = require('http');
 var path = require('path');
 
 var request = require('request');
 var jsdom = require('jsdom');
-var url = require('url');
 
 
 
 var app = express();
+
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -37,22 +32,27 @@ app.configure('development', function(){
     showStack: true
   }));
 });
+//use:
+//NODE_ENV=development node app.js
 
 app.configure('production', function(){
   app.use(express.errorHandler());
 });
-/////////////////////////////////////////////////////////////
+//use:
+//NODE_ENV=production node app.js
+
+
 /**
- * All the GET requests.
+ *  Include all the route files and setup the routes.
  */
-app.get('/', routes.index);
+[ 'index', 
+  'extractor'].map(function(controllerName) {
+    require('./routes/' + controllerName)(app);
+ });
+
+
 /**
- * All the POST requests.
- */
-app.post('/extract', extractor.extract);
-////////////////////////////////////////////////////////////////
-/**
- * Finelly create the server, and print in console the used port.
+ * Finally create the server, and print in console the used port.
  */
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
