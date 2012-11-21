@@ -35,6 +35,11 @@ var extract = function(res, url){
 	url = addHttp(url);
 
   request(url, function(error, response, body) {
+    if (error || response.statusCode !== 200) {
+      console.log('Error when contacting ' + url);
+      console.log(body);
+    }
+    
     var window = jsdom.jsdom(body).createWindow();
 	  var scripts = window.document.getElementsByTagName('script');
 	  res.render('js_list.jade', { title: 'Extracted JS code', scripts: scripts });
