@@ -1,8 +1,11 @@
 /**
  * Module dependencies
  */
+var urlLib = require('../lib/urlLib');
 var request = require('request');
 var jsdom = require('jsdom');
+var async = require('async');
+
 
 
 
@@ -12,10 +15,10 @@ var jsdom = require('jsdom');
 module.exports = function(app){
 
     app.post('/extract', function(req, res){
-      var url = req.body.url;
-      searchJs(url, function(results) {
-        final(res, results);
-      });
+    	var url = req.body.url;
+    	parsePage(url, function(results) {
+    		final(res, results);
+    	});
     });
 
     //other routes..
@@ -25,12 +28,13 @@ module.exports = function(app){
  * Controller functions.
  */
 
-function final(res, results) {
+function final(res, result) {
 
-  console.log("Script tags: " + results.length);
+	console.log("Script tags: " + result.scripts.length);
+	console.log("DOM Events: " + result.events.length);
 
-  res.render('js_list.jade', { title: 'Extracted JS code', scripts: results });
-}
+	res.render('js_list.jade', { title: 'Extracted JS code', scripts: result.scripts });
+};
 
 /**
  * Makes a request to the given url to get the HTML of that page.
@@ -40,91 +44,99 @@ function final(res, results) {
  * @param {object} res Is the respond object from the request handler.
  * @param {string} url The given url can be not normalized, meaning not containing 'http://'
  */
-function searchJs(url, finalCallback){
-	url = addHttp(url);
+function parsePage(url, finalCallback){
+  // It is possible that the user gives a url without 'http://'
+	url = urlLib.addHttp(url);
 
   request(url, function(error, response, body) {
     if (error || response.statusCode !== 200) {
-      console.log('Error when contacting ' + url);
-      console.log(body);
+     	console.log('Error when contacting ' + url);
+     	console.log(body);
     }
 
-    var window = jsdom.jsdom(body).createWindow();
-	  var scripts = window.document.getElementsByTagName('script');
-    var results = new Array(scripts.length);
+    var document = jsdom.jsdom(body);
+	var window = document.createWindow();
 
-    counter = scripts.length;
-    function makeCallback (index) {
-      return function(extractedJs) {
-        counter --;
+    // An array or object containing functions to run, 
+    // each function is passed a callback it must call on completion.
+    async.parallel({
+    	scripts: function(callback){
+    		callback(null, extractJs(document, url));
+    	},
+    	events: function(callback){
+    		callback(null, extractDomEvents(document));
+    	},
+    }, function(err, results) {
+    	window.close();
+    	finalCallback(results); 
+	});
 
-        console.log("nu bezig aan: " + index);
-        console.log(extractedJs.substring(0, 50));
-        results[index] = extractedJs.substring(0, 100);
-
-        //results[index] = extractedJs;
-
-        if(counter == 0) {
-          finalCallback(results);
-        }
-      }
-    }
-
-
-    for (var i = 0; i < scripts.length; i++) {
-      extractJs(url, scripts[i], makeCallback(i));
-    }
+    
   });
 };
 
-function extractJs(url, element, callb) {
-  var source = element.src;
-  if(source) {
-    if(!startWithHttp(source)) source = concatenateLinks(url, source);
 
-    request(source, function(error, response, body) {
-      callb(body);
-    });
-    
-  } else {
-    callb(element.innerHTML);
-  }
-}
-
-/**
- * It is possible that the user gives a url without 'http://'
- * this method makes the concatenation if needed.
- * 
- * @param {string} url of a web page
- */
-function addHttp(url) {
-  if(!startWithHttp(url)) {
-      url = "http://" + url;
-  }
-  return url;
-}
-
-function startWithHttp(url) {
-  var pattern = /^((http|https|ftp):\/\/)/;
-  return pattern.test(url);
-}
-
-
-function concatenateLinks() {
-  var result = arguments[0];
-  for (var i = 1; i < arguments.length; i++) {
-    var argument = arguments[i];
-    //       ***/ + /***
-    //       **** + /***
-    //       ***/ + ****
-    //       **** + ****
-    if(!result.charAt(result.length - 1) == '/')  result += '/';
-    if(!argument.charAt(0) == '/')  argument = argument.substring(1);
-    
-    result += argument;
-  }
-  return result;
-}
+function extractJs(document, url) {
+	var result = [];
+	var elements = document.getElementsByTagName('script');
+	for (var i = 0; i < elements.length; i++) {
+		var element = elements[i];
+		// If the given element between <script> tags actually is a reference to an external .js file
+		var source = element.src;
+		// so it has a 'source' attribute
+		if(source) {
+			// then check if this is a reference to a cross domain file. 
+			// If not, construct the url to that file, otherwise we already have it as attribute.
+			var domainBool = 'non-crossDomain';			
+			if(!urlLib.startWithHttp(source)) { 
+				domainBool = 'crossDomain';
+				source = urlLib.concatenateLinks(url, source);
+			}
+			// Now make a http request to that url, 
+			// and the javascript of that file will be in the body of the response.
+			request(source, function(error, response, body) {
+				result.push({
+					'code': body,
+					'properties': {
+						'domainBool': domainBool,
+						'location': source
+					} 
+				});
+		});
+		// Without the src attribute, the element contains its javascript code.
+		} else {
+			result.push({
+				'code': element.innerHTML,
+				'properties': 'inplace' 
+			});
+		}
+	};
+	return result;
+};
 
 
-
+function extractDomEvents(document) {
+	var result = [];
+	var all = document.getElementsByTagName('*');
+	var types = [ 'click', 'dblclick', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 
+			'mouseup', 'change', 'focus', 'blur', 'scroll', 'select', 'submit', 'keydown', 'keypress', 
+			'keyup', 'load', 'unload' ];
+	
+	for (var i = 0; i < all.length; i++) {
+		for (var j = 0; j < types.length; j++) {
+			if (typeof all[i]['on'+types[j]] == 'function') {
+				result.push({
+					"node": all[i],
+					"listeners": [ {
+						"type": types[j],
+						//"func": all[i]['on'+types[j]].toString(),
+						"func": all[i].getAttribute('on'+types[j]).toString(),
+						"removed": false,
+						"source": 'DOM 0 event'
+					} ]
+				});
+			}
+		}
+	};
+	return result;
+};
