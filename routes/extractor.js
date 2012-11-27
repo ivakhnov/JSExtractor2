@@ -75,48 +75,51 @@ function parsePage(url, finalCallback){
   });
 };
 
+function codeSnippet(code, type, location) {
+	return {
+		'code': code,
+			'properties': {
+				'type': type,
+				'location': location
+			}
+	}
+};
 
 function extractJs(document, url) {
-	var result = [];
+	var results = [];
 	var elements = document.getElementsByTagName('script');
 	for (var i = 0; i < elements.length; i++) {
-		var element = elements[i];
+		var code, type;
+		var element = elements[i];		
 		// If the given element between <script> tags actually is a reference to an external .js file
 		var source = element.src;
 		// so it has a 'source' attribute
 		if(source) {
 			// then check if this is a reference to a cross domain file. 
 			// If not, construct the url to that file, otherwise we already have it as attribute.
-			var domainBool = 'non-crossDomain';			
 			if(!urlLib.startWithHttp(source)) { 
-				domainBool = 'crossDomain';
+				type = 'file_crossDomain';
 				source = urlLib.concatenateLinks(url, source);
 			}
 			// Now make a http request to that url, 
 			// and the javascript of that file will be in the body of the response.
 			request(source, function(error, response, body) {
-				result.push({
-					'code': body,
-					'properties': {
-						'domainBool': domainBool,
-						'location': source
-					} 
-				});
+				code = body;
+				type = 'file_nonCrossDomain';
 		});
-		// Without the src attribute, the element contains its javascript code.
+		// Without the src attribute, the element itself contains its javascript code.
 		} else {
-			result.push({
-				'code': element.innerHTML,
-				'properties': 'inplace' 
-			});
+			code = element.innerHTML;
+			type = 'inplace';
 		}
+		results.push(codeSnippet(code, type, source));
 	};
-	return result;
+	return results;
 };
 
 
 function extractDomEvents(document) {
-	var result = [];
+	var results = [];
 	var all = document.getElementsByTagName('*');
 	var types = [ 'click', 'dblclick', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 
 			'mouseup', 'change', 'focus', 'blur', 'scroll', 'select', 'submit', 'keydown', 'keypress', 
@@ -125,7 +128,7 @@ function extractDomEvents(document) {
 	for (var i = 0; i < all.length; i++) {
 		for (var j = 0; j < types.length; j++) {
 			if (typeof all[i]['on'+types[j]] == 'function') {
-				result.push({
+				results.push({
 					"node": all[i],
 					"listeners": [ {
 						"type": types[j],
@@ -138,5 +141,5 @@ function extractDomEvents(document) {
 			}
 		}
 	};
-	return result;
+	return results;
 };
