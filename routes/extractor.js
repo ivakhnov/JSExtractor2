@@ -32,6 +32,8 @@ function final(res, result) {
 
 	console.log("Script tags: " + result.scripts.length);
 	console.log("DOM Events: " + result.events.length);
+	
+	//console.log(JSON.stringify(result.events));
 
 	res.render('js_list.jade', { title: 'Extracted JS code', scripts: result.scripts });
 };
@@ -75,13 +77,24 @@ function parsePage(url, finalCallback){
   });
 };
 
-function codeSnippet(code, type, location) {
+function storeCodeSnippet(code, type, location) {
 	return {
 		'code': code,
-			'properties': {
-				'type': type,
-				'location': location
-			}
+		'properties': {
+			'type': type,
+			'location': location
+		}
+	}
+};
+
+function storeEvent(nodeName, type, func, source) {
+	return {
+		'nodeName': nodeName,
+		'listeners': {
+			'type': type,
+			'func': func,
+			'source': source
+		}
 	}
 };
 
@@ -109,10 +122,11 @@ function extractJs(document, url) {
 		});
 		// Without the src attribute, the element itself contains its javascript code.
 		} else {
+			source = url;
 			code = element.innerHTML;
 			type = 'inplace';
 		}
-		results.push(codeSnippet(code, type, source));
+		results.push(storeCodeSnippet(code, type, source));
 	};
 	return results;
 };
@@ -128,16 +142,13 @@ function extractDomEvents(document) {
 	for (var i = 0; i < all.length; i++) {
 		for (var j = 0; j < types.length; j++) {
 			if (typeof all[i]['on'+types[j]] == 'function') {
-				results.push({
-					"node": all[i],
-					"listeners": [ {
-						"type": types[j],
-						//"func": all[i]['on'+types[j]].toString(),
-						"func": all[i].getAttribute('on'+types[j]).toString(),
-						"removed": false,
-						"source": 'DOM 0 event'
-					} ]
-				});
+				
+				var nodeName = all[i].nodeName;
+				var type = types[j];
+				var func = all[i].getAttribute('on' + type).toString();
+				var source = 'DOM 0 Event';
+
+				results.push(storeEvent(nodeName, type, func, source));
 			}
 		}
 	};
