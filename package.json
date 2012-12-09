@@ -12,9 +12,12 @@
     "url"       : "https://github.com/ivakhnov/JSExtractor2.git"
   },
   "dependencies"  : {
+    "async"       : "0.1.22",
     "express"     : "3.0.0",
-    "jade"        : "*",
-    "request"     : "https://github.com/mikeal/request/tarball/master",
-    "jsdom"       : "https://github.com/tmpvar/jsdom/tarball/master"
+    "jade"        : "0.27.7",
+    "jsdom"       : "0.2.19",
+    "jslint"      : "0.1.9",
+    "redis"       : "0.8.2",
+    "request"     : "2.12.0"
   }
 }
