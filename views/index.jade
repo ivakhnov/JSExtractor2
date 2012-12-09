@@ -1,13 +1,63 @@
 extends layout
 
-block content
-	h1= title
-	p Welcome to #{title}
 
-	form(name='input', action='/extract', method='post')
-		| URL:
-		input(name='url', type='text', value='webmail.ulb.ac.be', size=100) -# placeholder="bla bla bla" for disappearing default value
-		br
-		input(type='submit', value='Extract')
-	p
-		| If you click the "Submit" button, all the JavaScript from that page will be extracted.
+block content
+
+	style(type='text/css')
+		
+		/* Custom container */
+		.container-narrow {
+		margin: 0 auto;
+		max-width: 700px;
+		}
+		.container-narrow > hr {
+		margin: 30px 0;
+		}
+		/* Main marketing message and sign up button */
+		.jumbotron {
+		margin: 60px 0;
+		text-align: center;
+		}
+		.jumbotron h1 {
+		font-size: 72px;
+		line-height: 1;
+		}
+		.jumbotron .btn {
+		font-size: 21px;
+		padding: 14px 24px;
+		}
+		/* Supporting marketing content */
+		.marketing {
+		margin: 60px 0;
+		}
+		.marketing p + h4 {
+		margin-top: 28px;
+		}
+
+
+	.container-narrow
+		hr
+		.jumbotron
+			h1 Extract and analyse JavaScript!
+			p.lead
+				| Type a URL and click the button to collect any JavaScript code that is embedded in various parts inside the web page.
+			form(name='input', action='/extract', method='post')
+				input.input-xxlarge(name='url', type='text', value='webmail.ulb.ac.be') -# placeholder="bla bla bla"
+				br
+				br
+				button.btn.btn-large.btn-primary(type='submit') Extract		
+		hr
+		.row-fluid.marketing
+			.span6
+				h4 Primary goal?
+				p The primary goal of the project is to build a tool(set) that is able to separate the presentation from behavior by extracting the maximum amount of JavaScript possible from HTML pages.
+				h4 So what?
+				p Extracted code will be analysed by different tools like JSLint, JSHint, WALA, and DoctorJS. The results are presented in graphs and charts for easier comparison.
+				h4 What else?
+				p Analyzing how loading speed of a web page can be influenced by several things. For example the order of the script  tags, or by the used entry-point.
+			.span6
+				h4 Why?
+				p Complex web applications are difficult to understand for various reasons. One of the problems is that their JavaScript code can be embedded or loaded via script tags or attached as event handlers to DOM elements, making it hard to maintain a complete overview. Therefore, to reduce complexity and aid program understanding it would help if we could somehow extract and collect any JavaScript code that is embedded in various parts inside a web application.
+				h4 Conclusion?
+				p Give it a try!
+				

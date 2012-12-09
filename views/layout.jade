@@ -1,15 +1,48 @@
 doctype 5
 html
 	head
-		title #{title}
-		link(rel='stylesheet', href='/stylesheets/style.css')
+		meta(charset='utf-8')
+		title JSExtractor2
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		meta(name='description', content='Extract and analyse JavaScript on a web page.')
+		meta(name='author', content='Evgeni Ivakhnov')
+			
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
+		link(rel='stylesheet', href='/stylesheets/theme.css')
 	body
+		.navbar.navbar-inverse
+			.navbar-inner
+					.container
+						a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a.brand(href='/') JSExtractor2
+						.nav-collapse.collapse
+							ul.nav.pull-right
+								li
+									a(href='https://github.com/ivakhnov/JSExtractor2') Github
+								li
+									a(href='#contact') Contact
+						
+						.nav-collapse
+
+			
 		header
-			h1= title
+			// h1= 'JSExtractor2'
 		.container
 			.main-content
 				block content
 			.sidebar
 				block sidebar
-		footer
-			p Vrije Universiteit Brussel
+			hr
+			.footer
+				p
+					| Vrije Universiteit Brussel
+			
+		// JavaScript
+		// =====================================================
+		// Placed at the end of the document for faster loading.
+		script(src='/bootstrap/js/jquery.js')
+		script(src='/bootstrap/js/bootstrap.min.js')
