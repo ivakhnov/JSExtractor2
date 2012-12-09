@@ -2,6 +2,7 @@
  * Module dependencies
  */
 var urlLib = require('../lib/urlLib');
+var db = require('../lib/dbManager');
 var request = require('request');
 var jsdom = require('jsdom');
 var async = require('async');
@@ -16,8 +17,10 @@ module.exports = function(app){
 
     app.post('/extract', function(req, res){
     	var url = req.body.url;
+    	// It is possible that the user gives a url without 'http://'
+		url = urlLib.addHttp(url);
     	parsePage(url, function(results) {
-    		final(res, results);
+    		final(res, url, results);
     	});
     });
 
@@ -28,12 +31,14 @@ module.exports = function(app){
  * Controller functions.
  */
 
-function final(res, result) {
+function final(res, url, result) {
 
 	console.log("Script tags: " + result.scripts.length);
 	console.log("DOM Events: " + result.events.length);
 	
+	db.resetDb();	
 	//console.log(JSON.stringify(result.events));
+	db.savePage(url, result.scripts, result.events);
 
 	res.render('js_list.jade', { title: 'Extracted JS code', scripts: result.scripts });
 };
@@ -47,8 +52,6 @@ function final(res, result) {
  * @param {string} url The given url can be not normalized, meaning not containing 'http://'
  */
 function parsePage(url, finalCallback){
-  // It is possible that the user gives a url without 'http://'
-	url = urlLib.addHttp(url);
 
   request(url, function(error, response, body) {
     if (error || response.statusCode !== 200) {
@@ -77,7 +80,7 @@ function parsePage(url, finalCallback){
   });
 };
 
-function storeCodeSnippet(code, type, location) {
+function storeScript(code, type, location) {
 	return {
 		'code': code,
 		'properties': {
@@ -126,7 +129,7 @@ function extractJs(document, url) {
 			code = element.innerHTML;
 			type = 'inplace';
 		}
-		results.push(storeCodeSnippet(code, type, source));
+		results.push(storeScript(code, type, source));
 	};
 	return results;
 };
