@@ -19,6 +19,8 @@ module.exports = function(app){
     	var url = req.body.url;
     	// It is possible that the user gives a url without 'http://'
 		url = urlLib.addHttp(url);
+		// Store the session for that user and use the url as identifier.
+		req.session.userUrl = url; 
     	parsePage(url, function(results) {
     		final(res, url, results);
     	});

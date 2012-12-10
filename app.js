@@ -12,7 +12,7 @@ var jsdom = require('jsdom');
 
 
 var app = express();
-
+//var store = new express.session.MemoryStore;
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -22,6 +22,14 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(express.cookieParser());
+  app.use(express.session({secret: 'JSExtractor2'}));
+  // If we want some logic to execute before rendering each and every view, we can use dynamic helpers.
+  // The object ‘session’ will now be available to every view which will right now contain user information. 
+  app.use(function(req, res, next){
+    res.locals.userUrl = req.session.userUrl;
+    next();
+  });
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
