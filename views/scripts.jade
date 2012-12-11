@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  
+  .container-fluid
+    .row-fluid
+
+      include sidebar
+          
+      .span9
+        script(type='text/javascript', src='/jqplot/jquery.jqplot.min.js')
+        script(type='text/javascript', charset='utf-8', src='/javascripts/graphDemo.js')
+            
+        h1.page-title Extracted JavaScript between &lt;script&gt; tags.
+        hr
+        .row-fluid
+          .block
+            .block-heading(data-toggle='collapse', data-target='#inline') 
+              | Inline code
+              span.label.label-info #{scriptsCount}
+            #inline.block-body.collapse.in
+          .block
+            .block-heading(data-toggle='collapse', data-target='#sourceFiles') 
+              | External source files
+              span.label.label-info #{scriptsCount}
+            #sourceFiles.block-body.collapse.in
+          .block
+            .block-heading(data-toggle='collapse', data-target='#ourceFilesCrossDomaon') 
+              | External source files from other domain
+              span.label.label-info #{scriptsCount}
+            #ourceFilesCrossDomaon.block-body.collapse.in

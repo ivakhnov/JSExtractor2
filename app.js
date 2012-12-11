@@ -57,7 +57,8 @@ app.configure('production', function(){
  *  Include all the route files and setup the routes.
  */
 [ 'index', 
-  'extractor'].map(function(controllerName) {
+  'extractor',
+  'scripts'].map(function(controllerName) {
     require('./routes/' + controllerName)(app);
  });
 
