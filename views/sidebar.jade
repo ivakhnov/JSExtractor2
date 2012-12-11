@@ -1,0 +1,47 @@
+.span3
+  .sidebar-nav
+    
+    - currentMenu= 'statsAll'
+    // Variable currentMenu denotes the active nav item
+    - var nav = {}; nav[currentMenu] = 'active'
+    
+    .nav-header(data-toggle='collapse', data-target='#stats-menu')
+      i.icon-tasks
+      | Stats   
+    ul#stats-menu.nav.nav-list.collapse.in
+      li(class='#{nav.statsAll}')
+        a(href='#') All
+      li(class='#{nav.statsJSLint}')
+        a(href='#') JSLint
+      li(class='#{nav.statsJSHint}')
+        a(href='#') JSHint
+      li(class='#{nav.statsWALA}')
+        a(href='#') WALA
+      li(class='#{nav.statsDoctorJS}')
+        a(href='#') DoctorJS
+      li(class='#{nav.statsJSAnalyse}')
+        a(href='#') JSAnalyse
+        
+    .nav-header(data-toggle='collapse', data-target='#scripts-menu')
+      i.icon-chevron-left
+      | /  &nbsp;
+      i.icon-chevron-right
+      | Scripts
+      span.label.label-info #{scriptsCount}
+    ul#scripts-menu.nav.nav-list.collapse.in
+      li(class='#{nav.scriptsAll}')
+        a(href='#') All
+      li(class='#{nav.scriptsInline}')
+        a(href='#') Inline
+      li(class='#{nav.scriptsSourceFile}')
+        a(href='#') Source file
+      li(class='#{nav.scriptsSourceFileCrossDomain}')
+        a(href='#') Source file cross-domain
+        
+    .nav-header(data-toggle='collapse', data-target='#events-menu')
+      i.icon-screenshot
+      | Events
+      span.label.label-info #{eventsCount}
+    ul#events-menu.nav.nav-list.collapse.in
+      li(class='#{nav.eventsAll}')
+        a(href='#') All

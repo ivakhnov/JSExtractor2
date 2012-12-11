@@ -20,50 +20,7 @@ block content
   
   .container-fluid
     .row-fluid
-      .span3
-        .sidebar-nav
-          .nav-header(data-toggle='collapse', data-target='#stats-menu')
-            i.icon-tasks
-            | Stats
-          ul#stats-menu.nav.nav-list.collapse.in
-            li.active
-              a(href='#') All
-            li
-              a(href='#') JSLint
-            li
-              a(href='#') JSHint
-            li
-              a(href='#') WALA
-            li
-              a(href='#') DoctorJS
-            li
-              a(href='#') JSAnalyse
-              
-          .nav-header(data-toggle='collapse', data-target='#scripts-menu')
-            i.icon-chevron-left
-            | Scripts &nbsp;
-            i.icon-chevron-right
-            span.label.label-info #{scriptsCount}
-          ul#scripts-menu.nav.nav-list.collapse
-            li
-              a(href='#') All
-            li
-              a(href='#') &nbsp; Inline
-                .label.pull-left.label-info #{scriptsCount}
-            li
-              a(href='#') &nbsp; Source file
-                .label.pull-left.label-info 0
-            li
-              a(href='#') &nbsp; Source file cross-domain
-                .label.pull-left.label-info 0
-              
-          .nav-header(data-toggle='collapse', data-target='#events-menu')
-            i.icon-screenshot
-            | Events
-            span.label.label-info #{eventsCount}
-          ul#events-menu.nav.nav-list.collapse
-            li
-              a(href='#') All
+      include sidebar
           
       .span9
         script(type='text/javascript', src='/jqplot/jquery.jqplot.min.js')

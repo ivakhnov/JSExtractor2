@@ -20,9 +20,9 @@ module.exports = function(app){
     	// It is possible that the user gives a url without 'http://'
 		url = urlLib.addHttp(url);
 		// Store the session for that user and use the url as identifier.
-		req.session.userUrl = url; 
+		req.session.userUrl = url;
     	parsePage(url, function(results) {
-    		final(res, url, results);
+    		final(req, res, url, results);
     	});
     });
 
@@ -33,17 +33,21 @@ module.exports = function(app){
  * Controller functions.
  */
 
-function final(res, url, result) {
+function final(req, res, url, result) {
 
 	console.log("Script tags: " + result.scripts.length);
 	console.log("DOM Events: " + result.events.length);
 	
 	db.resetDb();	
 	//console.log(JSON.stringify(result.events));
+	//Store the page and all the extracted results in database
 	db.savePage(url, result.scripts, result.events);
+	// But also save just few local variables to render on every singel page
+	req.session.scriptsCount = result.scripts.length;
+	req.session.eventsCount = result.events.length;
 
 	//res.render('js_list.jade', { title: 'Extracted JS code', scripts: result.scripts });
-	res.render('js_list', { scriptsCount: result.scripts.length, eventsCount: result.events.length});
+	res.render('js_list');
 };
 
 /**

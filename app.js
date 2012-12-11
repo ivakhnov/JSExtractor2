@@ -25,9 +25,12 @@ app.configure(function(){
   app.use(express.cookieParser());
   app.use(express.session({secret: 'JSExtractor2'}));
   // If we want some logic to execute before rendering each and every view, we can use dynamic helpers.
-  // The object ‘session’ will now be available to every view which will right now contain user information. 
+  // The object ‘session’ will now be available to every view which will right now contain user information.
+  // In fact this is used to store some variables which will be displayed on every single page.
   app.use(function(req, res, next){
     res.locals.userUrl = req.session.userUrl;
+    res.locals.scriptsCount = req.session.scriptsCount;
+    res.locals.eventsCount = req.session.eventsCount;
     next();
   });
   app.use(app.router);
