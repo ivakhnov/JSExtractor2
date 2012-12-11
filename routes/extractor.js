@@ -42,7 +42,8 @@ function final(res, url, result) {
 	//console.log(JSON.stringify(result.events));
 	db.savePage(url, result.scripts, result.events);
 
-	res.render('js_list.jade', { title: 'Extracted JS code', scripts: result.scripts });
+	//res.render('js_list.jade', { title: 'Extracted JS code', scripts: result.scripts });
+	res.render('js_list', { scriptsCount: result.scripts.length, eventsCount: result.events.length});
 };
 
 /**

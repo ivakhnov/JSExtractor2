@@ -21,5 +21,5 @@ module.exports = function(app){
  * @param  {object} res Is the respond object from the request handler.
  */
 var index = function(res){
-  res.render('index', { title: 'JSExtractor2' });
+  res.render('index');
 };

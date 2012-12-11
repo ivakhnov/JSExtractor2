@@ -1,9 +1,134 @@
 extends layout
 
 block content
-  h1= title
-  ul
-  each script in scripts
-    li= script
-    br
+  
+  style(type='text/css')
+  //-    #line-chart {
+    height:300px;
+    width:800px;
+    margin: 0px auto;
+    margin-top: 1em;
+    }
+    .brand .first {
+    color: #ccc;
+    font-style: italic;
+    }
+    .brand .second {
+    color: #fff;
+    font-weight: bold;
+    }
+  
+  .container-fluid
+    .row-fluid
+      .span3
+        .sidebar-nav
+          .nav-header(data-toggle='collapse', data-target='#stats-menu')
+            i.icon-tasks
+            | Stats
+          ul#stats-menu.nav.nav-list.collapse.in
+            li.active
+              a(href='#') All
+            li
+              a(href='#') JSLint
+            li
+              a(href='#') JSHint
+            li
+              a(href='#') WALA
+            li
+              a(href='#') DoctorJS
+            li
+              a(href='#') JSAnalyse
+              
+          .nav-header(data-toggle='collapse', data-target='#scripts-menu')
+            i.icon-chevron-left
+            | Scripts &nbsp;
+            i.icon-chevron-right
+            span.label.label-info #{scriptsCount}
+          ul#scripts-menu.nav.nav-list.collapse
+            li
+              a(href='#') All
+            li
+              a(href='#') &nbsp; Inline
+                .label.pull-left.label-info #{scriptsCount}
+            li
+              a(href='#') &nbsp; Source file
+                .label.pull-left.label-info 0
+            li
+              a(href='#') &nbsp; Source file cross-domain
+                .label.pull-left.label-info 0
+              
+          .nav-header(data-toggle='collapse', data-target='#events-menu')
+            i.icon-screenshot
+            | Events
+            span.label.label-info #{eventsCount}
+          ul#events-menu.nav.nav-list.collapse
+            li
+              a(href='#') All
+          
+      .span9
+        script(type='text/javascript', src='/jqplot/jquery.jqplot.min.js')
+        script(type='text/javascript', charset='utf-8', src='/javascripts/graphDemo.js')
+            
+        h1.page-title Statistics
+        .row-fluid
+          .block
+            p.block-heading(data-toggle='collapse', data-target='#chart-container') Performance Chart
+            img(src='images/graph.png')
+            #chart-container.block-body.collapse.in
+              #line-chart
+        .row-fluid
+          .block.span6
+            .block-heading(data-toggle='collapse', data-target='#tablewidget') 
+              | Results
+            #tablewidget.block-body.collapse.in
+              table.table
+                thead
+                  tr
+                    th Analyser
+                    th Errors
+                    th Warnings
+                tbody
+                  tr
+                    td JSLint
+                    td 10
+                    td 4
+                  tr
+                    td JSHint
+                    td 8
+                    td 4
+                  tr
+                    td WALA
+                    td 6
+                    td 1
+                  tr
+                    td DoctorJS
+                    td 6
+                    td 1
+                  tr
+                    td JSAnalyse
+                    td 2
+                    td 0
 
+          .block.span6
+            .block-heading(data-toggle='collapse', data-target='#widget1container') Info 
+            #widget1container.block-body.collapse.in
+              h2 Statistical info
+              p
+                | Some very useful infomation.
+
+        .row-fluid
+          .block.span6
+            .block-heading(data-toggle='collapse', data-target='#widget2container') Info 
+            #widget2container.block-body.collapse.in
+              h2 Some more statistical info
+              p
+                | Some very important and useful infomation.
+                
+          .block.span6
+            .block-heading(data-toggle='collapse', data-target='#widget3container') the Good Parts: Tip of the Day 
+            #widget3container.block-body.collapse.in
+              h2 Operator + adds numbers and concatenates.
+              p
+                | Operator + adds numbers and concatenates. The + operator can add or concatenate. Which one it does depends on the types of the parameters. If either operand is an empty string, it produces the other operand converted to a string. If both operands are numbers, it produces the sum. Otherwise, it converts both operands to strings and concatenates them. This complicated behavior is a common source of bugs. If you intend + to add, make sure that both operands are numbers.
+                | Operators == and != do type coercion. Use of the === and !== operators is always preferred.
+                | Too many falsy values. 0, Nan, '' (empty string), false, null, undefined are all false.
