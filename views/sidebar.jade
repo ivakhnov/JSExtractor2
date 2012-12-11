@@ -5,7 +5,7 @@
     - var nav = {}; nav[currentMenu] = 'active'
     
     .nav-header(data-toggle='collapse', data-target='#stats-menu')
-      i.icon-tasks
+      i.icon-tasks.icon-white
       | Stats   
     ul#stats-menu.nav.nav-list.collapse.in
       li(class='#{nav.statsAll}')
@@ -23,13 +23,13 @@
         
     a(href='/scripts').nav-header(data-toggle='collapse', data-target='#scripts-menu')
       | Scripts &nbsp;
-      i.icon-chevron-left
+      i.icon-chevron-left.icon-white
       | /  &nbsp;
-      i.icon-chevron-right
+      i.icon-chevron-right.icon-white
       span.label.label-info #{scriptsCount}
         
     a(href='/events').nav-header(data-toggle='collapse', data-target='#events-menu')
       | Events &nbsp;
-      i.icon-screenshot
+      i.icon-screenshot.icon-white
       span.label.label-info #{eventsCount}
     
