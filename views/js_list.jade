@@ -20,6 +20,10 @@ block content
   
   .container-fluid
     .row-fluid
+      
+      // Variable currentMenu denotes the active nav item
+      - currentMenu= 'statsAll'
+      // Now include the sidebar and activate (=highlite) the currentMenu item
       include sidebar
           
       .span9
