@@ -11,7 +11,16 @@ var async = require('async');
 module.exports = function(app){
 	
 	app.get('/scripts', function(req, res){
-		getScripts(res);
+		var userUrl = res.locals.userUrl;
+		// Just make sure the user is always associated with the url of the webpage he wants to
+		// analyse. If the user didn't pass through the home page and did not enter a url to analyse
+		// there needs to be a redirect to the home page.
+		if (!userUrl) { 
+			return res.redirect('/'); 
+		};
+		getScripts(res, userUrl, function(results) {
+			res.render('scripts', results)
+		});
 	});
 
 };
@@ -21,29 +30,29 @@ module.exports = function(app){
  * Controller functions.
  */
 
-var getScripts = function(res){
-		console.log('opgeslagen in sessie webpage: ' + res.locals.userUrl); 
-		db.getScripts(res.locals.userUrl, function(scripts) {
-			var inplace = [];
-			var sourceFiles = [];
-			var sourceFilesCrossDomain = [];
-			for(var i = 0; i < scripts.length; i++) {
-				var script = scripts[i];
-				switch (script.properties.type) {
-					case 'inplace':
-						inplace.push(script);
-						break;
-					case 'file_nonCrossDomain':
-						sourceFiles.push(script);
-						break;
-					case 'file_crossDomain':
-						sourceFilesCrossDomain.push(script);
-						break;
-				};
+var getScripts = function(res, userUrl, callback){
+	var userUrl = res.locals.userUrl;
+	db.getScripts(userUrl, function(scripts) {
+		var inplace = [];
+		var sourceFiles = [];
+		var sourceFilesCrossDomain = [];
+		for(var i = 0; i < scripts.length; i++) {
+			var script = scripts[i];
+			switch (script.properties.type) {
+				case 'inplace':
+					inplace.push(script);
+					break;
+				case 'file_nonCrossDomain':
+					sourceFiles.push(script);
+					break;
+				case 'file_crossDomain':
+					sourceFilesCrossDomain.push(script);
+					break;
 			};
-			res.render('scripts', { all: scripts, 
-									inplace: inplace, 
-									sourceFiles: sourceFiles, 
-									sourceFilesCrossDomain: sourceFilesCrossDomain });
-		});
+		};
+		callback ({ all: scripts,
+					inplace: inplace, 
+					sourceFiles: sourceFiles, 
+					sourceFilesCrossDomain: sourceFilesCrossDomain });
+	});
 };
