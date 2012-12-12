@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  
+  .container-fluid
+    .row-fluid
+
+      // Variable currentMenu denotes the active nav item
+      - currentMenu= ''
+      include sidebar
+          
+      .span9            
+        h1.page-title Extracted event handlers.
+        hr
+        .row-fluid
+          .block
+            .block-heading(data-toggle='collapse', data-target='#all') 
+              | All
+              span.label.label-info #{all.length}
+            #all.block-body.collapse.in
+              - each event in all
+                p
+                ol
+                  li=event.listeners.type
+                  ul
+                    p
+                    li= event.listeners.func
