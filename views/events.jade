@@ -21,7 +21,7 @@ block content
               - each event in all
                 p
                 ol
-                  li=event.listeners.type
+                  li=JSON.parse(event).listeners.type
                   ul
                     p
-                    li= event.listeners.func
+                    li=JSON.parse(event).listeners.func

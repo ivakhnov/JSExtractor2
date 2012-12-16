@@ -21,10 +21,10 @@ block content
               - each script in all
                 p
                 ol
-                  li=script.properties.location
+                  li=JSON.parse(script).properties.location
                   ul
                     p
-                    li= script.code     
+                    li= JSON.parse(script).code     
           .block
             .block-heading(data-toggle='collapse', data-target='#inplace') 
               | Inplace code
