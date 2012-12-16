@@ -31,8 +31,13 @@ module.exports = function(app){
  */
 
 var getEvents = function(res, userUrl, callback){
-	var userUrl = res.locals.userUrl;
-	db.getEvents(userUrl, function(events) {
-		callback ({ all: events });
+	db.getEvents(userUrl, function(err, events) {
+		if(err) {
+			console.log('ter hoogte van de events.js ging er iets verkeerd');
+			console.log(err);
+			//res.render('error');
+		} else {
+			callback ({ all: events });
+		};
 	});
 };

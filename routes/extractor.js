@@ -22,6 +22,8 @@ module.exports = function(app){
 		// Store the session for that user and use the url as identifier.
 		req.session.userUrl = url;
     	parsePage(url, function(results) {
+    		req.session.scriptsCount = results.scripts.length;
+			req.session.eventsCount = results.events.length;
     		final(req, res, url, results);
     	});
     });
@@ -33,21 +35,21 @@ module.exports = function(app){
  * Controller functions.
  */
 
-function final(req, res, url, result) {
+function final(req, res, url, results) {
 
-	console.log("Script tags: " + result.scripts.length);
-	console.log("DOM Events: " + result.events.length);
+	console.log("Script tags: " + results.scripts.length);
+	console.log("DOM Events: " + results.events.length);
 	
 	db.resetDb();	
-	//console.log(JSON.stringify(result.events));
-	//Store the page and all the extracted results in database
-	db.savePage(url, result.scripts, result.events);
-	// But also save just few local variables to render on every singel page
-	req.session.scriptsCount = result.scripts.length;
-	req.session.eventsCount = result.events.length;
-
-	//res.render('js_list.jade', { title: 'Extracted JS code', scripts: result.scripts });
-	res.render('js_list');
+	db.savePage(url, results.scripts, results.events, function(err, reply) {
+		if(err) {
+			console.log('Catched an error in extractor.js');
+			console.log(err);
+			//res.render('error');
+		} else {
+			res.redirect('/scripts');
+		}
+	});
 };
 
 /**

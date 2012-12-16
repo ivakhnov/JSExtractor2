@@ -32,27 +32,17 @@ module.exports = function(app){
 
 var getScripts = function(res, userUrl, callback){
 	var userUrl = res.locals.userUrl;
-	db.getScripts(userUrl, function(scripts) {
-		var inplace = [];
-		var sourceFiles = [];
-		var sourceFilesCrossDomain = [];
-		for(var i = 0; i < scripts.length; i++) {
-			var script = scripts[i];
-			switch (script.properties.type) {
-				case 'inplace':
-					inplace.push(script);
-					break;
-				case 'file_nonCrossDomain':
-					sourceFiles.push(script);
-					break;
-				case 'file_crossDomain':
-					sourceFilesCrossDomain.push(script);
-					break;
-			};
+	
+	db.getScripts(userUrl, function(err, scripts) {
+		if(err) {
+			console.log('ter hoogte van de scripts.js ging er iets verkeerd');
+			console.log(err);
+			//res.render('error');
+		} else {
+			callback ({ all: scripts.all,
+						inplace: scripts.inplace, 
+						sourceFiles: scripts.sourceFiles, 
+						sourceFilesCrossDomain: scripts.sourceFilesCrossDomain });
 		};
-		callback ({ all: scripts,
-					inplace: inplace, 
-					sourceFiles: sourceFiles, 
-					sourceFilesCrossDomain: sourceFilesCrossDomain });
 	});
 };
