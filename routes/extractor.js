@@ -40,7 +40,7 @@ function final(req, res, url, results) {
 	console.log("Script tags: " + results.scripts.length);
 	console.log("DOM Events: " + results.events.length);
 	
-	db.resetDb();	
+	//db.resetDb();	
 	db.savePage(url, results.scripts, results.events, function(err, reply) {
 		if(err) {
 			console.log('Catched an error in extractor.js');
@@ -122,16 +122,17 @@ function extractJs(document, url) {
 		if(source) {
 			// then check if this is a reference to a cross domain file. 
 			// If not, construct the url to that file, otherwise we already have it as attribute.
-			if(!urlLib.startWithHttp(source)) { 
+			if(urlLib.startWithHttp(source)) { 
 				type = 'file_crossDomain';
+			} else {
+				type = 'file_nonCrossDomain';
 				source = urlLib.concatenateLinks(url, source);
 			}
 			// Now make a http request to that url, 
 			// and the javascript of that file will be in the body of the response.
 			request(source, function(error, response, body) {
 				code = body;
-				type = 'file_nonCrossDomain';
-		});
+			});
 		// Without the src attribute, the element itself contains its javascript code.
 		} else {
 			source = url;
