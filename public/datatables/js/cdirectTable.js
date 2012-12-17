@@ -1,7 +1,8 @@
 (function ($) {
 	var datatable = {
 		"sPaginationType": "bootstrap",
-		"sDom": "t<'row-fluid'i><'row-fluid'<'well cddt-bottom-0'lp>>"
+		"sDom": "t<'row-fluid'<'span6'il>r<'span6'p>>"
+				
 	};
 
 	var dt;
