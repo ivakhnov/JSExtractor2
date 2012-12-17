@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  
+  .container-fluid
+    .row-fluid
+
+      // Variable currentMenu denotes the active nav item
+      - currentMenu= ''
+      include sidebar
+          
+      .span9            
+        h1.page-title Compare with other pages.
+        hr
+        .row-fluid
+          .block

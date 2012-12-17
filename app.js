@@ -59,7 +59,8 @@ app.configure('production', function(){
 [ 'index', 
   'extractor',
   'scripts',
-  'events'].map(function(controllerName) {
+  'events',
+  'compare'].map(function(controllerName) {
     require('./routes/' + controllerName)(app);
  });
 
