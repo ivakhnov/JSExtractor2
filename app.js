@@ -57,7 +57,7 @@ app.configure('production', function(){
  *  Include all the route files and setup the routes.
  */
 [ 'index', 
-  'extractor',
+  'extract',
   'scripts',
   'events',
   'compare'].map(function(controllerName) {
