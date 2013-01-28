@@ -1,8 +1,17 @@
 (function ($) {
 	var datatable = {
-		"sPaginationType": "bootstrap",
-		"sDom": "t<'row-fluid'<'span6'il>r<'span6'p>>"
-				
+      	"sPaginationType": "bootstrap",
+		"sDom": "<'row-fluid'r>t<'row-fluid'<'span6'il><'span6'p>>",
+		"bProcessing": true,
+      	"sAjaxSource": "custom_prop.txt",
+      	"sAjaxDataProp": "demo",
+      	"aoColumns": [
+	      { "sWidth": "20%" },
+	      { "sWidth": "30%" },
+	      { "sWidth": "30%" },
+	      { "sWidth": "10%" },
+	      { "sWidth": "10%" },
+	    ]		
 	};
 
 	var dt;
@@ -56,7 +65,7 @@
 		}
 	};
 	
-	$.fn.cdirectTable = function( options ) {
+	$.fn.comparisonTable = function( options ) {
 		if(options && options.datatable)
 			$.extend( datatable, options.datatable );
 			
