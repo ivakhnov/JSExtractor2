@@ -26,6 +26,7 @@ module.exports = function(app){
     		
     		console.log("Script tags: " + results.scripts.length);
 			console.log("DOM Events: " + results.events.length);
+			console.log("Frameworks: " + results.frameworks.length);
 			
 			//db.resetDb();	
 			db.savePage(url, results.scripts, results.events, function(err, reply) {
