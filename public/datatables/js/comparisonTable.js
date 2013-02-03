@@ -3,14 +3,15 @@
       	"sPaginationType": "bootstrap",
 		"sDom": "<'row-fluid'r>t<'row-fluid'<'span6'il><'span6'p>>",
 		"bProcessing": true,
-      	"sAjaxSource": "custom_prop.txt",
+		"bServerSide": true,
+      	"sAjaxSource": "/compare/table",
       	"sAjaxDataProp": "demo",
       	"aoColumns": [
 	      { "sWidth": "20%" },
 	      { "sWidth": "30%" },
 	      { "sWidth": "30%" },
-	      { "sWidth": "10%" },
-	      { "sWidth": "10%" },
+	      { "sWidth": "10%", "bSortable": false },
+	      { "sWidth": "10%", "bSortable": false },
 	    ]		
 	};
 
