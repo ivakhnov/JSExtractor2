@@ -2,6 +2,7 @@
  * Module dependencies
  */
 var db = require('../lib/dbManager');
+var db__ = require('../lib/DT_server_side');
 
 
 /*
@@ -21,6 +22,22 @@ module.exports = function(app){
 		getData(res, userUrl, function(results) {
 			res.render('compare', results)
 		});
+	});
+
+
+	// For AJAX calls from DataTables
+	app.get('/compare/table', function(req, res){
+		//var userUrl = res.locals.userUrl;
+		//var userUrl = 'http://webmail.ulb.ac.be';
+		// Just make sure the user is always associated with the url of the webpage he wants to
+		// analyse. If the user didn't pass through the home page and did not enter a url to analyse
+		// there needs to be a redirect to the home page.
+		// if (!userUrl) { 
+		// 	return res.redirect('/'); 
+		// };
+		console.log('TEEEEST');
+		//console.log(req.query);
+		db__.process(req.query);
 	});
 
 };

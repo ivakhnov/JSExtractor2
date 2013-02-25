@@ -93,12 +93,14 @@ hr {
   background-color: #444;
   color: #fff;
 }
-footer {
+.footer {
   padding: 1em;
   margin-top: 4em;
-  color: #666;
+  color: #555;
   font-size: .85em;
   line-height: 1.3em;
+  position: fixed;
+  bottom: 0;
 }
 footer hr {
   margin: 2em -2em;
@@ -375,16 +377,17 @@ footer hr {
   *background-color: #556665;
 }
 .btn-warning {
-  background-color: #aaaa55;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#dddd77), to(#aaaa55));
-  background-image: -webkit-linear-gradient(top, #dddd77, #aaaa55);
-  background-image: -o-linear-gradient(top, #dddd77, #aaaa55);
-  background-image: linear-gradient(to bottom, #dddd77, #aaaa55);
-  background-image: -moz-linear-gradient(top, #dddd77, #aaaa55);
+  background-color: #dc621e;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fa9300), to(#dc621e));
+  background-image: -webkit-linear-gradient(top,  #fa9300,#dc621e);
+  background-image: -o-linear-gradient(top,  #fa9300,#dc621e);
+  background-image: linear-gradient(to bottom,  #fa9300,#dc621e);
+  background-image: -moz-linear-gradient(top,  #fa9300, #dc621e);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
 }
 .btn-warning:hover {
-  background-color: #aaaa55;
-  *background-color: #aaaa55;
+  background-color: #dc621e;
+  *background-color: #dc621e;
 }
 .navbar .dropdown-menu a:hover {
   background: none;
