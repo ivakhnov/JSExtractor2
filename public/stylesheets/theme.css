@@ -377,17 +377,17 @@ footer hr {
   *background-color: #556665;
 }
 .btn-warning {
-  background-color: #dc621e;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fa9300), to(#dc621e));
-  background-image: -webkit-linear-gradient(top,  #fa9300,#dc621e);
-  background-image: -o-linear-gradient(top,  #fa9300,#dc621e);
-  background-image: linear-gradient(to bottom,  #fa9300,#dc621e);
-  background-image: -moz-linear-gradient(top,  #fa9300, #dc621e);
+  background-color: #AD4107;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fa9300), to(#AD4107));
+  background-image: -webkit-linear-gradient(top,  #fa9300,#AD4107);
+  background-image: -o-linear-gradient(top,  #fa9300,#AD4107);
+  background-image: linear-gradient(to bottom,  #fa9300,#AD4107);
+  background-image: -moz-linear-gradient(top,  #fa9300, #AD4107);
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
 }
 .btn-warning:hover {
-  background-color: #dc621e;
-  *background-color: #dc621e;
+  background-color: #AD4107;
+  *background-color: #AD4107;
 }
 .navbar .dropdown-menu a:hover {
   background: none;
