@@ -42,12 +42,36 @@ $(document).ready(function () {
 		} else {
 			accordionList.push(e.added.id);
 
-			var newDiv = "<h3 class="+ e.added.id +"><a href='#'>" + e.added.text + "</a></h3><div class="+ e.added.id +">" + e.added.text + "</div>";
-			$('.toolsAccordion').append(newDiv);
-			$('.toolsAccordion').accordion('refresh');
-			// make the new accordion element active
-			var index = $( ".toolsAccordion h3" ).length - 1;
-			$('.toolsAccordion').accordion( {active:index} );
+			// ajax call to get html of the selected plugin
+			$.post('/analyseconfig/plugin', { toolName: e.added.text }, function(json){
+				var htmlDiv = "<h3 class="+ e.added.id +"><a href='#'>" + e.added.text + "</a></h3><div class="+ e.added.id +">" + json.htmlDiv + "</div>";
+				$('.toolsAccordion').append(htmlDiv);
+				$('.toolsAccordion').accordion('refresh');
+				// make the new accordion element active
+				var index = $( ".toolsAccordion h3" ).length - 1;
+				$('.toolsAccordion').accordion( {active:index} );
+			});
+
+			// $.ajax({
+			// 	url: '/analyseconfig/plugin',
+			// 	type: 'post',
+			// 	data: "{'toolName':'" + e.added.text + "'}",
+			// 	dataType: 'html',
+			// 	success: function(htmlDiv) {
+			// 		$('.toolsAccordion').append(htmlDiv);
+			// 		$('.toolsAccordion').accordion('refresh');
+			// 		// make the new accordion element active
+			// 		var index = $( ".toolsAccordion h3" ).length - 1;
+			// 		$('.toolsAccordion').accordion( {active:index} );
+			// 	}
+			// });
+
+			// var newDiv = "<h3 class="+ e.added.id +"><a href='#'>" + e.added.text + "</a></h3><div class="+ e.added.id +">" + e.added.text + "</div>";
+			// $('.toolsAccordion').append(newDiv);
+			// $('.toolsAccordion').accordion('refresh');
+			// // make the new accordion element active
+			// var index = $( ".toolsAccordion h3" ).length - 1;
+			// $('.toolsAccordion').accordion( {active:index} );
 
 		}
 

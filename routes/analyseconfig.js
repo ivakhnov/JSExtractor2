@@ -1,3 +1,4 @@
+var pluginManager = require ('../lib/pluginManager');
 /**
  * Module dependencies
  */
@@ -15,7 +16,17 @@ module.exports = function(app){
 	]};
 
 	app.get('/analyseconfig', function(req, res){
-		res.render('analyseconfig', json);
+		//res.render('analyseconfig', json);
+		pluginManager.getNamesJson(function(json){
+			res.render('analyseconfig', json);
+		});
+	});
+
+	app.post('/analyseconfig/plugin', function(req, res){
+		console.log('config: ' + req.body.toolName);
+		pluginManager.getHtml(req.body.toolName, function(html){
+			res.json({ htmlDiv: html });
+		});
 	});
 
 };
