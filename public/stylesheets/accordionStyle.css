@@ -1,19 +1,5 @@
 /*Basic Styles*/
-html {
-	height: 100%;
-	background: #e3e3e0;
-}
-a {
-	text-decoration: none;
-}
-:focus, :active {
-	outline: 0;
-}
-* { 
-	-moz-box-sizing: border-box; 
-	-webkit-box-sizing: border-box; 
-	box-sizing: border-box;
-}
+
 #accordion {
 	width: 100%;
 	margin: 30px auto;
@@ -36,17 +22,18 @@ a {
 	border-top: 1px solid rgba(250, 250, 250, .2);
 }
 #accordion .ui-accordion-content {
+	text-align: left;
 	width: 100%;
 	background-color: #DCDCDC;
 	color: #111;
 	font-size: 12pt;
-	line-height: 16pt;
+	line-height: 20pt;
 	box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, .2),
 				inset 0px -1px 0px 0px rgba(0, 0, 0, .4);
 }
 #accordion .ui-accordion-content > * {
 	margin: 0;
-	padding: 30px;
+	padding: 7px;
 }
 #accordion .ui-accordion-content a {
 	color: #777;

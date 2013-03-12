@@ -3,7 +3,7 @@ extends layout
 
 block content
 
-	link(rel='stylesheet', href='stylesheets/normalize.css')
+	//- link(rel='stylesheet', href='stylesheets/normalize.css')
 	link(rel='stylesheet', href='stylesheets/accordionStyle.css')
 	link(rel='stylesheet', href='libs/select2/select2.css')
 	script(src='libs/jquery-ui-1.10.1.min.js')
@@ -48,9 +48,9 @@ block content
 
 	.container-narrow
 		.jumbotron
-			h1.page-title Analyse JavaScript on webpages!
+			h1.page-title Pick analyse tools
 			p.lead
-				| Type URL and any JavaScript code that is embedded in various parts inside the page will be extracted.
+				| Click on the input field below to search analyse tools, multiple selections possible..
 			br
 			div
 				select#toolSelect.select(multiple='multiple')
@@ -58,61 +58,8 @@ block content
 						option(value= tool.id)= tool.toolName
 			br
 			br
-			div
-				button.btn.btn-large.btn-primary#addAccordion Add Accordion
-			
 			.toolsAccordion#accordion
-				
-				h3
-					a(href='#') Question 1. My First Question ?
-				div.block
-					p
-						strong HTML5
-						| is a markup language for structuring and presenting content for the World Wide Web,
-						| and is a core technology of the Internet originally proposed by Opera Software. It is
-						| the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997)
-						| and, as of July 2012, is still under development.
-						| is a markup language for structuring and presenting content for the World Wide Web,
-						| and is a core technology of the Internet originally proposed by Opera Software. It is
-						| the fifth revision of the HTML standard (created in 1990 and standardized as HTML4 as of 1997)
-						| and, as of July 2012, is still under development.
-			
-				h3
-					a(href='#') CSS3
-				div.block
-					p
-						| Unlike CSS 2, which is a large single specification defining various features,
-						| CSS 3 is divided into several separate documents called "modules". Each module
-						| adds new capabilities or extends features defined in CSS 2, over preserving backward
-						| compatibility.
-						em
-							strong Source:
-							a(href='http://en.wikipedia.org/wiki/Css') WikiPedia.org
-
-				h3
-					a(href='#') Sass
-				div.block
-					p
-						strong Sass
-						| makes CSS fun again. Sass is an extension of CSS3, adding nested rules, variables,
-						| mixins, selector inheritance, and more. It's translated to well-formatted, standard CSS
-						| using the command line tool or a web-framework plugin.
-			
-				h3
-					a(href='#') Dreamweaver
-				div.block
-					p
-						strong Adobe Dreamweaver
-						| (formerly Macromedia Dreamweaver) is a proprietary web development
-						| application originally created by Macromedia. It is now developed by Adobe Systems,
-						| which acquired Macromedia in 2005.
-			
-				h3
-					a(href='#') jQuery
-				div.block
-					p
-						strong jQuery
-						| is a cross-browser JavaScript library designed to simplify the client-side
-						| scripting of HTML. It was released in January 2006 at BarCamp NYC by John Resig.
-						| Used by over 55% of the 10,000 most visited websites, jQuery is the most popular
-						| JavaScript library in use today.
+			br
+			div
+				button.btn.btn-large.btn-primary#startButton Start Analyse &nbsp; &nbsp;
+					i.icon-play.icon-white
