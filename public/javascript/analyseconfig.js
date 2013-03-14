@@ -1,7 +1,7 @@
 $(document).ready(function () {
 	var accordionList = [];
 	
-	$( ".toolsAccordion" ).accordion({
+	$('.toolsAccordion').accordion({
 		header: "> h3",
 		collapsible: false,
 		active: false,
@@ -15,13 +15,22 @@ $(document).ready(function () {
 		allowClear: true
 	});
 
-	$('#myClicker').click(function() {
-		var parent = $(this).closest('div');
-		var head = parent.prev('h3');
-		parent.add(head).fadeOut('slow',function(){$(this).remove();});
+	$('#startButton').click(function() {
+		var config = [];
+		for(var i = 0; i < accordionList.length; i++){
+			var id = accordionList[i];
+			var form = $('div.' + id).children('form').serialize();
+			config.push({ 
+				'toolID': id,
+				'config': form
+			});
+		};
+		$("<form action='/analyseresults' method='POST'>" + 
+			"<input type='hidden' name='config' value='" + JSON.stringify(config) + "'>" +
+			"</form>").submit();
 	});
 
-	$('#toolSelect').on("change", function(e) {
+	$('#toolSelect').on('change', function(e) {
 		// determine if the 'change' is a deletion
 		if(accordionList.length > e.val.length){
 			// determine which item has been deleted from selection
@@ -43,7 +52,7 @@ $(document).ready(function () {
 			accordionList.push(e.added.id);
 
 			// ajax call to get html of the selected plugin
-			$.post('/analyseconfig/plugin', { toolName: e.added.text }, function(json){
+			$.get('/analyseconfig/plugin', { toolName: e.added.text }).done(function(json){
 				var htmlDiv = "<h3 class="+ e.added.id +"><a href='#'>" + e.added.text + "</a></h3><div class="+ e.added.id +">" + json.htmlDiv + "</div>";
 				$('.toolsAccordion').append(htmlDiv);
 				$('.toolsAccordion').accordion('refresh');
