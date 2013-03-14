@@ -2,8 +2,12 @@ var JSLintPlugin = function() {
 	// method executed on creation, normaly none
 
 	// public members --------------------
-	this.viewJson = function(){
+	this.viewConstr = function(){
 		return _view;
+	};
+	
+	this.start = function(configJson, sites){
+		console.log('configJson: ' + JSON.stringify(configJson));
 	};
 
 	// private members ------------------

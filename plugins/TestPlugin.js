@@ -1,6 +1,15 @@
 var TestPlugin = function() {
 	// method executed on creation, normaly none
 
+	// public members --------------------
+	this.viewConstr = function(){
+		return _view;
+	};
+	
+	this.start = function(configJson, sites){
+		console.log('configJson: ' + JSON.stringify(configJson));
+	};
+	
 	// private members ------------------
 	var _view = [
 		{	"type": "text",
@@ -17,7 +26,7 @@ var TestPlugin = function() {
 			"description": "This is an other description for the user, please check all the needed boxes: "
 		},
 		{	"type": "radio",
-			"name": "userInput2",
+			"name": "userInput3",
 			"values": [ { "value": "scripts",
 						  "description": "The first radio for scripts" },
 						{ "value": "events",
@@ -26,7 +35,7 @@ var TestPlugin = function() {
 			"description": "Again a description, choose the right value: "
 		},
 		{	"type": "select",
-			"name": "userInput3",
+			"name": "userInput4",
 			"values": [ { "value": "default",
 						  "description": "default" },
 						{ "value": "true",
@@ -37,12 +46,6 @@ var TestPlugin = function() {
 			"description": " Again a description, choose the right value."
 		}
 	];
-
-
-	// public members --------------------
-	this.viewJson = function(){
-		return _view;
-	};
 };
 
 
