@@ -4,11 +4,8 @@ extends layout
 block content
 
 	link(rel='stylesheet', href='stylesheets/accordionStyle.css')
-	link(rel='stylesheet', href='libs/select2/select2.css')
 	script(src='libs/jquery-ui-1.10.1.min.js')
-	script(src='javascript/analyseconfig.js')
-	script(src='libs/select2/select2.js')
-		
+	script(src='javascript/analyseresults.js')		
 
 	//if lte IE 8
 		script(type='text/javascript', src='libs/mootools.js')
@@ -46,19 +43,20 @@ block content
 
 
 	.container-narrow
-		.jumbotron
-			h1.page-title Pick analyse tools
-			p.lead
-				| Click on the input field below to search analyse tools, multiple selections possible..
-			br
-			div
-				select#toolSelect.select(multiple='multiple')
-					- each tool in toolsList
-						option(value= tool.id)= tool.toolName
+		//- this is NOT an accordion, but it uses the CSS style of the accordion
+		.jumbotron#accordion
+			h1.page-title Analyse results
 			br
 			br
-			.toolsAccordion#accordion
 			br
-			div
-				button.btn.btn-large.btn-primary#startButton Start Analyse &nbsp; &nbsp;
-					i.icon-play.icon-white
+				
+			- each result in results
+				br
+				br
+				//- thz CSS style as for the accordion title
+				h3.ui-accordion-header
+					a()= result.toolName
+				div.block
+					p
+						= result.output
+					

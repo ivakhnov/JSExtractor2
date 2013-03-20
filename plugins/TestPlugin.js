@@ -2,12 +2,17 @@ var TestPlugin = function() {
 	// method executed on creation, normaly none
 
 	// public members --------------------
-	this.viewConstr = function(){
+	this.getInputForm = function(){
 		return _view;
 	};
 	
-	this.start = function(configJson, sites){
-		console.log('configJson: ' + JSON.stringify(configJson));
+	this.start = function(configJson, sites, callback){
+		//console.log('configJson: ' + JSON.stringify(configJson));
+		var result = {	
+						"type": "boolean",
+						"value": "true"
+					};
+		callback(result);
 	};
 	
 	// private members ------------------

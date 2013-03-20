@@ -2,12 +2,16 @@ var JSLintPlugin = function() {
 	// method executed on creation, normaly none
 
 	// public members --------------------
-	this.viewConstr = function(){
+	this.getInputForm = function(){
 		return _view;
 	};
 	
-	this.start = function(configJson, sites){
-		console.log('configJson: ' + JSON.stringify(configJson));
+	this.start = function(configJson, sites, callback){
+		var result = {	
+						"type": "boolean",
+						"value": "false"
+					};
+		callback(result);
 	};
 
 	// private members ------------------

@@ -2,7 +2,7 @@
  * Module dependencies
  */
 var db = require('../lib/dbManager');
-var db__ = require('../lib/DT_server_side');
+//var db__ = require('../lib/DT_server_side');
 
 
 /*
@@ -37,7 +37,7 @@ module.exports = function(app){
 		// };
 		console.log('TEEEEST');
 		//console.log(req.query);
-		db__.process(req.query);
+//		db__.process(req.query);
 	});
 
 };
