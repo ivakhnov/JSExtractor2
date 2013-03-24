@@ -1,4 +1,4 @@
-var View = function() {
+function View() {
 	
 	// private members ------------------
 	
@@ -77,4 +77,5 @@ var View = function() {
 /**
  * Export View
  */
-module.exports = new View();
+//module.exports = new View();
+var view = new View();

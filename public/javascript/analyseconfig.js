@@ -19,7 +19,8 @@ $(document).ready(function () {
 		var config = [];
 		for(var i = 0; i < accordionList.length; i++){
 			var id = accordionList[i];
-			var form = $('div.' + id).children('form').serialize();
+			var formString = $('div.' + id).children('form').serialize();
+			var form = view.formFilledToJson(formString);
 			config.push({ 
 				'toolID': id,
 				'config': form
@@ -53,7 +54,7 @@ $(document).ready(function () {
 
 			// ajax call to get html of the selected plugin
 			$.get('/analyseconfig/plugin', { toolName: e.added.text }).done(function(json){
-				var htmlDiv = "<h3 class="+ e.added.id +"><a href='#'>" + e.added.text + "</a></h3><div class="+ e.added.id +">" + json.htmlDiv + "</div>";
+				var htmlDiv = "<h3 class="+ e.added.id +"><a href='#'>" + e.added.text + "</a></h3><div class="+ e.added.id +">" + view.createForm(json.inputView) + "</div>";
 				$('.toolsAccordion').append(htmlDiv);
 				$('.toolsAccordion').accordion('refresh');
 				// make the new accordion element active

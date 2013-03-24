@@ -2,7 +2,7 @@ var TestPlugin = function() {
 	// method executed on creation, normaly none
 
 	// public members --------------------
-	this.getInputForm = function(){
+	this.getInputView = function(){
 		return _view;
 	};
 	

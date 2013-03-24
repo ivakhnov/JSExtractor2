@@ -14,8 +14,8 @@ module.exports = function(app){
 	});
 
 	app.get('/analyseconfig/plugin', function(req, res){
-		pluginManager.getHtml(req.query['toolName'], function(html){
-			res.json({ htmlDiv: html });
+		pluginManager.getInputView(req.query['toolName'], function(html){
+			res.json({ 'inputView': html });
 		});
 	});
 
