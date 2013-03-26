@@ -5,7 +5,7 @@ block content
 
 	link(rel='stylesheet', href='stylesheets/accordionStyle.css')
 	script(src='libs/jquery-ui-1.10.1.min.js')
-	script(src='javascript/analyseresults.js')		
+	script(src='javascript/view.js')
 
 	//if lte IE 8
 		script(type='text/javascript', src='libs/mootools.js')
@@ -38,6 +38,24 @@ block content
 		.select {
 		width: 300px;
 		}
+		
+		.falseBlock, .trueBlock {
+			position: relative;
+			height: 90px;
+			width: 10%;
+			font-size: 48px;
+			text-align: center;
+			display: table-cell;
+			vertical-align: middle;
+		}
+		.falseBlock {
+			color: #B40404;
+			background: #F99D9F;
+		}
+		.trueBlock {
+			color: #0B610B;
+			background: #B3E0B1;
+		}
 
 
 
@@ -51,12 +69,13 @@ block content
 			br
 				
 			- each result in results
-				br
-				br
-				//- thz CSS style as for the accordion title
+				//- CSS style as for the accordion title
 				h3.ui-accordion-header
-					a()= result.toolName
-				div.block
-					p
-						= result.output
-					
+					a
+						| #{result.toolName}
+				div.ui-accordion-content(id=result.toolName)
+					script
+						var analyseOutput = '!{JSON.stringify(result.output)}'
+						var htmlDiv = view.createOutput(analyseOutput)
+						var toolName = '#{result.toolName}'
+						$('div.ui-accordion-content#' + toolName).append(htmlDiv);

@@ -1,7 +1,5 @@
 function View() {
-	
-	// private members ------------------
-	
+
 	// public members --------------------
 
 	// method to convert data from filled from to json
@@ -64,13 +62,26 @@ function View() {
 	// method to create html for the output of the analyse
 	this.createOutput = function(resultJson) {
 		var resultHtml = "";
+		resultJson = JSON.parse(resultJson);
 		switch(resultJson.type) {
 			case 'boolean':
-				resultHtml = resultJson.value;
+				var val = resultJson.value;
+				var blockStyle = null;
+				if (val == 'true') { 
+					blockStyle = 'trueBlock'; 
+				} else { 
+					blockStyle = 'falseBlock'; 
+				}
+
+				resultHtml = "<div class='" + blockStyle + "'>" + val + "</div>";
 				break;
 		};
 		return resultHtml;
 	};
+
+
+	// private members ------------------
+
 };
 
 
