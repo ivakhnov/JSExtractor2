@@ -8,10 +8,38 @@ var TestPlugin = function() {
 	
 	this.start = function(configJson, sites, callback){
 		//console.log('configJson: ' + JSON.stringify(configJson));
-		var result = {	
-						"type": "boolean",
-						"value": "true"
-					};
+		var result = [	
+						{
+							"siteName": "www.google.be",
+							"siteOutput": [
+											{
+												"title": "Test property 1",
+												"type": "boolean",
+												"value": "false"
+											},
+											{
+												"title": "Test property 2",
+												"type": "boolean",
+												"value": "true"
+											}
+										]
+						},
+						{
+							"siteName": "www.facebook.com",
+							"siteOutput": [	
+											{
+												"title": "Test property 1",
+												"type": "boolean",
+												"value": "true"
+											},
+											{
+												"title": "Test property 2",
+												"type": "boolean",
+												"value": "false"
+											}
+										]
+						}
+					];
 		callback(result);
 	};
 	

@@ -7,10 +7,38 @@ var JSLintPlugin = function() {
 	};
 	
 	this.start = function(configJson, sites, callback){
-		var result = {	
-						"type": "boolean",
-						"value": "false"
-					};
+		var result = [	
+						{
+							"siteName": "www.google.be",
+							"siteOutput": [
+											{
+												"title": "Test property 1",
+												"type": "boolean",
+												"value": "true"
+											},
+											{
+												"title": "Test property 2",
+												"type": "boolean",
+												"value": "false"
+											}
+										]
+						},
+						{
+							"siteName": "www.facebook.com",
+							"siteOutput": [	
+											{
+												"title": "Test property 1",
+												"type": "boolean",
+												"value": "false"
+											},
+											{
+												"title": "Test property 2",
+												"type": "boolean",
+												"value": "true"
+											}
+										]
+						}
+					];
 		callback(result);
 	};
 

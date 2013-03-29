@@ -60,22 +60,25 @@ function View() {
 	};
 	
 	// method to create html for the output of the analyse
-	this.createOutput = function(resultJson) {
+	this.createOutput = function(siteOutputArray) {
 		var resultHtml = "";
-		resultJson = JSON.parse(resultJson);
-		switch(resultJson.type) {
-			case 'boolean':
-				var val = resultJson.value;
-				var blockStyle = null;
-				if (val == 'true') { 
-					blockStyle = 'trueBlock'; 
-				} else { 
-					blockStyle = 'falseBlock'; 
-				}
-
-				resultHtml = "<div class='" + blockStyle + "'>" + val + "</div>";
-				break;
-		};
+		for (var i = 0; i < siteOutputArray.length; i++) {
+			var outputJson = siteOutputArray[i];
+						
+			resultHtml += "<h3>" + outputJson.title + "</h3>"
+			switch(outputJson.type) {
+				case 'boolean':
+					var val = outputJson.value;
+					var blockStyle = null;
+					if (val == 'true') { 
+						blockStyle = 'trueBlock'; 
+					} else { 
+						blockStyle = 'falseBlock'; 
+					}
+					resultHtml += "<div class='" + blockStyle + "'>" + val + "</div>";
+					break;
+			};
+		}
 		return resultHtml;
 	};
 
