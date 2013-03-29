@@ -6,40 +6,24 @@ var JSLintPlugin = function() {
 		return _view;
 	};
 	
-	this.start = function(configJson, sites, callback){
-		var result = [	
-						{
-							"siteName": "www.google.be",
-							"siteOutput": [
-											{
-												"title": "Test property 1",
-												"type": "boolean",
-												"value": "true"
-											},
-											{
-												"title": "Test property 2",
-												"type": "boolean",
-												"value": "false"
-											}
-										]
-						},
-						{
-							"siteName": "www.facebook.com",
-							"siteOutput": [	
-											{
-												"title": "Test property 1",
-												"type": "boolean",
-												"value": "false"
-											},
-											{
-												"title": "Test property 2",
-												"type": "boolean",
-												"value": "true"
-											}
-										]
-						}
-					];
-		callback(result);
+	this.start = function(configJson, site, callback){
+		var err = null;
+		var result = {
+						"siteName": site,
+						"siteOutput": [
+										{
+											"title": "Test property 1",
+											"type": "boolean",
+											"value": "true"
+										},
+										{
+											"title": "Test property 2",
+											"type": "boolean",
+											"value": "false"
+										}
+									]
+					};
+		callback(err, result);
 	};
 
 	// private members ------------------

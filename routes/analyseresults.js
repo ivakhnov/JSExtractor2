@@ -15,7 +15,8 @@ module.exports = function(app){
 		function triggerTool(conf, callback){
 			console.log('config in POST - id: ' + conf.toolID);
 			console.log('config in POST - con: ' + conf.config);
-			pluginManager.startTool(conf.toolID, conf.config, 'sites', callback);
+			var sitesArray = ['site1', 'site2'];
+			pluginManager.startTool(conf.toolID, conf.config, sitesArray, callback);
 		};
 		
 		async.mapSeries(config, triggerTool, function(err, results){

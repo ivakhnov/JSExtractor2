@@ -6,41 +6,24 @@ var TestPlugin = function() {
 		return _view;
 	};
 	
-	this.start = function(configJson, sites, callback){
-		//console.log('configJson: ' + JSON.stringify(configJson));
-		var result = [	
-						{
-							"siteName": "www.google.be",
-							"siteOutput": [
-											{
-												"title": "Test property 1",
-												"type": "boolean",
-												"value": "false"
-											},
-											{
-												"title": "Test property 2",
-												"type": "boolean",
-												"value": "true"
-											}
-										]
-						},
-						{
-							"siteName": "www.facebook.com",
-							"siteOutput": [	
-											{
-												"title": "Test property 1",
-												"type": "boolean",
-												"value": "true"
-											},
-											{
-												"title": "Test property 2",
-												"type": "boolean",
-												"value": "false"
-											}
-										]
-						}
-					];
-		callback(result);
+	this.start = function(configJson, site, callback){
+		var err = null;
+		var result = {
+						"siteName": site,
+						"siteOutput": [
+										{
+											"title": "Test property 1",
+											"type": "boolean",
+											"value": "false"
+										},
+										{
+											"title": "Test property 2",
+											"type": "boolean",
+											"value": "true"
+										}
+									]
+					};
+		callback(err, result);
 	};
 	
 	// private members ------------------
