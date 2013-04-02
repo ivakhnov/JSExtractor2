@@ -2,14 +2,12 @@ extends layout
 
 
 block content
+
 	link(rel="stylesheet", href="libs/datatables/css/DataTables_bootstrap.css")
-	script(type='text/javascript', src='libs/datatables/js/jquery.dataTables.min.js', charset='utf-8')
-	script(type='text/javascript', src='libs/datatables/js/dataTables.bootstrap.js', charset='utf-8')
-	script(type='text/javascript', src='libs/datatables/js/comparisonTable.js', charset='utf-8')
-	script(type='text/javascript')
-		$(function(){
-			$("#comparisonTable").comparisonTable();
-		});
+	script(type='text/javascript', src='libs/datatables/js/jquery.dataTables.min.js')
+	script(type='text/javascript', src='libs/datatables/js/jquery.dataTables.bootstrap.js')
+	script(type='text/javascript', src='libs/datatables/js/jquery.dataTables.columnFilter.js')
+	script(type='text/javascript', src='javascript/index.js')
 
 	style(type='text/css')
 		
@@ -51,14 +49,15 @@ block content
 
 				a.accordion-toggle(data-toggle='collapse', data-target='#databaseTable')
 					| Or browse websites
-				#databaseTable.block-body.collapse
-					table#comparisonTable
+				#databaseTable.block-body
+					table#comparisonTable.table.table-striped.table-bordered(cellpadding='10', cellspacing='10', border='10')
 						thead
 							tr
 								th Website
 								th Libraries
-								th Features
-								th Scripts
-								th Events
+							tr
+								th Website
+								th Libraries
+						tbody
 				button.btn.btn-large.btn-warning(type='submit') Pick Analyse Tools &nbsp; &nbsp;
 					i.icon-play.icon-white
