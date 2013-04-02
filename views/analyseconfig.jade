@@ -53,12 +53,12 @@ block content
 				| Click on the input field below to search analyse tools, multiple selections possible..
 			br
 			div
-				select#toolSelect.select(multiple='multiple')
-					- each tool in toolsList
-						option(value= tool.id)= tool.toolName
+				select#pluginSelect.select(multiple='multiple')
+					- each plugin in pluginsList
+						option(value= plugin.id)= plugin.pluginName
 			br
 			br
-			.toolsAccordion#accordion
+			.pluginsAccordion#accordion
 			br
 			div
 				button.btn.btn-large.btn-primary#startButton Start Analyse &nbsp; &nbsp;

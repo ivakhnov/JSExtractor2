@@ -1,7 +1,7 @@
 $(document).ready(function () {
 	var accordionList = [];
 	
-	$('.toolsAccordion').accordion({
+	$('.pluginsAccordion').accordion({
 		header: "> h3",
 		collapsible: false,
 		active: false,
@@ -10,8 +10,8 @@ $(document).ready(function () {
 		heightStyle: "content"
 	});
 
-	$('#toolSelect').select2({
-		placeholder: 'Select tools',
+	$('#pluginSelect').select2({
+		placeholder: 'Select plugins',
 		allowClear: true
 	});
 
@@ -22,7 +22,7 @@ $(document).ready(function () {
 			var formString = $('div.' + id).children('form').serialize();
 			var form = view.formFilledToJson(formString);
 			config.push({ 
-				'toolID': id,
+				'pluginID': id,
 				'config': form
 			});
 		};
@@ -31,7 +31,7 @@ $(document).ready(function () {
 			"</form>").submit();
 	});
 
-	$('#toolSelect').on('change', function(e) {
+	$('#pluginSelect').on('change', function(e) {
 		// determine if the 'change' is a deletion
 		if(accordionList.length > e.val.length){
 			// determine which item has been deleted from selection
@@ -53,13 +53,13 @@ $(document).ready(function () {
 			accordionList.push(e.added.id);
 
 			// ajax call to get html of the selected plugin
-			$.get('/analyseconfig/plugin', { toolName: e.added.text }).done(function(json){
+			$.get('/analyseconfig/plugin', { pluginName: e.added.text }).done(function(json){
 				var htmlDiv = "<h3 class="+ e.added.id +"><a href='#'>" + e.added.text + "</a></h3><div class="+ e.added.id +">" + view.createForm(json.inputView) + "</div>";
-				$('.toolsAccordion').append(htmlDiv);
-				$('.toolsAccordion').accordion('refresh');
+				$('.pluginsAccordion').append(htmlDiv);
+				$('.pluginsAccordion').accordion('refresh');
 				// make the new accordion element active
-				var index = $( ".toolsAccordion h3" ).length - 1;
-				$('.toolsAccordion').accordion( {active:index} );
+				var index = $( ".pluginsAccordion h3" ).length - 1;
+				$('.pluginsAccordion').accordion( {active:index} );
 			});
 
 		}

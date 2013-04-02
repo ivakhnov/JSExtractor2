@@ -10,10 +10,10 @@ $(document).ready(function () {
 	$.fn.processOutput = function () {
 		for (var counter = 0; counter < this.length; counter++) {
 			var $parent = this[counter];
-			var toolName = $parent.id;
+			var pluginName = $parent.id;
 			// get the analyse results for a particular plugin
 			var result = $.grep(results, function(e) { 
-				return e.toolName == toolName; 
+				return e.pluginName == pluginName; 
 			});
 			// the result is an array, so take first element
 			var result = result[0];
