@@ -3,11 +3,8 @@ extends layout
 
 block content
 
-	link(rel="stylesheet", href="libs/datatables/css/DataTables_bootstrap.css")
-	script(type='text/javascript', src='libs/datatables/js/jquery.dataTables.min.js')
-	script(type='text/javascript', src='libs/datatables/js/jquery.dataTables.bootstrap.js')
-	script(type='text/javascript', src='libs/datatables/js/jquery.dataTables.columnFilter.js')
 	script(type='text/javascript', src='javascript/index.js')
+	script(type='text/javascript', src='libs/jquery.validate.min.js')
 
 	style(type='text/css')
 		
@@ -34,6 +31,11 @@ block content
 		padding: 14px 24px;
 		}
 
+		/* style for validation form */
+		#inputSites-form .fieldgroup label.error {
+				color: #FB3A3A;
+		}
+
 
 
 	.container-narrow
@@ -42,22 +44,30 @@ block content
 			p.lead
 				| Type URL and any JavaScript code that is embedded in various parts inside the page will be extracted.
 			br
-			form(name='input', action='/extract', method='post')
-				input.input-xxlarge(name='url', type='text', value='webmail.ulb.ac.be') -# placeholder="bla bla bla"
-				
-				br
+			//- form(name='input', action='/analyseconfig', method='post')
+			//- 	input.input-xxlarge(name='url', type='text', value='webmail.ulb.ac.be') -# placeholder="bla bla bla"
+			//- 	br
+			//- 	button.btn.btn-large.btn-warning(type='submit') Pick Analyse Tools &nbsp; &nbsp;
+			//- 		i.icon-play.icon-white
 
-				a.accordion-toggle(data-toggle='collapse', data-target='#databaseTable')
-					| Or browse websites
-				#databaseTable.block-body
-					table#comparisonTable.table.table-striped.table-bordered(cellpadding='10', cellspacing='10', border='10')
-						thead
-							tr
-								th Website
-								th Libraries
-							tr
-								th Website
-								th Libraries
-						tbody
-				button.btn.btn-large.btn-warning(type='submit') Pick Analyse Tools &nbsp; &nbsp;
-					i.icon-play.icon-white
+
+
+
+			form#inputSites-form(action='/analyseconfig', method='post', novalidate="novalidate")
+				#form-content
+					fieldset
+						.fieldgroup
+							label(for='urls')
+							input.input-xxlarge(type='text', name='urls', value='webmail.ulb.ac.be')
+						//- .fieldgroup
+						//- 	label(for='lastname') Last Name
+						//- 	input(type='text', name='lastname')
+						//- .fieldgroup
+						//- 	label(for='email') Email
+						//- 	input(type='text', name='email')
+						//- .fieldgroup
+						//- 	label(for='password') Password
+						//- 	input(type='password', name='password')
+						.fieldgroup
+							button.btn.btn-large.btn-warning(type='submit') Pick Analyse Tools &nbsp; &nbsp;
+								i.icon-play.icon-white

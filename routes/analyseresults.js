@@ -1,8 +1,8 @@
 /**
  * Module dependencies
  */
-var pluginManager = require('../lib/pluginManager');
 var async = require('async');
+var pluginManager = require('../lib/pluginManager');
 
 /*
  * Setup the routes and request handlers.
@@ -11,12 +11,13 @@ module.exports = function(app){
 	app.post('/analyseresults', function(req, res){
 		var config = JSON.parse(req.body.config);
 		console.log('aantal tools actief in analyse: ' + config.length);
+
+		var userUrls = res.locals.userUrls;
 		
 		function triggerTool(conf, callback){
 			console.log('config in POST - id: ' + conf.toolID);
 			console.log('config in POST - con: ' + conf.config);
-			var sitesArray = ['site1', 'site2'];
-			pluginManager.startTool(conf.toolID, conf.config, sitesArray, callback);
+			pluginManager.startTool(conf.toolID, conf.config, userUrls, callback);
 		};
 		
 		async.mapSeries(config, triggerTool, function(err, results){

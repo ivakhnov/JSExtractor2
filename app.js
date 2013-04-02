@@ -28,9 +28,7 @@ app.configure(function(){
   // The object ‘session’ will now be available to every view which will right now contain user information.
   // In fact this is used to store some variables which will be displayed on every single page.
   app.use(function(req, res, next){
-    res.locals.userUrl = req.session.userUrl;
-    res.locals.scriptsCount = req.session.scriptsCount;
-    res.locals.eventsCount = req.session.eventsCount;
+    res.locals.userUrls = req.session.userUrls;
     next();
   });
   app.use(app.router);
