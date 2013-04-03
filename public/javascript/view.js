@@ -16,10 +16,10 @@ function View() {
 	};
 
 	// method executed on creation, normaly none
-	this.createForm = function(viewJson) {
+	this.createForm = function(viewJsonsArray) {
 		resultHtml = "<form>";
-		for (var i = 0; i < viewJson.length; i++) {
-			var view = viewJson[i];
+		for (var i = 0; i < viewJsonsArray.length; i++) {
+			var view = viewJsonsArray[i];
 			var result = "";
 
 			switch(view.type) {
@@ -79,6 +79,21 @@ function View() {
 					break;
 			};
 		}
+		return resultHtml;
+	};
+
+	// creating table to search on plugin output
+	this.createComparisonTable = function(outputFormatArray) {
+		resultHtml = '<table class="table table-striped table-bordered comparisonTable">';
+		resultHtml += '<thead><tr>';
+
+		// the first column is always a list of sites, so add this first
+		resultHtml += '<th>Sites</th>';
+		for (var i = 0; i < outputFormatArray.length; i++) {
+			var column = outputFormatArray[i];
+			resultHtml += '<th>' + column.title + '</th>';
+		};
+		resultHtml += "</tr></thead><tbody>";
 		return resultHtml;
 	};
 

@@ -3,8 +3,12 @@ var JSLintPlugin = function() {
 
 	// public members --------------------
 	this.getInputView = function(){
-		return _view;
+		return _inputView;
 	};
+
+	this.getOutputFormat = function(){
+		return _outputFormat;
+	}
 	
 	this.start = function(configJson, site, callback){
 		var err = null;
@@ -27,7 +31,18 @@ var JSLintPlugin = function() {
 	};
 
 	// private members ------------------
-	var _view = [
+	var _outputFormat = [
+		{
+			"title": "Test property 1",
+			"type": "boolean"
+		},
+		{
+			"title": "Test property 2",
+			"type": "boolean"
+		}
+	];
+
+	var _inputView = [
 		{	"type": "text",
 			"name": "indent",
 			"description": "The number of spaces used for indentation (default is 4)."

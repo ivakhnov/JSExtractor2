@@ -1,35 +1,64 @@
 extends layout
 
-block content
-     
-  link(rel="stylesheet", href="/datatables/css/DataTables_bootstrap.css")
-  script(type='text/javascript', src='/datatables/js/jquery.dataTables.min.js', charset='utf-8')
-  script(type='text/javascript', src='/datatables/js/dataTables.bootstrap.js', charset='utf-8')
-  script(type='text/javascript', src='/datatables/js/comparisonTable.js', charset='utf-8')
-  script(type='text/javascript')
-    $(function(){
-      $("#comparisonTable").comparisonTable();
-    });
-  style(type='text/css')
-    input { width: 85%}
-          
-  .container-fluid
-    .row-fluid
 
-      // Variable currentMenu denotes the active nav item
-      - currentMenu= ''
-      include sidebar
-          
-      .span9            
-        h1.page-title Compare with other sites
-        hr
-        .row-fluid
-        
-          table#comparisonTable
-            thead
-              tr
-                th Website
-                th Libraries
-                th Features
-                th Scripts
-                th Events
+block content
+
+	link(rel='stylesheet', href='stylesheets/viewStyle.css')
+	link(rel='stylesheet', href='libs/select2/select2.css')
+	link(rel="stylesheet", href="libs/datatables/css/DataTables_bootstrap.css")
+	script(src='libs/jquery-ui-1.10.1.min.js')
+	script(src='javascript/view.js')
+	script(src='javascript/compare.js')
+	script(src='libs/select2/select2.js')
+	script(type='text/javascript', src='libs/datatables/js/jquery.dataTables.min.js')
+	script(type='text/javascript', src='libs/datatables/js/jquery.dataTables.bootstrap.js')
+		
+
+	//if lte IE 8
+		script(type='text/javascript', src='libs/mootools.js')
+		script(type='text/javascript', src='libs/selectivizr.js')
+
+
+	style(type='text/css')
+		
+		/* Custom container */
+		.container-narrow {
+		margin: 0 auto;
+		max-width: 900px;
+		}
+		.container-narrow > hr {
+		margin: 30px 0;
+		}
+		/* Main message and sign up button */
+		.jumbotron {
+		margin: 60px 0;
+		text-align: center;
+		}
+		.jumbotron h1 {
+		font-size: 72px;
+		line-height: 1;
+		}
+		.jumbotron .btn {
+		font-size: 21px;
+		padding: 14px 24px;
+		}
+		.select {
+		width: 300px;
+		}
+
+
+
+
+	.container-narrow
+		.jumbotron
+			h1.page-title Search analyses and compare websites.
+			p.lead
+				| Click on the input field below to select analyse tools, multiple selections possible..
+			br
+			div
+				select#pluginSelect.select(multiple='multiple')
+					- each plugin in pluginsList
+						option(value= plugin.id)= plugin.pluginName
+			br
+			br
+			.pluginsList#accordion

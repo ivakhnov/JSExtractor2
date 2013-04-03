@@ -2,6 +2,7 @@
  * Module dependencies
  */
 var async = require('async');
+var db = require('../lib/dbManager');
 var pluginManager = require('../lib/pluginManager');
 
 /*
@@ -22,7 +23,16 @@ module.exports = function(app){
 					callback(err);
 				} else {
 					// add results to database
-					callback(err, analyseResults);
+					var pluginName = analyseResults.pluginName;
+					var output = analyseResults.output;
+
+					function saveSiteAnalyseResults(siteResults, callback){
+						db.saveAnalyse(siteResults.siteName, pluginName, siteResults.siteOutput, callback);
+					};
+
+					async.map(output, saveSiteAnalyseResults, function(err, results){
+						callback(err, analyseResults);
+					});
 				}
 			});
 		};
