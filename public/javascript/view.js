@@ -62,6 +62,10 @@ function View() {
 	// method to create html for the output of the analyse
 	this.createOutput = function(siteOutputArray) {
 		var resultHtml = "";
+		// some things (e.g. charts) have to be initialised after they are added to the DOM
+		// we generate html and give an array with json objects which contain info (id, type, ..)
+		// about items that have to be initialised on the page by jQuery after being added to the DOM
+		var initItems = [];
 		for (var i = 0; i < siteOutputArray.length; i++) {
 			var outputJson = siteOutputArray[i];
 						
@@ -77,9 +81,22 @@ function View() {
 					}
 					resultHtml += "<div class='" + blockStyle + "'>" + val + "</div>";
 					break;
+				case 'barchart':	
+					var data = outputJson.value;
+					initItems.push({
+						'id': outputJson.type,
+						'type': outputJson.type,
+						'data': data
+					});
+
+					resultHtml += "<canvas id='" + outputJson.type + "' height='300' width='850'></canvas>";
+					break;
 			};
 		}
-		return resultHtml;
+		return {
+			'initItems': initItems,
+			'resultHtml': resultHtml
+		};
 	};
 
 	// creating table to search on plugin output
