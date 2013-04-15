@@ -12,21 +12,18 @@ var JSLintPlugin = function() {
 	
 	this.start = function(configJson, site, callback){
 		var err = null;
-		var result = {
-						"siteName": site,
-						"siteOutput": [
-										{
-											"title": "Test property 1",
-											"type": "boolean",
-											"value": "true"
-										},
-										{
-											"title": "Test property 2",
-											"type": "boolean",
-											"value": "false"
-										}
-									]
-					};
+		var result = [
+						{
+							"title": "Test property 1",
+							"type": "boolean",
+							"value": "true"
+						},
+						{
+							"title": "Test property 2",
+							"type": "boolean",
+							"value": "false"
+						}
+					];
 		callback(err, result);
 	};
 

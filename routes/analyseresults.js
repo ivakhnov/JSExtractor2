@@ -11,35 +11,53 @@ var pluginManager = require('../lib/pluginManager');
 module.exports = function(app){
 	app.post('/analyseresults', function(req, res){
 		var config = JSON.parse(req.body.config);
-		console.log('aantal plugins actief in analyse: ' + config.length);
+		console.log('analyse conf: ' + config);
 
 		var userUrls = res.locals.userUrls;
-		
-		function triggerPlugin(conf, callback){
-			console.log('config in POST - id: ' + conf.pluginID);
-			console.log('config in POST - con: ' + conf.config);
-			pluginManager.startPlugin(conf.pluginID, conf.config, userUrls, function(err, analyseResults) {
-				if(err != null) {
-					callback(err);
-				} else {
-					// add results to database
-					var pluginName = analyseResults.pluginName;
-					var output = analyseResults.output;
 
-					function saveSiteAnalyseResults(siteResults, callback){
-						db.saveAnalyse(siteResults.siteName, pluginName, siteResults.siteOutput, callback);
-					};
+		var usedPlugins = config.map (function(pluginConf){
+			var pluginID = pluginConf.pluginID;
+			return {
+				'pluginName': pluginManager.getPluginName(pluginID),
+				'dataPerspectives': pluginManager.getDataPerspectives(pluginID)
+			};
+		});
 
-					async.map(output, saveSiteAnalyseResults, function(err, results){
-						callback(err, analyseResults);
-					});
-				}
+		function analyseSite(url, callback){
+
+			function triggerPlugin(conf, callback){
+				var pluginID = conf.pluginID;
+				var pluginName = pluginManager.getPluginName(pluginID);
+				var analyseConfig = conf.config;
+
+				pluginManager.startPlugin(pluginID, analyseConfig, url, function(err, analyseResults) {
+					if(err != null) {
+						callback(err);
+					} else {
+						// add results to database
+						db.saveAnalyse(url, pluginName, analyseResults, function(err, saveResp){
+							callback(err, {
+								'pluginName':		pluginName,
+								'analyseResults':	analyseResults
+							});
+						});
+					}
+				});
+			};
+
+			async.map(config, triggerPlugin, function(err, results){
+				callback(err, {
+					'siteName': url,
+					'siteOutput': results
+				});
 			});
 		};
-		
-		async.mapSeries(config, triggerPlugin, function(err, results){
-			console.log('result of map: ' + JSON.stringify(results));
-			res.render('analyseresults', { 'results': results });
+
+		async.map(userUrls, analyseSite, function(err, results){
+			res.render('analyseresults', { 
+				'usedPlugins': usedPlugins, 
+				'analyseResults': results 
+			});
 		});
 	});
 

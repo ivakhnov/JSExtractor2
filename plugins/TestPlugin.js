@@ -12,40 +12,37 @@ var TestPlugin = function() {
 	
 	this.start = function(configJson, site, callback){
 		var err = null;
-		var result = {
-						"siteName": site,
-						"siteOutput": [
-										{
-											"title": "Test property 1",
-											"type": "boolean",
-											"value": "false"
-										},
-										{
-											"title": "Test property 2",
-											"type": "barchart",
-											"value": {
-												"labels" : ["January","February","March","April","May","June","July"],
-												"datasets" : [
-													{
-														"fillColor" : "rgba(120,120,120,0.5)",
-														"strokeColor" : "rgba(120,120,120,1)",
-														"data" : [65,59,90,81,56,55,40]
-													},
-													{
-														"fillColor" : "rgba(151,187,205,0.5)",
-														"strokeColor" : "rgba(151,187,205,1)",
-														"data" : [28,48,40,19,96,27,100]
-													}
-												]
-											}
-										},
-										{
-											"title": "Test property 3",
-											"type": "boolean",
-											"value": "true"
-										}
-									]
-					};
+		var result = [
+						{
+							"title": "Test property 1",
+							"type": "boolean",
+							"value": "false"
+						},
+						{
+							"title": "Test property 2",
+							"type": "barchart",
+							"value": {
+								"labels" : ["January","February","March","April","May","June","July"],
+								"datasets" : [
+									{
+										"fillColor" : "rgba(120,120,120,0.5)",
+										"strokeColor" : "rgba(120,120,120,1)",
+										"data" : [65,59,90,81,56,55,40]
+									},
+									{
+										"fillColor" : "rgba(151,187,205,0.5)",
+										"strokeColor" : "rgba(151,187,205,1)",
+										"data" : [28,48,40,19,96,27,100]
+									}
+								]
+							}
+						},
+						{
+							"title": "Test property 3",
+							"type": "boolean",
+							"value": "true"
+						}
+					];
 		callback(err, result);
 	};
 	

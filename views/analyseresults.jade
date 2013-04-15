@@ -4,12 +4,17 @@ extends layout
 block content
 
 	link(rel='stylesheet', href='stylesheets/viewStyle.css')
+	link(rel="stylesheet", href="libs/datatables/css/DataTables_bootstrap.css")
 	script(src='libs/jquery-ui-1.10.1.min.js')
 	script(src='libs/Chartjs/Chart.min.js')
+	script(type='text/javascript', src='libs/datatables/js/jquery.dataTables.min.js')
+	script(type='text/javascript', src='libs/datatables/js/jquery.dataTables.bootstrap.js')
+	script(type='text/javascript', src='libs/datatables/js/jquery.dataTables.columnFilter.js')
 	script(src='javascript/view.js')
 	//- passing jade variable to the scripts (=> variable is global on this page)
 	script(type='text/javascript')
-		var RESULTS = '!{JSON.stringify(results)}';
+		var USED_PLUGINS = '!{JSON.stringify(usedPlugins)}';
+		var ANALYSE_RESULTS = '!{JSON.stringify(analyseResults)}';
 	script(src='javascript/analyseresults.js')
 
 	//if lte IE 8
@@ -70,10 +75,6 @@ block content
 			br
 			br
 			br
-			//- this is NOT an accordion, but it uses the CSS style of the accordion
-			#accordion
-				- each result in results
-					//- CSS style as for the accordion title
-					h3.ui-acc-header
-						a #{result.pluginName}
-					div.ui-acc-content(id=result.pluginName)
+				
+			#databaseTable.block-body
+				table#comparisonTable.table.table-striped.table-bordered(cellpadding='10', cellspacing='10', border='10')
