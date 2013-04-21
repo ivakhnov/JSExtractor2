@@ -250,7 +250,6 @@ footer hr {
   font-size: 1em;
   line-height: 3em;
   text-transform: none;
-  padding: 0em .75em;
   margin-bottom: 0px;
   cursor: pointer;
   /*border: 1px solid #ccc;*/
@@ -317,7 +316,6 @@ footer hr {
   background-clip: padding-box;
 }
 .sidebar-nav .nav-list.collapse {
-  margin-bottom: 1em;
 }
 .sidebar-nav .nav-list  > li > a:hover {
   background: #262626;

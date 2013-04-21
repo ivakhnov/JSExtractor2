@@ -1,21 +1,8 @@
 $(document).ready(function () {
 	var accordionList = [];
 	
-	$('.pluginsAccordion').accordion({
-		header: "> h3",
-		collapsible: false,
-		active: false,
-		autoHeight: false,
-		autoActivate: false,
-		heightStyle: "content"
-	});
+	function startButton() {
 
-	$('#pluginSelect').select2({
-		placeholder: 'Select plugins',
-		allowClear: true
-	});
-
-	$('#startButton').click(function() {
 		var config = [];
 		for(var i = 0; i < accordionList.length; i++){
 			var id = accordionList[i];
@@ -26,9 +13,25 @@ $(document).ready(function () {
 				'config': form
 			});
 		};
-		$("<form action='/analyseresults' method='POST'>" + 
-			"<input type='hidden' name='config' value='" + JSON.stringify(config) + "'>" +
-			"</form>").submit();
+		var resultForm = $("<form action='/analyseresults' method='POST'></form>");
+		
+		// urls
+		var urlsInput = $('#form-content input:text.urls');
+		urlsInput.appendTo(resultForm);
+		
+		// selected plugins
+		var pluginsInput = $('<input>').attr({
+			type: 'hidden',
+			name: 'config',
+			value: JSON.stringify(config)});
+		pluginsInput.appendTo(resultForm);
+		
+		resultForm.submit();
+	};
+
+	$('#pluginSelect').select2({
+		placeholder: 'Select plugins',
+		allowClear: true
 	});
 
 	$('#pluginSelect').on('change', function(e) {
@@ -64,5 +67,29 @@ $(document).ready(function () {
 
 		}
 
+	});
+
+	//form validation rules
+	$("#analyseConfig-form").validate({
+		rules: {
+			urls: "required",
+			plugins: "required"
+		},
+		messages: {
+			urls: "Please enter one or more urls (comma separated).",
+			plugins: "Pick at least one tool for the analysis."
+		},
+		submitHandler: function(pageForm) {
+			startButton();
+		}
+	});
+
+	$('.pluginsAccordion').accordion({
+		header: "> h3",
+		collapsible: false,
+		active: false,
+		autoHeight: false,
+		autoActivate: false,
+		heightStyle: "content"
 	});
 });

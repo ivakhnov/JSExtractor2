@@ -8,6 +8,7 @@ block content
 	script(src='libs/jquery-ui-1.10.1.min.js')
 	script(src='javascript/view.js')
 	script(src='javascript/analyseconfig.js')
+	script(src='libs/jquery.validate.min.js')
 	script(src='libs/select2/select2.js')
 		
 
@@ -43,23 +44,42 @@ block content
 		width: 300px;
 		}
 
+		/* style for validation form */
+		#analyseConfig-form .fieldgroup label.error {
+				color: #FB3A3A;
+		}
+
 
 
 
 	.container-narrow
 		.jumbotron
-			h1.page-title Pick analyse tools
+			h1.page-title Configure your analysis
+			br
 			p.lead
-				| Click on the input field below to search analyse tools, multiple selections possible..
-			br
-			div
-				select#pluginSelect.select(multiple='multiple')
-					- each plugin in pluginsList
-						option(value= plugin.id)= plugin.pluginName
-			br
-			br
+				| Type specific URL(s) of the websites you would like to analyse, 
+				| or an * (asterix) to browse collection of all previously analysed websites.
+			
+
+			form#analyseConfig-form
+				#form-content
+					fieldset
+						.fieldgroup
+							input.input-xxlarge.urls(type='text', name='urls', value='webmail.ulb.ac.be')
+							br
+						.fieldgroup
+							br
+							| Click on the input field below to pick analyse tools, multiple selections possible..
+							br
+							br
+							select#pluginSelect.select(multiple='multiple', name='plugins')
+								- each plugin in pluginsList
+									option(value= plugin.id)= plugin.pluginName
+							br
+							br
+						.fieldgroup
+							br
+							button.btn.btn-large.btn-primary Start Analysis &nbsp; &nbsp;
+								i.icon-play.icon-white
+
 			.pluginsAccordion#accordion
-			br
-			div
-				button.btn.btn-large.btn-primary#startButton Start Analyse &nbsp; &nbsp;
-					i.icon-play.icon-white

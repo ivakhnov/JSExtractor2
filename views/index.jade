@@ -1,67 +1,13 @@
 extends layout
 
-
 block content
+  
+  .container-fluid
+    .row-fluid
 
-	script(type='text/javascript', src='javascript/index.js')
-	script(type='text/javascript', src='libs/jquery.validate.min.js')
-
-	style(type='text/css')
-		
-		/* Custom container */
-		.container-narrow {
-		margin: 0 auto;
-		max-width: 900px;
-		}
-		.container-narrow > hr {
-		margin: 30px 0;
-		}
-		/* Main message and sign up button */
-		.jumbotron {
-		margin: 60px 0;
-		text-align: center;
-		}
-		.jumbotron h1 {
-		font-size: 72px;
-		line-height: 1;
-		}
-		.jumbotron .btn {
-		margin: 90px 0;
-		font-size: 21px;
-		padding: 14px 24px;
-		}
-
-		/* style for validation form */
-		#inputSites-form .fieldgroup label.error {
-				color: #FB3A3A;
-		}
-
-
-
-	.container-narrow
-		.jumbotron
-			h1.page-title Analyse JavaScript on webpages!
-			p.lead
-				| Type URL and any JavaScript code that is embedded in various parts inside the page will be extracted.
-			br
-			//- form(name='input', action='/analyseconfig', method='post')
-			//- 	input.input-xxlarge(name='url', type='text', value='webmail.ulb.ac.be') -# placeholder="bla bla bla"
-			//- 	br
-			//- 	button.btn.btn-large.btn-warning(type='submit') Pick Analyse Tools &nbsp; &nbsp;
-			//- 		i.icon-play.icon-white
-
-
-
-
-			form#inputSites-form(action='/analyseconfig', method='post', novalidate="novalidate")
-				#form-content
-					fieldset
-						.fieldgroup
-							label(for='urls')
-							input.input-xxlarge(type='text', name='urls', value='webmail.ulb.ac.be')
-						.fieldgroup
-							a(href='/compare')
-								| Or search analyses and compare websites.
-						.fieldgroup
-							button.btn.btn-large.btn-warning(type='submit') Pick Analyse Tools &nbsp; &nbsp;
-								i.icon-play.icon-white
+      // Variable currentMenu denotes the active nav item
+      include sidebar
+      - currentMenu= ''
+          
+      .span9            
+        h1.page-title Homepage

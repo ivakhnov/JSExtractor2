@@ -4,36 +4,28 @@
     // Variable currentMenu denotes the active nav item
     - var nav = {}; nav[currentMenu] = 'active'
     
-    .nav-header(data-toggle='collapse', data-target='#stats-menu')
-      i.icon-tasks.icon-white
-      | Stats   
-    ul#stats-menu.nav.nav-list.collapse.in
-      li(class='#{nav.statsAll}')
-        a(href='#') All
-      li(class='#{nav.statsJSLint}')
-        a(href='#') JSLint
-      li(class='#{nav.statsJSHint}')
-        a(href='#') JSHint
-      li(class='#{nav.statsWALA}')
-        a(href='#') WALA
-      li(class='#{nav.statsDoctorJS}')
-        a(href='#') DoctorJS
-      li(class='#{nav.statsJSAnalyse}')
-        a(href='#') JSAnalyse
-        
-    a(href='/compare').nav-header(data-toggle='collapse', data-target='#compare-menu')
-      | Compare &nbsp;
-      i.icon-resize-small.icon-white
-    p
-    a(href='/scripts').nav-header(data-toggle='collapse', data-target='#scripts-menu')
-      | Scripts &nbsp;
-      i.icon-chevron-left.icon-white
-      | /  &nbsp;
-      i.icon-chevron-right.icon-white
-      span.label.label-info #{scriptsCount}
-        
-    a(href='/events').nav-header(data-toggle='collapse', data-target='#events-menu')
-      | Events &nbsp;
+    a(href='/analyseconfig').nav-header
       i.icon-screenshot.icon-white
-      span.label.label-info #{eventsCount}
+      | Analysis
+    br
+    br
+    .nav-header(data-toggle='collapse', data-target='#plugins-menu')
+      i.icon-th-list.icon-white
+      | Plugins
+      span.label.label-info #{pluginsList.length}
+    ul#plugins-menu.nav.nav-list.collapse.in
+      - each plugin in pluginsList
+        - var pl = nav['plugin' + plugin.id]
+        li(class=pl)
+          a(href='/plugin/info/#{plugin.pluginName}') #{plugin.pluginName}
+        
+    .nav-header(data-toggle='collapse', data-target='#plconfigs-menu')
+      i.icon-list-alt.icon-white
+      | Configurations
+      //- span.label.label-info #{eventsCount}
+    ul#plconfigs-menu.nav.nav-list.collapse.in
+      - each plugin in pluginsList
+        - var pl = nav['plconfig' + plugin.id]
+        li(class=pl)
+          a(href='/plugin/configs/#{plugin.pluginName}') #{plugin.pluginName}
     

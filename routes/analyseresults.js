@@ -3,6 +3,8 @@
  */
 var async = require('async');
 var db = require('../lib/dbManager');
+var urlLib = require('../lib/urlLib');
+var extractor = require('../lib/extractor');
 var pluginManager = require('../lib/pluginManager');
 
 /*
@@ -10,10 +12,16 @@ var pluginManager = require('../lib/pluginManager');
  */
 module.exports = function(app){
 	app.post('/analyseresults', function(req, res){
+		// take the string with the urls and selected plugins (config)
+		var urlsString = req.body.urls;
 		var config = JSON.parse(req.body.config);
-		console.log('analyse conf: ' + config);
 
-		var userUrls = res.locals.userUrls;
+		// Separate the urls in the string and create array of strings 
+		// delimiters: comma, semicolon and whitespace
+		var urlsArray = urlsString.split(/\s*[,;]\s*|\s{1,}|[\r\n]+/);
+
+		
+		console.log('analyse conf: ' + config);
 
 		var usedPlugins = config.map (function(pluginConf){
 			var pluginID = pluginConf.pluginID;
@@ -53,7 +61,22 @@ module.exports = function(app){
 			});
 		};
 
-		async.map(userUrls, analyseSite, function(err, results){
+		// Go through urlsArray and extract JS from pages. When done, get the names of all
+		// installed plugins and render the page, or return to main page if any of the urls 
+		// is wrong or causes a problem.
+		async.map(urlsArray, parsePage, function(err, results){
+			if(err) {
+				console.log(err);
+				console.log('Catched an error in extractor.js');
+				//res.render('error');
+			} else {
+				pluginManager.getNamesJson(function(json){
+					res.render('analyseconfig', json);
+				});
+			}
+		});
+
+		async.map(urlsArray, analyseSite, function(err, results){
 			res.render('analyseresults', { 
 				'usedPlugins': usedPlugins, 
 				'analyseResults': results 
@@ -68,3 +91,26 @@ module.exports = function(app){
  * Controller functions.
  */
 
+// extract different JS code from page
+function parsePage(url, callback){
+	// It is possible that the user gives a url without 'http://'
+	urlHttp = urlLib.addHttp(url);
+	
+	extractor.parsePage(urlHttp, function(err, results) {
+		if(err != null) {
+			callback(err);
+		} else {
+			var scripts = results.scripts;
+			var events = results.events;
+
+			console.log("Script tags: " + scripts.length);
+			console.log("DOM Events: " + events.length);
+			
+			//db.resetDb();	
+			db.savePage(url, scripts, events, function(err, reply) {
+				console.log('saved in database');
+				callback(err, reply);
+			});
+		};
+	});
+};
