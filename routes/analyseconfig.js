@@ -9,8 +9,8 @@ var pluginManager = require ('../lib/pluginManager');
  */
 module.exports = function(app){
 	app.get('/analyseconfig', function(req, res){
-		pluginManager.getNamesJson(function(json){
-			res.render('analyseconfig', json);
+		pluginManager.getNames(function(json){
+			res.render('analyseconfig', { "pluginsList": json });
 		});
 	});
 

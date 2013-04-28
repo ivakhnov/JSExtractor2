@@ -15,17 +15,17 @@
       span.label.label-info #{pluginsList.length}
     ul#plugins-menu.nav.nav-list.collapse.in
       - each plugin in pluginsList
-        - var pl = nav['plugin' + plugin.id]
+        - var pl = nav['plginfo:' + plugin.pluginName]
         li(class=pl)
-          a(href='/plugin/info/#{plugin.pluginName}') #{plugin.pluginName}
+          a(href='/plugin?pluginName=#{plugin.pluginName}') #{plugin.pluginName}
         
     .nav-header(data-toggle='collapse', data-target='#plconfigs-menu')
-      i.icon-list-alt.icon-white
+      i.icon-wrench.icon-white
       | Configurations
       //- span.label.label-info #{eventsCount}
     ul#plconfigs-menu.nav.nav-list.collapse.in
       - each plugin in pluginsList
-        - var pl = nav['plconfig' + plugin.id]
+        - var pl = nav['plgconfig:' + plugin.pluginName]
         li(class=pl)
-          a(href='/plugin/configs/#{plugin.pluginName}') #{plugin.pluginName}
+          a(href='/plgconfigs?pluginName=#{plugin.pluginName}') #{plugin.pluginName}
     

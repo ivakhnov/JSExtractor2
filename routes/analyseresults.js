@@ -15,6 +15,8 @@ module.exports = function(app){
 		// take the string with the urls and selected plugins (config)
 		var urlsString = req.body.urls;
 		var config = JSON.parse(req.body.config);
+		
+		console.log('TEEEST: ' + req.body.config);
 
 		// Separate the urls in the string and create array of strings 
 		// delimiters: comma, semicolon and whitespace
@@ -70,8 +72,8 @@ module.exports = function(app){
 				console.log('Catched an error in extractor.js');
 				//res.render('error');
 			} else {
-				pluginManager.getNamesJson(function(json){
-					res.render('analyseconfig', json);
+				pluginManager.getNames(function(json){
+					res.render('analyseconfig', { "pluginsList": json });
 				});
 			}
 		});

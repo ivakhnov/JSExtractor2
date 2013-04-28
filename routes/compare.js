@@ -9,8 +9,8 @@ var pluginManager = require ('../lib/pluginManager');
 module.exports = function(app){
 
 	app.get('/compare', function(req, res){
-		pluginManager.getNamesJson(function(json){
-			res.render('compare', json);
+		pluginManager.getNames(function(json){
+			res.render('compare', { "pluginsList": json });
 		});
 	});
 

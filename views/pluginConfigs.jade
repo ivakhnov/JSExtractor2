@@ -1,0 +1,47 @@
+extends layout
+
+block content
+
+	script(src='javascript/view.js')
+	script(src='javascript/pluginConfigs.js')
+	script(type='text/javascript')
+		var PLUGIN_NAME = '#{pluginName}';
+		var INPUT_VIEW = '!{JSON.stringify(inputView)}';
+
+	.container-fluid
+		.row-fluid
+
+			// Variable currentMenu denotes the active nav item
+			- currentMenu = 'plgconfig:' + pluginName
+			include sidebar
+					
+			.span9
+				h1.page-title Available configurations for #{pluginName}
+				
+				//- Button to trigger modal to create new configuration
+				a.btn.btn-primary(href='#addModal', role='button', data-toggle='modal') Add new configuration!
+				//- Modal 
+				#addModal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='addModalLabel', aria-hidden='true')
+					.modal-header
+						button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+						h3#addModalLabel New configuration
+					.modal-body
+						#confName
+						#confDescription
+						hr
+						br
+						#confForm
+					.modal-footer
+						button.btn(data-dismiss='modal', aria-hidden='true') Close
+						button.btn.btn-primary#saveConfig Save configuration
+						
+				br
+				br
+				br
+				- each config in pluginConfigs
+					hr
+					h3 #{JSON.parse(config).confName}
+					| #{JSON.parse(config).confDescription}
+					h6
+						a(href='#') Edit &nbsp;
+						a(href='#') Delete

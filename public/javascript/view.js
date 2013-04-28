@@ -27,7 +27,7 @@ function View() {
 					var description = view.description;
 					var type = " <input type='" + view.type + "' class='input-xlarge'";
 					var name = " name='" + view.name + "'>";
-					result += description + "<br>" + type + name;
+					result += description + "<br>" + type + name + "<br>";
 					break;
 				// radio OR checkbox 
 				case 'radio':

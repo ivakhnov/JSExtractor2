@@ -60,6 +60,7 @@ app.configure('production', function(){
   'events',
   'analyseconfig',
   'analyseresults',
+  'pluginConfigs',
   'compare'].map(function(controllerName) {
     require('./routes/' + controllerName)(app);
  });
