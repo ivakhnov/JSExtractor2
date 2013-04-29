@@ -2,6 +2,7 @@
  * Module dependencies
  */
 var async = require('async');
+var db = require('../lib/dbManager');
 var pluginManager = require ('../lib/pluginManager');
 
 /*
@@ -15,9 +16,15 @@ module.exports = function(app){
 	});
 
 	app.get('/analyseconfig/plugin', function(req, res){
-		pluginManager.getInputView(req.query['pluginName'], function(html){
-			res.json({ 'inputView': html });
+		var pluginName = req.query['pluginName'];
+		
+		db.getPluginConfigs(pluginName, function(pluginConfigs){
+			res.json({ 'pluginConfigs': pluginConfigs });
 		});
+		
+		// pluginManager.getInputView(req.query['pluginName'], function(html){
+		// 	res.json({ 'inputView': html });
+		// });
 	});
 
 };

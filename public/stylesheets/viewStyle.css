@@ -1,7 +1,7 @@
 /*Basic Styles*/
 
 #accordion {
-	width: 100%;
+	width: 50%;
 	margin: 30px auto;
 }
 #accordion .ui-accordion-header, .ui-acc-header {
@@ -23,7 +23,7 @@
 	border-top: 1px solid rgba(250, 250, 250, .2);
 }
 #accordion .ui-accordion-content, .ui-acc-content {
-	text-align: left;
+	text-align: center;
 	width: 100%;
 	background-color: #DCDCDC;
 	color: #111;

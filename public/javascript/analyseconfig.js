@@ -57,7 +57,29 @@ $(document).ready(function () {
 
 			// ajax call to get html of the selected plugin
 			$.get('/analyseconfig/plugin', { pluginName: e.added.text }).done(function(json){
-				var htmlDiv = "<h3 class="+ e.added.id +"><a href='#'>" + e.added.text + "</a></h3><div class="+ e.added.id +">" + view.createForm(json.inputView) + "</div>";
+				var pluginConfigs = json.pluginConfigs;
+				
+				var htmlDiv = $("<h3 class="+ e.added.id +">"+
+					"<a href='#'>" + e.added.text + "</a></h3>"+
+					"<div class="+ e.added.id +"></div>");
+				
+				// Select plugin configuration
+				var configNameSelect = $("<select class='" + e.added.id + "' name='configNameSelect'>");
+				$(htmlDiv[1]).append(configNameSelect);
+				
+				// Select function which defines perspective of the output (if plugin output is an object
+				// with multiple fields, this 'perspective' defines which to show in this analyse)
+				var perspectiveSelect = $("<select class='" + e.added.id + "' name='perspectiveSelect'>");
+				$(htmlDiv[1]).append(perspectiveSelect);
+				
+				// Initialise select options for configurations of a plugin
+				$.each(pluginConfigs, function(i, value) {
+					var conf = JSON.parse(value);
+					configNameSelect.append($('<option>').text(conf.confName).attr('value', conf.confName));
+				});
+				
+				//console.log($('select[name=configNameSelect]'));
+				// Add this to the page
 				$('.pluginsAccordion').append(htmlDiv);
 				$('.pluginsAccordion').accordion('refresh');
 				// make the new accordion element active
