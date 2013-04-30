@@ -39,9 +39,14 @@ block content
 				br
 				br
 				- each config in pluginConfigs
+					- console.log('ttt: ' + config.confName);
+					- var confName = config.confName;
+					- var confDescription = config.confDescription;
 					hr
-					h3 #{JSON.parse(config).confName}
-					| #{JSON.parse(config).confDescription}
-					h6
-						a(href='#') Edit &nbsp;
-						a(href='#') Delete
+					h3 #{confName}
+					| #{confDescription}
+					p
+					.btn-group
+						button.btn.btn-small Edit
+						button.btn.btn-small.deleteConf(href = '#{confName}') Delete
+

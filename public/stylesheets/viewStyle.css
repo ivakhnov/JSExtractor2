@@ -29,8 +29,6 @@
 	color: #111;
 	font-size: 12pt;
 	line-height: 20pt;
-	box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, .2),
-				inset 0px -1px 0px 0px rgba(0, 0, 0, .4);
 }
 #accordion .ui-accordion-content > *, .ui-acc-content > * {
 	margin: 0;

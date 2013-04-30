@@ -64,18 +64,19 @@ $(document).ready(function () {
 					"<div class="+ e.added.id +"></div>");
 				
 				// Select plugin configuration
-				var configNameSelect = $("<select class='" + e.added.id + "' name='configNameSelect'>");
+				var configNameSelect = $("<p>Choose plugin configuration</p>"+
+					"<select class='" + e.added.id + " select' name='configNameSelect'>");
 				// using index 1 of htmlDiv to get the <div> for insertion
 				$(htmlDiv[1]).append(configNameSelect);
 				
 				// Select function which defines perspective of the output (if plugin output is an object
 				// with multiple fields, this 'perspective' defines which to show in this analyse)
-				var perspectiveSelect = $("<select class='" + e.added.id + "' name='perspectiveSelect'>");
+				var perspectiveSelect = $("<p>Choose perspective function to show results</p>"+
+					"<select class='" + e.added.id + " select' name='perspectiveSelect'>");
 				$(htmlDiv[1]).append(perspectiveSelect);
 				
 				// Initialise select options for configurations of a plugin
-				$.each(pluginConfigs, function(i, value) {
-					var conf = JSON.parse(value);
+				$.each(pluginConfigs, function(i, conf) {
 					configNameSelect.append($('<option>').text(conf.confName).attr('value', conf.confName));
 				});
 				

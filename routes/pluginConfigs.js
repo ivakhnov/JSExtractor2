@@ -26,8 +26,7 @@ module.exports = function(app){
 		});
 	});
 	
-	app.post('/plgconfigs', function(req, res){
-		// add new config to database
+	app.post('/plgconfigs/save', function(req, res){
 		var pluginName = req.body.pluginName;
 		var confName = req.body.confName;
 		var confDescription = req.body.confDescription;
@@ -36,6 +35,17 @@ module.exports = function(app){
 		db.savePluginConfig(pluginName, confName, confDescription, confConfig, function(result) {
 			console.log('New configuration added to database!');
 			res.send('New configuration added to database!');
+		});
+	});
+	
+	app.post('/plgconfigs/del', function(req, res){
+		// add new config to database
+		var pluginName = req.body.pluginName;
+		var confName = req.body.confName;
+
+		db.deletePluginConfig(pluginName, confName, function(result) {
+			console.log('Configuration deleted from database!');
+			res.send('Configuration deleted from database!');
 		});
 	});
 };
