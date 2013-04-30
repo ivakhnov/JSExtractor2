@@ -23,7 +23,7 @@
       i.icon-wrench.icon-white
       | Configurations
       //- span.label.label-info #{eventsCount}
-    ul#plconfigs-menu.nav.nav-list.collapse.in
+    ul#plconfigs-menu.nav.nav-list.collapse
       - each plugin in pluginsList
         - var pl = nav['plgconfig:' + plugin.pluginName]
         li(class=pl)

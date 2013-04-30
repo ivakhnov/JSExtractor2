@@ -65,6 +65,7 @@ $(document).ready(function () {
 				
 				// Select plugin configuration
 				var configNameSelect = $("<select class='" + e.added.id + "' name='configNameSelect'>");
+				// using index 1 of htmlDiv to get the <div> for insertion
 				$(htmlDiv[1]).append(configNameSelect);
 				
 				// Select function which defines perspective of the output (if plugin output is an object

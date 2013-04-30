@@ -32,7 +32,10 @@ app.configure(function(){
     next();
   });
   app.use(app.router);
+  // add public folder
   app.use(express.static(path.join(__dirname, 'public')));
+  // add folder with plugins
+  app.use(express.static(path.join(__dirname, 'plugins')));
 });
 
 app.configure('development', function(){
