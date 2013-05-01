@@ -1,0 +1,20 @@
+extends layout
+
+block content
+
+	script(src='javascript/view.js')
+	script(src='javascript/pluginConfigs.js')
+
+	.container-fluid
+		.row-fluid
+
+			// Variable currentMenu denotes the active nav item
+			- currentMenu = 'plgman:' + pluginName
+			include sidebar
+					
+			.span9
+				h1.page-title Description of #{pluginName}
+				br
+				br
+				br
+				!{pluginMan}

@@ -18,6 +18,7 @@
     "jsdom"       : "0.2.19",
     "jslint"      : "0.1.9",
     "redis"       : "0.8.2",
-    "request"     : "2.12.0"
+    "request"     : "2.12.0",
+    "showdown"    : "0.3.1"
   }
 }

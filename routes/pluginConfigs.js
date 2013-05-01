@@ -12,14 +12,14 @@ module.exports = function(app){
 	app.get('/plgconfigs', function(req, res){
 		var pluginName = req.query['pluginName'];
 		
-		pluginManager.getNames(function(pluginNames){
+		pluginManager.getNames(function(pluginsList){
 			pluginManager.getInputView(pluginName, function(inputView){			
 				db.getPluginConfigs(pluginName, function(pluginConfigs){
 					res.render('pluginConfigs', {
-						'pluginsList': pluginNames,
-						'pluginName': pluginName,
-						'pluginConfigs': pluginConfigs,
-						'inputView': inputView
+						'pluginsList'	: pluginsList,
+						'pluginName'	: pluginName,
+						'pluginConfigs'	: pluginConfigs,
+						'inputView'		: inputView
 					});
 				});
 			});

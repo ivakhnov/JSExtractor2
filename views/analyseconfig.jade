@@ -50,36 +50,42 @@ block content
 		}
 
 
+	.container-fluid
+		.row-fluid
 
+			// Variable currentMenu denotes the active nav item
+			- currentMenu = ''
+			include sidebar
 
-	.container-narrow
-		.jumbotron
-			h1.page-title Configure your analysis
-			br
-			p.lead
-				| Type specific URL(s) of the websites you would like to analyse, 
-				| or an * (asterix) to browse collection of all previously analysed websites.
-			
+			.span9
+				.container-narrow
+					.jumbotron
+						h1.page-title Configure your analysis
+						br
+						p.lead
+							| Type specific URL(s) of the websites you would like to analyse, 
+							| or an * (asterix) to browse collection of all previously analysed websites.
+						
 
-			form#analyseConfig-form
-				#form-content
-					fieldset
-						.fieldgroup
-							input.input-xxlarge.urls(type='text', name='urls', value='webmail.ulb.ac.be')
-							br
-						.fieldgroup
-							br
-							| Click on the input field below to pick analyse tools, multiple selections possible..
-							br
-							br
-							select#pluginSelect.select(multiple='multiple', name='plugins')
-								- each plugin in pluginsList
-									option(value= plugin.id)= plugin.pluginName
-							br
-							br
-						.fieldgroup
-							br
-							button.btn.btn-large.btn-primary Start Analysis &nbsp; &nbsp;
-								i.icon-play.icon-white
+						form#analyseConfig-form
+							#form-content
+								fieldset
+									.fieldgroup
+										input.input-xxlarge.urls(type='text', name='urls', value='webmail.ulb.ac.be')
+										br
+									.fieldgroup
+										br
+										| Click on the input field below to pick analyse tools, multiple selections possible..
+										br
+										br
+										select#pluginSelect.select(multiple='multiple', name='plugins')
+											- each plugin in pluginsList
+												option(value= plugin.id)= plugin.pluginName
+										br
+										br
+									.fieldgroup
+										br
+										button.btn.btn-large.btn-primary Start Analysis &nbsp; &nbsp;
+											i.icon-play.icon-white
 
-			.pluginsAccordion#accordion
+						.pluginsAccordion#accordion

@@ -9,15 +9,8 @@ var pluginManager = require ('../lib/pluginManager');
 module.exports = function(app){
 
 	app.get('/', function(req, res){
-		pluginManager.getNames(function(json){
-			console.log(json);
-			res.render('index', { "pluginsList": json });
-		});
-	});
-	app.get('/plugin', function(req, res){
-		pluginManager.getNames(function(json){
-			console.log(json);
-			res.render('index', { "pluginsList": json });
+		pluginManager.getNames(function(pluginsList){
+			res.render('index', { "pluginsList": pluginsList });
 		});
 	});
 };
