@@ -20,7 +20,7 @@ $(document).ready(function () {
 			var pos = (i + 1);
 			var column = {
 				"aTargets": [ pos ],
-				"sTitle": _usedPlugins[i].pluginName,
+				"sTitle": _usedPlugins[i],
 				"mData": "siteOutput." + i + ".analyseResults"
 			};
 			aoColumnDefs.push(column);
@@ -49,24 +49,24 @@ $(document).ready(function () {
 		]
 	});
 
-	function fnCreateSelect (pluginID) {
-		var r='<select  style="width: 90%">';
-		r += '<option value="fnDataPerspective1">fnDataPerspective1</option>';
-		r += '<option value="fnDataPerspective2">fnDataPerspective2</option>';
-		r += '<option value="fnDataPerspective3">fnDataPerspective3</option>';
-		r += '<option value="fnDataPerspective4">fnDataPerspective4</option></select>';
-		return r;
-	}
+	// function fnCreateSelect (pluginID) {
+	// 	var r='<select  style="width: 90%">';
+	// 	r += '<option value="fnDataPerspective1">fnDataPerspective1</option>';
+	// 	r += '<option value="fnDataPerspective2">fnDataPerspective2</option>';
+	// 	r += '<option value="fnDataPerspective3">fnDataPerspective3</option>';
+	// 	r += '<option value="fnDataPerspective4">fnDataPerspective4</option></select>';
+	// 	return r;
+	// }
 
-	// the first column contains websites (not plugin results)
-	// so it has no dropdown selector for visualisation of plugin results
-	$("thead > tr:first > :not(:first)").each( function ( i ) {
-		console.log(this.innerHTML);
-		// i corresponds with the position of the plugin in de the _usedPlugins array
-		var pluginName = this.innerHTML;
-		this.innerHTML = fnCreateSelect(i);
-		// $('select', this).change( function () {
-		// 	oTable.fnFilter( $(this).val(), i );
-		// } );
-	} );
+	// // the first column contains websites (not plugin results)
+	// // so it has no dropdown selector for visualisation of plugin results
+	// $("thead > tr:first > :not(:first)").each( function ( i ) {
+	// 	console.log(this.innerHTML);
+	// 	// i corresponds with the position of the plugin in de the _usedPlugins array
+	// 	var pluginName = this.innerHTML;
+	// 	this.innerHTML = fnCreateSelect(i);
+	// 	// $('select', this).change( function () {
+	// 	// 	oTable.fnFilter( $(this).val(), i );
+	// 	// } );
+	// } );
 });

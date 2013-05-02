@@ -3,14 +3,15 @@ $(document).ready(function () {
 	
 	function startButton() {
 
-		var config = [];
+		var plugins = [];
 		for(var i = 0; i < accordionList.length; i++){
-			var id = accordionList[i];
-			var formString = $('div.' + id).children('form').serialize();
-			var form = view.formFilledToJson(formString);
-			config.push({ 
-				'pluginID': id,
-				'config': form
+			var pluginID = accordionList[i];
+			var configNameSelect = $('div.' + pluginID + " > select.configNameSelect").val();
+			var perspectiveSelect = $('div.' + pluginID + " > select.perspectiveSelect").val();
+			plugins.push({ 
+				'pluginID': pluginID,
+				'configName': configNameSelect,
+				'perspectiveFun': perspectiveSelect
 			});
 		};
 		var resultForm = $("<form action='/analyseresults' method='POST'></form>");
@@ -22,8 +23,8 @@ $(document).ready(function () {
 		// selected plugins
 		var pluginsInput = $('<input>').attr({
 			type: 'hidden',
-			name: 'config',
-			value: JSON.stringify(config)});
+			name: 'plugins',
+			value: JSON.stringify(plugins)});
 		pluginsInput.appendTo(resultForm);
 		
 		resultForm.submit();
@@ -35,6 +36,8 @@ $(document).ready(function () {
 	});
 
 	$('#pluginSelect').on('change', function(e) {
+		var pluginName = e.added.text;
+		var pluginID = e.added.id;
 		// determine if the 'change' is a deletion
 		if(accordionList.length > e.val.length){
 			// determine which item has been deleted from selection
@@ -53,34 +56,39 @@ $(document).ready(function () {
 
 		// or a new item is selected
 		} else {
-			accordionList.push(e.added.id);
+			accordionList.push(pluginID);
 
 			// ajax call to get html of the selected plugin
-			$.get('/analyseconfig/plugin', { pluginName: e.added.text }).done(function(json){
+			$.get('/analyseconfig/plugin', { pluginName: pluginName }).done(function(json){
 				var pluginConfigs = json.pluginConfigs;
 				
-				var htmlDiv = $("<h3 class="+ e.added.id +">"+
-					"<a href='#'>" + e.added.text + "</a></h3>"+
-					"<div class="+ e.added.id +"></div>");
+				var htmlDiv = $("<h3 class="+ pluginID +">"+
+					"<a href='#'>" + pluginName + "</a></h3>"+
+					"<div class="+ pluginID +"></div>");
 				
 				// Select plugin configuration
 				var configNameSelect = $("<p>Choose plugin configuration</p>"+
-					"<select class='" + e.added.id + " select' name='configNameSelect'>");
+					"<select class='configNameSelect select'>");
 				// using index 1 of htmlDiv to get the <div> for insertion
 				$(htmlDiv[1]).append(configNameSelect);
-				
-				// Select function which defines perspective of the output (if plugin output is an object
-				// with multiple fields, this 'perspective' defines which to show in this analyse)
-				var perspectiveSelect = $("<p>Choose perspective function to show results</p>"+
-					"<select class='" + e.added.id + " select' name='perspectiveSelect'>");
-				$(htmlDiv[1]).append(perspectiveSelect);
-				
 				// Initialise select options for configurations of a plugin
 				$.each(pluginConfigs, function(i, conf) {
 					configNameSelect.append($('<option>').text(conf.confName).attr('value', conf.confName));
 				});
 				
-				//console.log($('select[name=configNameSelect]'));
+				// Select function which defines perspective of the output (if plugin output is an object
+				// with multiple fields, this 'perspective' defines which to show in this analyse)
+				var perspectiveSelect = $("<p>Choose perspective function to show results</p>"+
+					"<select class='perspectiveSelect select'>");
+				$(htmlDiv[1]).append(perspectiveSelect);
+				// load dynamically perspective functions
+				$.getScript(pluginName+'/_'+pluginName+'.js', function () {
+					// Initialise select options for configurations of a plugin
+					$.each(PerspectiveFuns, function(i, persp) {
+						perspectiveSelect.append($('<option>').text(persp.perspName).attr('value', persp.perspName));
+					});
+				});
+				
 				// Add this to the page
 				$('.pluginsAccordion').append(htmlDiv);
 				$('.pluginsAccordion').accordion('refresh');

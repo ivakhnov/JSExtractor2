@@ -10,82 +10,45 @@ var pluginManager = require('../lib/pluginManager');
 /*
  * Setup the routes and request handlers.
  */
-module.exports = function(app){
+module.exports = function(app){	
 	app.post('/analyseresults', function(req, res){
 		// take the string with the urls and selected plugins (config)
-		var urlsString = req.body.urls;
-		var config = JSON.parse(req.body.config);
-		
-		console.log('TEEEST: ' + req.body.config);
-
+		var urlsString = req.body.urls;		
 		// Separate the urls in the string and create array of strings 
 		// delimiters: comma, semicolon and whitespace
 		var urlsArray = urlsString.split(/\s*[,;]\s*|\s{1,}|[\r\n]+/);
 
+		var plugins = JSON.parse(req.body.plugins);
 		
-		console.log('analyse conf: ' + config);
-
-		var usedPlugins = config.map (function(pluginConf){
-			var pluginID = pluginConf.pluginID;
-			return {
-				'pluginName': pluginManager.getPluginName(pluginID),
-				'dataPerspectives': pluginManager.getDataPerspectives(pluginID)
-			};
+		var pluginNames = plugins.map(function (plugin){
+			var pluginID = plugin.pluginID;
+			return pluginManager.getPluginName(pluginID);
 		});
-
-		function analyseSite(url, callback){
-
-			function triggerPlugin(conf, callback){
-				var pluginID = conf.pluginID;
-				var pluginName = pluginManager.getPluginName(pluginID);
-				var analyseConfig = conf.config;
-
-				pluginManager.startPlugin(pluginID, analyseConfig, url, function(err, analyseResults) {
-					if(err != null) {
-						callback(err);
-					} else {
-						// add results to database
-						db.saveAnalyse(url, pluginName, analyseResults, function(err, saveResp){
-							callback(err, {
-								'pluginName':		pluginName,
-								'analyseResults':	analyseResults
-							});
-						});
-					}
-				});
-			};
-
-			async.map(config, triggerPlugin, function(err, results){
-				callback(err, {
-					'siteName': url,
-					'siteOutput': results
-				});
-			});
-		};
 
 		// Go through urlsArray and extract JS from pages. When done, get the names of all
 		// installed plugins and render the page, or return to main page if any of the urls 
 		// is wrong or causes a problem.
-		async.map(urlsArray, parsePage, function(err, results){
-			if(err) {
-				console.log(err);
-				console.log('Catched an error in extractor.js');
-				//res.render('error');
-			} else {
-				pluginManager.getNames(function(json){
-					res.render('analyseconfig', { "pluginsList": json });
+		async.map(urlsArray, 
+			function (url, callback) { 
+				parsePage(url, function (err) {
+					if(err) { callback (err); }
+					else { analyseSite(url, plugins, callback); }
 				});
-			}
+			}, 
+			function (err, results){
+				if(err) {
+					console.log(err);
+					console.log('Catched an error in extractor.js');
+					//res.render('error');
+				} else {
+					res.render('analyseresults', { 
+						'usedPlugins': pluginNames, 
+						'analyseResults': results 
+					});
+				}
 		});
 
-		async.map(urlsArray, analyseSite, function(err, results){
-			res.render('analyseresults', { 
-				'usedPlugins': usedPlugins, 
-				'analyseResults': results 
-			});
-		});
 	});
-
 };
 
 
@@ -108,11 +71,44 @@ function parsePage(url, callback){
 			console.log("Script tags: " + scripts.length);
 			console.log("DOM Events: " + events.length);
 			
-			//db.resetDb();	
 			db.savePage(url, scripts, events, function(err, reply) {
 				console.log('saved in database');
 				callback(err, reply);
 			});
 		};
+	});
+};
+
+function triggerPlugin(plugin, url, callback){
+	var pluginID = plugin.pluginID;
+	var pluginName = pluginManager.getPluginName(pluginID);
+	var pluginConfig = plugin.configNameSelect;
+	var pluginPerspective = plugin.perspectiveSelect;
+
+	pluginManager.startPlugin(pluginID, pluginConfig, pluginPerspective, url, function(err, analyseResults) {
+		if(err != null) {
+			callback(err);
+		} else {
+			// add results to database
+			db.saveAnalyse(url, pluginName, pluginConfig, analyseResults, function(err, saveResp){
+				callback(err, {
+					'pluginName':		pluginName,
+					'analyseResults':	analyseResults
+				});
+			});
+		}
+	});
+};
+
+function analyseSite(url, plugins, callback){
+	async.map(plugins, 
+		function(plugin, callback) {
+			triggerPlugin(plugin, url, callback);
+		}, 
+		function(err, results){
+			callback(err, {
+				'siteName': url,
+				'siteOutput': results
+		});
 	});
 };
