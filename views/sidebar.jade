@@ -1,31 +1,44 @@
 .span3
-  .sidebar-nav
-    
-    // Variable currentMenu denotes the active nav item
-    - var nav = {}; nav[currentMenu] = 'active'
-    
-    a(href='/analyseconfig').nav-header
-      i.icon-screenshot.icon-white
-      | Analysis
-    br
-    br
-    .nav-header(data-toggle='collapse', data-target='#plugins-menu')
-      i.icon-th-list.icon-white
-      | Plugins
-      span.label.label-info #{pluginsList.length}
-    ul#plugins-menu.nav.nav-list.collapse.in
-      - each plugin in pluginsList
-        - var pl = nav['plgman:' + plugin.pluginName]
-        li(class=pl)
-          a(href='/plgman?pluginName=#{plugin.pluginName}') #{plugin.pluginName}
-        
-    .nav-header(data-toggle='collapse', data-target='#plconfigs-menu')
-      i.icon-wrench.icon-white
-      | Configurations
-      //- span.label.label-info #{eventsCount}
-    ul#plconfigs-menu.nav.nav-list.collapse
-      - each plugin in pluginsList
-        - var pl = nav['plgconfig:' + plugin.pluginName]
-        li(class=pl)
-          a(href='/plgconfigs?pluginName=#{plugin.pluginName}') #{plugin.pluginName}
-    
+	.sidebar-nav
+		
+		// Variable currentMenu denotes the active nav item
+		- var nav = {}; nav[currentMenu] = 'active'
+		
+		a(href='/corpus').nav-header
+			i.icon-eye-open.icon-white
+			| Browse corpus
+		.nav-header(data-toggle='collapse', data-target='#perspectives-menu')
+			i.icon-wrench.icon-white
+			| Perspective functions
+		ul#perspectives-menu.nav.nav-list.collapse
+			- each plugin in pluginsList
+				- var pl = nav['plgperspectives:' + plugin.pluginName]
+				li(class=pl)
+					a(href='/plgconfigs?pluginName=#{plugin.pluginName}') #{plugin.pluginName}
+		br
+		br
+
+		a(href='/analyseconfig').nav-header
+			i.icon-screenshot.icon-white
+			| Analysis
+		.nav-header(data-toggle='collapse', data-target='#plconfigs-menu')
+			i.icon-wrench.icon-white
+			| Configurations
+		ul#plconfigs-menu.nav.nav-list.collapse
+			- each plugin in pluginsList
+				- var pl = nav['plgconfig:' + plugin.pluginName]
+				li(class=pl)
+					a(href='/plgconfigs?pluginName=#{plugin.pluginName}') #{plugin.pluginName}
+		br
+		br
+
+		.nav-header(data-toggle='collapse', data-target='#plugins-menu')
+			i.icon-folder-open.icon-white
+			| Plugins
+			span.label.label-info #{pluginsList.length}
+		ul#plugins-menu.nav.nav-list.collapse.in
+			- each plugin in pluginsList
+				- var pl = nav['plgman:' + plugin.pluginName]
+				li(class=pl)
+					a(href='/plgman?pluginName=#{plugin.pluginName}') #{plugin.pluginName}
+		

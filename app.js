@@ -65,6 +65,7 @@ app.configure('production', function(){
   'analyseresults',
   'pluginMan',
   'pluginConfigs',
+  'corpus',
   'compare'].map(function(controllerName) {
     require('./routes/' + controllerName)(app);
  });

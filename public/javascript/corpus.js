@@ -37,12 +37,12 @@ $(document).ready(function () {
 		});
 	};
 
-	$('#pluginSelect').select2({
+	$('#perspectiveSelect').select2({
 		placeholder: 'Select plugins',
 		allowClear: true
 	});
 
-	$('#pluginSelect').on('change', function(e) {
+	$('#perspectiveSelect').on('change', function(e) {
 		var pluginName = e.added.text;
 		var pluginID = e.added.id;
 		// determine if the 'change' is a deletion
@@ -96,7 +96,7 @@ $(document).ready(function () {
 	});
 
 	//form validation rules
-	$("#analyseConfig-form").validate({
+	$("#browseConfig-form").validate({
 		rules: {
 			urls: "required",
 			plugins: "required"
