@@ -256,7 +256,11 @@ async.series([
     },
     function(callback){
         addPerspectiveFns(callback);
-    }
+    },
+    // test function
+    // function(callback){
+    //     db.getAllPerspFnNames(callback);
+    // }
 ],
 // optional callback
 function(err, results){

@@ -12,9 +12,9 @@
 			| Perspective functions
 		ul#perspectives-menu.nav.nav-list.collapse
 			- each plugin in pluginsList
-				- var pl = nav['plgperspectives:' + plugin.pluginName]
+				- var pl = nav['plgpersp:' + plugin.pluginName]
 				li(class=pl)
-					a(href='/plgconfigs?pluginName=#{plugin.pluginName}') #{plugin.pluginName}
+					a(href='/plgPerspFns?pluginName=#{plugin.pluginName}') #{plugin.pluginName}
 		br
 		br
 

@@ -66,6 +66,7 @@ app.configure('production', function(){
   'pluginMan',
   'pluginConfigs',
   'corpus',
+  'pluginPerspFns',
   'compare'].map(function(controllerName) {
     require('./routes/' + controllerName)(app);
  });

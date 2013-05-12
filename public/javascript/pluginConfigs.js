@@ -3,7 +3,7 @@ $(document).ready(function () {
 	var inputView = JSON.parse(INPUT_VIEW);
 
 	$('#confName').append('Title: <p><input type="text" name="confName"></p>');
-	$('#confDescription').append('Description: <p><textarea name="confDescription" rows="4" cols="80"></textarea></p>');
+	$('#confDescription').append('Description: <p><textarea name="confDescription" style="height:100px; width:480px;"></textarea></p>');
 	$('#confForm').append(view.createForm(inputView));
 	
 	$('#saveConfig').click(function () {

@@ -29,6 +29,12 @@ function View() {
 					var name = " name='" + view.name + "'>";
 					result += description + "<br>" + type + name + "<br>";
 					break;
+				case 'textarea':
+					var description = view.description;
+					var type = " <textarea  style='height:200px; width:480px;'";
+					var name = " name='" + view.name + "'></textarea>";
+					result += description + "<p>" + type + name + "</p>";
+					break;
 				// radio OR checkbox 
 				case 'radio':
 				case 'checkbox':
