@@ -153,6 +153,12 @@ var testPerspectiveFns = [
 ];
 
 
+function resetDb(callback) {
+	var err = null;
+	db.resetDb();
+	callback(err, 'Database resetted!');
+};
+
 function async(arg, callback) {
   console.log(arg);
   extractor.parsePage(urlLib.addHttp(arg), function(results) {
@@ -189,7 +195,8 @@ function launcher() {
   }
 };
 
-function addConfigs() {
+function addConfigs(callback) {
+	var err = null;
 	function loopFun (conf, callback) {
 		var confName = conf.configName;
 		var confDescription = conf.description;
@@ -205,11 +212,15 @@ function addConfigs() {
 	
 	async.mapSeries(testPluginConfigs, loopFun, function(res) {
 		console.log('OK - saving configurations!');
-		// db.getPluginConfigs('TestPlugin', function(res) { console.log('TEST: ' + res); });
+		// db.getPluginConfigs('TestPlugin', function(res) { 
+		// console.log('TEST: ' + res); 
+		// });
+		callback(err, 'OK - saving configurations!');
 	});
 };
 
-function addPerspectiveFns() {
+function addPerspectiveFns(callback) {
+	var err = null;
 	function loopFun (persp, callback) {
 		var perspName = persp.perspName;
 		var perspDescription = persp.description;
@@ -228,14 +239,28 @@ function addPerspectiveFns() {
 	
 	async.mapSeries(testPerspectiveFns, loopFun, function(res) {
 		console.log('OK - saving perspective functions!');
-		fnPool.getFn(2, function(fn) {
-			console.log('TEST: ' + fn);
-		});
+		// fnPool.getFn(2, function(fn) {
+		// 	console.log('TEST: ' + fn);
+		// });
+		callback(err, 'OK - saving perspective functions!');
 	});
 };
 
 
-db.resetDb();
-//launcher();
-addConfigs();
-addPerspectiveFns();
+async.series([
+    function(callback){
+        resetDb(callback);
+    },
+    function(callback){
+        addConfigs(callback);
+    },
+    function(callback){
+        addPerspectiveFns(callback);
+    }
+],
+// optional callback
+function(err, results){
+    console.log('\n Dummy data added to database! \n \n Done!');
+    process.exit(code=0);
+});
+
