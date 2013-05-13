@@ -1,6 +1,5 @@
 $(document).ready(function () {
 	
-	var _analyseResults = [];
 	var _selectedPerspectives = [];
 
 	function initColumnDefs() {
@@ -17,7 +16,7 @@ $(document).ready(function () {
 			var column = {
 				"aTargets": [ pos ],
 				"sTitle": _selectedPerspectives[i],
-				"mData": "siteOutput." + i + ".analyseResults"
+				"mData": "siteOutput." + _selectedPerspectives[i]
 			};
 			aoColumnDefs.push(column);
 		};
@@ -31,32 +30,30 @@ $(document).ready(function () {
 	function startButton() {
 		// get the array of all selected perspectives
 		_selectedPerspectives = $('#perspectiveSelect').val();
-		
-		
-		// table#comparisonTable.table.table-striped.table-bordered(cellpadding='10', cellspacing='10', border='10')
-		
-		// <table id="comparisonTable" cellpadding="10" cellspacing="10" border="10" class="table table-striped table-bordered"></table>
-		
-		
-		console.log('En nu gaan we data aan dataTables geven');
-		
+
 		$('#table-block').remove();
 		$('#databaseTable').append($('<div id="table-block">'+
 			'<table id="comparisonTable" cellpadding="10" cellspacing="10" border="10" class="table table-striped table-bordered">'+
 			'</table></div>'));
 		
-		$('#comparisonTable').dataTable({
-			"sDom": "<'row-fluid'r>t<'row-fluid'<'span6'il><'span6'p>>",
-			"sPaginationType": "bootstrap",
-			"oLanguage": {
-				"sLengthMenu": "_MENU_ records per page"
-			},
-			"bProcessing": true,
-
-			"aaData": _analyseResults,
-			"aoColumnDefs": initColumnDefs()
-		});
+		var urlsString = $('#form-content input:text.urls').val();
 		
+		$.get('/corpus/browse', { 
+			urls 		: urlsString,
+			perspFns 	: _selectedPerspectives
+		}).done(function (analyseResults){			
+			$('#comparisonTable').dataTable({
+				"sDom": "<'row-fluid'r>t<'row-fluid'<'span6'il><'span6'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {
+					"sLengthMenu": "_MENU_ records per page"
+				},
+				"bProcessing": true,
+
+				"aaData": analyseResults,
+				"aoColumnDefs": initColumnDefs()
+			});
+		});		
 	};
 
 	$('#perspectiveSelect').select2({
