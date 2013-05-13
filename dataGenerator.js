@@ -193,10 +193,6 @@ function testfunctie(callback) {
 
 var dummyPerspFns = { };
 dummyPerspFns.testfunctie1 = function(analyseOutput) {
-	var pluginOutput1 = [0, 365];
-	var pluginOutput2 = [1, 500];
-	
-	var val = pluginOutput1[0];
 	
 	var resultHtml = '<style media="screen" type="text/css">'+
 			'.falseBlock, .trueBlock {'+
@@ -219,7 +215,9 @@ dummyPerspFns.testfunctie1 = function(analyseOutput) {
 		'</style>';
 
 	var blockStyle = null;
-	if (val == 1) { 
+	var val = analyseOutput[0].value
+	
+	if (val == 'true') { 
 		val = 'true';
 		blockStyle = 'trueBlock';
 	} else { 

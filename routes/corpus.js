@@ -52,8 +52,12 @@ function getSiteAnalyses (url, perspFns, callback) {
 			db.getPerspID(perspName, function (err, fnID) {
 				// now get the actual perspective function from the pool with this ID
 				fnPool.getFn(fnID, function (perspFn) {
-					siteResults[perspName] = perspFn('testArgument');
-					callb(err, 'ok!');
+					db.getPluginOfPerspFn(perspName, function (err, pluginName) {
+						db.getAnalysis(url, pluginName, function (err, siteRes) {
+							siteResults[perspName] = perspFn(siteRes.analyseResults);
+							callb(err, 'ok!');
+						})
+					})
 				});
 			});
 			
