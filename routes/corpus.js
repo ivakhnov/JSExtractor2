@@ -1,6 +1,7 @@
 /**
  * Module dependencies
  */
+var db = require('../lib/dbManager');
 var pluginManager = require ('../lib/pluginManager');
 
 /*
@@ -9,7 +10,13 @@ var pluginManager = require ('../lib/pluginManager');
 module.exports = function(app){
 	app.get('/corpus', function(req, res){
 		pluginManager.getNames(function(plugins){
-			res.render('corpus', { "pluginsList": plugins });
+			db.getAllPerspFnNames(function(err, perspFnNames){
+				console.log('testlengte: ' + perspFnNames);
+				res.render('corpus', { 
+					"pluginsList"	: plugins,
+					"perspFnNames" 	: perspFnNames
+				});
+			});
 		});
 	});
 

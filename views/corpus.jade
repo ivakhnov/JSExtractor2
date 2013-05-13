@@ -10,6 +10,8 @@ block content
 	script(src='javascript/corpus.js')
 	script(src='libs/jquery.validate.min.js')
 	script(src='libs/select2/select2.js')
+	script(src='libs/datatables/js/jquery.dataTables.min.js')
+	script(src='libs/datatables/js/jquery.dataTables.bootstrap.js')
 		
 
 	//if lte IE 8
@@ -78,14 +80,15 @@ block content
 										br
 										br
 										select#perspectiveSelect.select(multiple='multiple', name='plugins')
-											- each plugin in pluginsList
-												option(value= plugin.id)= plugin.pluginName
+											- each persp in perspFnNames
+												option(value= persp)= persp
 										br
 										br
 									.fieldgroup
 										br
 										button.btn.btn-large.btn-primary Show results &nbsp; &nbsp;
 											i.icon-chevron-down.icon-white
-
-						.pluginsAccordion#accordion
-					
+			br
+			#databaseTable.block-body
+				#table-block
+					table#comparisonTable.table.table-striped.table-bordered(cellpadding='10', cellspacing='10', border='10')
