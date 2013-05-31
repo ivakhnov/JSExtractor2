@@ -64,65 +64,6 @@ function View() {
 		resultHtml += "</form>";
 		return resultHtml;
 	};
-	
-	// method to create html for the output of the analyse
-	this.createOutput = function(siteOutputArray) {
-		var resultHtml = "";
-		// some things (e.g. charts) have to be initialised after they are added to the DOM
-		// we generate html and give an array with json objects which contain info (id, type, ..)
-		// about items that have to be initialised on the page by jQuery after being added to the DOM
-		var initItems = [];
-		for (var i = 0; i < siteOutputArray.length; i++) {
-			var outputJson = siteOutputArray[i];
-						
-			resultHtml += "<h3>" + outputJson.title + "</h3>"
-			switch(outputJson.type) {
-				case 'boolean':
-					var val = outputJson.value;
-					var blockStyle = null;
-					if (val == 'true') { 
-						blockStyle = 'trueBlock'; 
-					} else { 
-						blockStyle = 'falseBlock'; 
-					}
-					resultHtml += "<div class='" + blockStyle + "'>" + val + "</div>";
-					break;
-				case 'barchart':	
-					var data = outputJson.value;
-					initItems.push({
-						'id': outputJson.type,
-						'type': outputJson.type,
-						'data': data
-					});
-
-					resultHtml += "<canvas id='" + outputJson.type + "' height='300' width='850'></canvas>";
-					break;
-			};
-		}
-		return {
-			'initItems': initItems,
-			'resultHtml': resultHtml
-		};
-	};
-
-	// creating table to search on plugin output
-	this.createComparisonTable = function(outputFormatArray) {
-		resultHtml = '<table class="table table-striped table-bordered comparisonTable">';
-		resultHtml += '<thead><tr>';
-
-		// the first column is always a list of sites, so add this first
-		resultHtml += '<th>Sites</th>';
-		for (var i = 0; i < outputFormatArray.length; i++) {
-			var column = outputFormatArray[i];
-			resultHtml += '<th>' + column.title + '</th>';
-		};
-		resultHtml += "</tr></thead><tbody>";
-		return resultHtml;
-	};
-
-
-	// private members ------------------
-
 };
 
 

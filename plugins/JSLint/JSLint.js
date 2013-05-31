@@ -5,10 +5,6 @@ var JSLintPlugin = function() {
 	this.getInputView = function(){
 		return _inputView;
 	};
-
-	this.getOutputFormat = function(){
-		return _outputFormat;
-	}
 	
 	this.start = function(configJson, site, callback){
 		var err = null;
@@ -28,16 +24,6 @@ var JSLintPlugin = function() {
 	};
 
 	// private members ------------------
-	var _outputFormat = [
-		{
-			"title": "Test property 1",
-			"type": "boolean"
-		},
-		{
-			"title": "Test property 2",
-			"type": "boolean"
-		}
-	];
 
 	var _inputView = [
 		{	"type": "text",
