@@ -10,11 +10,11 @@ var pluginManager = require ('../lib/pluginManager');
  * Setup the routes and request handlers.
  */
 module.exports = function(app){
-	app.get('/corpus', function(req, res){
+	app.get('/analysisresults', function(req, res){
 		pluginManager.getNames(function(plugins){
 			db.getAllPerspFnNames(function(err, perspFnNames){
 				console.log('testlengte: ' + perspFnNames);
-				res.render('corpus', { 
+				res.render('analysisresults', { 
 					"pluginsList"	: plugins,
 					"perspFnNames" 	: perspFnNames
 				});
@@ -22,7 +22,7 @@ module.exports = function(app){
 		});
 	});
 
-	app.get('/corpus/browse', function(req, res){
+	app.get('/analysisresults/browse', function(req, res){
 		// take the string with the urls and selected plugins (config)
 		var urlsString = req.query["urls"];		
 		// Separate the urls in the string and create array of strings 

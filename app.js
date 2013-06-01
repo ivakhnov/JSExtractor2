@@ -58,11 +58,12 @@ app.configure('production', function(){
  *  Include all the route files and setup the routes.
  */
 [ 'analyseconfig',
-  'corpus',
+  'analysisresults',
   'index',
   'pluginConfigs',
   'pluginMan',
-  'pluginPerspFns'].map(function(controllerName) {
+  'pluginPerspFns',
+  'sites'].map(function(controllerName) {
     require('./routes/' + controllerName)(app);
  });
 

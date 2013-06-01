@@ -3,10 +3,32 @@
 		
 		// Variable currentMenu denotes the active nav item
 		- var nav = {}; nav[currentMenu] = 'active'
-		
-		a(href='/corpus').nav-header
-			i.icon-eye-open.icon-white
-			| Browse corpus
+
+		a(href='/analyseconfig').nav-header
+			i.icon-screenshot.icon-white
+			| Extraction & Analysis
+		.nav-header(data-toggle='collapse', data-target='#plconfigs-menu')
+			i.icon-wrench.icon-white
+			| Analysis configs
+		ul#plconfigs-menu.nav.nav-list.collapse
+			- each plugin in pluginsList
+				- var pl = nav['plgconfig:' + plugin.pluginName]
+				li(class=pl)
+					a(href='/plgconfigs?pluginName=#{plugin.pluginName}') #{plugin.pluginName}
+		br
+		br
+			
+		a(href='/sites').nav-header
+			i.icon-chevron-left.icon-white
+			| ...
+			i.icon-chevron-right.icon-white
+			| Browse extracted JS
+		br
+		br
+
+		a(href='/analysisresults').nav-header
+			i.icon-list.icon-white
+			| Browse analysis results
 		.nav-header(data-toggle='collapse', data-target='#perspectives-menu')
 			i.icon-wrench.icon-white
 			| Perspective functions
@@ -17,21 +39,7 @@
 					a(href='/plgPerspFns?pluginName=#{plugin.pluginName}') #{plugin.pluginName}
 		br
 		br
-
-		a(href='/analyseconfig').nav-header
-			i.icon-screenshot.icon-white
-			| Analysis
-		.nav-header(data-toggle='collapse', data-target='#plconfigs-menu')
-			i.icon-wrench.icon-white
-			| Configurations
-		ul#plconfigs-menu.nav.nav-list.collapse
-			- each plugin in pluginsList
-				- var pl = nav['plgconfig:' + plugin.pluginName]
-				li(class=pl)
-					a(href='/plgconfigs?pluginName=#{plugin.pluginName}') #{plugin.pluginName}
-		br
-		br
-
+			
 		.nav-header(data-toggle='collapse', data-target='#plugins-menu')
 			i.icon-folder-open.icon-white
 			| Plugins

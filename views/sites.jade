@@ -1,0 +1,57 @@
+extends layout
+
+
+block content
+
+	link(rel='stylesheet', href='stylesheets/viewStyle.css')
+	link(rel='stylesheet', href='libs/select2/select2.css')
+	script(src='libs/select2/select2.js')
+	script(src='libs/jquery-ui-1.10.1.min.js')
+	script(src='javascript/sites.js')
+	script(src='libs/jquery.validate.min.js')		
+
+	//if lte IE 8
+		script(type='text/javascript', src='libs/mootools.js')
+		script(type='text/javascript', src='libs/selectivizr.js')
+
+
+	style(type='text/css')
+		/* style for validation form */
+		#browseConfig-form .fieldgroup label.error {
+			color: #FB3A3A;
+		}
+
+
+	.container-fluid
+		.row-fluid
+
+			// Variable currentMenu denotes the active nav item
+			- currentMenu = ''
+			include sidebar
+
+			.span9
+				.container-narrow
+					.jumbotron
+						h1.page-title Browse the extracted JavaScript code
+						br
+						p.lead
+							| Query the websites by typing the whole url or just a part of it, and an asterix in front or behind it.
+
+						form#browseConfig-form
+							#form-content
+								fieldset
+									.fieldgroup
+										select#siteSelect.select(style="width:600px", name='urls')
+											option
+											- each url in urlsList
+												option(value= url)= url
+										br
+										br
+									.fieldgroup
+										br
+										button.btn.btn-large.btn-primary Show code &nbsp; &nbsp;
+											i.icon-chevron-down.icon-white
+						br
+						.block-body#code-accordion
+							#scripts
+							#events

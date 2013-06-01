@@ -38,7 +38,7 @@ $(document).ready(function () {
 		
 		var urlsString = $('#form-content input:text.urls').val();
 		
-		$.get('/corpus/browse', { 
+		$.get('/analysisresults/browse', { 
 			urls 		: urlsString,
 			perspFns 	: _selectedPerspectives
 		}).done(function (analyseResults){			
