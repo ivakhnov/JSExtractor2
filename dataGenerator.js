@@ -127,6 +127,39 @@ var testPluginConfigs = [
 		}
 	}
 ];
+
+var JSLintConfigs = [
+	{
+		"configName": "MyConfig 1",
+		"description": "Cillum tattooed pickled, meggings non nostrud enim dolor blog freegan mustache sint actually Austin. Nostrud mustache tempor sed post-ironic. Swag labore quinoa helvetica, vero proident excepteur dreamcatcher godard photo booth stumptown VHS reprehenderit +1 mixtape. Sustainable irony vero, esse tempor before they sold out salvia skateboard lo-fi elit non. +1 typewriter shoreditch intelligentsia hoodie chambray. Assumenda ugh commodo VHS locavore, narwhal squid sapiente chillwave pork belly carles dreamcatcher. Chambray wes anderson irony art party, beard you probably haven't heard of them minim officia. Mcsweeney's skateboard umami marfa, whatever irony stumptown cliche salvia tousled ut exercitation intelligentsia hoodie put a bird on it. Stumptown fashion axe cupidatat letterpress, quis echo park tousled consectetur mollit post-ironic. Ea fixie tempor sapiente labore 3 wolf moon. Incididunt flannel pickled small batch, voluptate put a bird on it in echo park sustainable DIY. Banjo hella VHS four loko est. Ethnic scenester next level occupy, culpa chillwave pork belly. Est assumenda voluptate, exercitation tempor swag beard et four loko helvetica readymade consectetur.",
+		"config": {	
+			"userInput1":"userInputField1",
+			"userInput2":"scripts",
+			"userInput3":"events",
+			"userInput4":"true"
+		}
+	},
+	{
+		"configName": "Config for NodeJS",
+		"description": "Cred letterpress non irure, nisi aliquip portland. Wolf master cleanse leggings, blue bottle swag banksy laborum cillum terry richardson accusamus fixie pork belly umami ullamco. Ullamco raw denim placeat irony master cleanse, quinoa sint odio proident scenester flannel etsy. Lo-fi tonx VHS hoodie incididunt. Beard keffiyeh raw denim officia. Laboris eiusmod high life organic mlkshk try-hard. Terry richardson salvia cupidatat organic, ea cray aesthetic laborum.",
+		"config": {	
+			"node":"true",
+			"white":"true", 
+			"regexp":"true", 
+			"todo":"true"
+		}
+	},
+	{
+		"configName": "MyConfig 3",
+		"description": "VHS raw denim portland, hashtag pour-over quinoa put a bird on it tattooed placeat deep v fap esse photo booth eu high life. Ugh incididunt church-key et, occupy lo-fi umami do dolore squid gluten-free freegan keytar. Adipisicing gluten-free ethnic, pinterest narwhal ea neutra salvia nulla hashtag selfies banjo cupidatat. Church-key retro brooklyn sed, vinyl intelligentsia brunch trust fund cred sint magna esse. Kale chips high life Austin, single-origin coffee squid vegan whatever. Ad quis freegan veniam, blog mcsweeney's mumblecore fingerstache 90's. Godard sapiente occupy, ex vegan master cleanse literally. Jean shorts try-hard next level, photo booth placeat dolore cardigan PBR gentrify ex tempor. Street art 8-bit fanny pack, single-origin coffee mumblecore banjo cupidatat non. Yr artisan occaecat seitan photo booth intelligentsia DIY nostrud. Pour-over DIY beard banksy, tonx fanny pack try-hard brooklyn portland lomo ex PBR. Fanny pack echo park mumblecore, beard meggings esse consectetur nulla vegan nostrud quis ex mcsweeney's. Disrupt in authentic etsy ugh nulla synth tempor scenester. Gastropub artisan et, etsy tempor 8-bit kale chips brooklyn aesthetic laboris odd future quinoa. Laborum locavore cupidatat, mollit nulla ex butcher aesthetic disrupt. Shoreditch sunt church-key echo park art party. DIY chillwave vegan dolore culpa fixie. Umami pinterest actually, aute squid whatever excepteur. Vero jean shorts church-key next level, officia beard hoodie stumptown ethnic tonx. You probably haven't heard of them intelligentsia sriracha umami pitchfork, delectus tumblr godard nisi biodiesel tonx food truck anim. Hashtag aute esse, art party nostrud fanny pack tempor bespoke.",
+		"config": {	
+			"userInput1":"userInputField1",
+			"userInput2":"events",
+			"userInput3":"scripts",
+			"userInput4":"false"
+		}
+	}
+];
 			
 var testPerspectiveFns = [
 	{
@@ -151,48 +184,21 @@ var testPerspectiveFns = [
 	}
 ];
 
-function testfunctie(callback) {
-	var pluginOutput1 = [0, 365];
-	var pluginOutput2 = [1, 500];
-	
-	var val = pluginOutput1[0];
-	
-	var resultHtml = '<style media="screen" type="text/css">'+
-			'.falseBlock, .trueBlock {'+
-			'	position: relative;'+
-			'	height: 90px;'+
-			'	width: 10%;'+
-			'	font-size: 48px;'+
-			'	text-align: center;'+
-			'	display: table-cell;'+
-			'	vertical-align: middle;'+
-			'}'+
-			'.falseBlock {'+
-			'	color: #B40404;'+
-			'	background: #F99D9F;'+
-			'}'+
-			'.trueBlock {'+
-			'	color: #0B610B;'+
-			'	background: #B3E0B1;'+
-			'}'+
-		'</style>';
-
-	var blockStyle = null;
-	if (val == 1) { 
-		val = 'true';
-		blockStyle = 'trueBlock';
-	} else { 
-		val = 'false';
-		blockStyle = 'falseBlock';
+var JSLintPerspectiveFns = [
+	{
+		"perspName": "Errors-Warnings Pie",
+		"description": "Cillum tattooed pickled, meggings non nostrud enim dolor blog freegan mustache sint actually Austin. Nostrud mustache tempor sed post-ironic. Swag labore quinoa helvetica, vero proident excepteur dreamcatcher godard photo booth stumptown VHS reprehenderit +1 mixtape. Sustainable irony vero, esse tempor before they sold out salvia skateboard lo-fi elit non. +1 typewriter shoreditch intelligentsia hoodie chambray. Assumenda ugh commodo VHS locavore, narwhal squid sapiente chillwave pork belly carles dreamcatcher. Chambray wes anderson irony art party, beard you probably haven't heard of them minim officia. Mcsweeney's skateboard umami marfa, whatever irony stumptown cliche salvia tousled ut exercitation intelligentsia hoodie put a bird on it. Stumptown fashion axe cupidatat letterpress, quis echo park tousled consectetur mollit post-ironic. Ea fixie tempor sapiente labore 3 wolf moon. Incididunt flannel pickled small batch, voluptate put a bird on it in echo park sustainable DIY. Banjo hella VHS four loko est. Ethnic scenester next level occupy, culpa chillwave pork belly. Est assumenda voluptate, exercitation tempor swag beard et four loko helvetica readymade consectetur.",
+		"fn": "ErrWarPie"
+	},
+	{
+		"perspName": "Count of remarks",
+		"description": "Cred letterpress non irure, nisi aliquip portland. Wolf master cleanse leggings, blue bottle swag banksy laborum cillum terry richardson accusamus fixie pork belly umami ullamco. Ullamco raw denim placeat irony master cleanse, quinoa sint odio proident scenester flannel etsy. Lo-fi tonx VHS hoodie incididunt. Beard keffiyeh raw denim officia. Laboris eiusmod high life organic mlkshk try-hard. Terry richardson salvia cupidatat organic, ea cray aesthetic laborum.",
+		"fn": "RemarksCount"
 	}
-	resultHtml += "<div class='" + blockStyle + "'>" + val + "</div>";
+];
 
-	console.log('test HTML: \n' + resultHtml);
-	callback(null, resultHtml);
-};
-
-var dummyPerspFns = { };
-dummyPerspFns.testfunctie1 = function(analyseOutput) {
+var standaardPerspFns = { };
+standaardPerspFns.testfunctie1 = function(analyseOutput) {
 	
 	var resultHtml = '<style media="screen" type="text/css">'+
 			'.falseBlock, .trueBlock {'+
@@ -224,6 +230,65 @@ dummyPerspFns.testfunctie1 = function(analyseOutput) {
 		val = 'false';
 		blockStyle = 'falseBlock';
 	}
+	resultHtml += "<div class='" + blockStyle + "'>" + val + "</div>";
+
+	return resultHtml;
+};
+
+standaardPerspFns.ErrWarPie = function(analyseOutput) {
+	
+	var resultHtml = '<style media="screen" type="text/css">'+
+			'.falseBlock, .trueBlock {'+
+			'	position: relative;'+
+			'	height: 90px;'+
+			'	width: 10%;'+
+			'	font-size: 48px;'+
+			'	text-align: center;'+
+			'	display: table-cell;'+
+			'	vertical-align: middle;'+
+			'}'+
+			'.falseBlock {'+
+			'	color: #B40404;'+
+			'	background: #F99D9F;'+
+			'}'+
+			'.trueBlock {'+
+			'	color: #0B610B;'+
+			'	background: #B3E0B1;'+
+			'}'+
+		'</style>';
+
+	var blockStyle = null;
+	var val = analyseOutput[0].value
+	
+	if (val == 'true') { 
+		val = 'true';
+		blockStyle = 'trueBlock';
+	} else { 
+		val = 'false';
+		blockStyle = 'falseBlock';
+	}
+	resultHtml += "<div class='" + blockStyle + "'>" + val + "</div>";
+
+	return resultHtml;
+};
+
+standaardPerspFns.RemarksCount = function(analyseOutput) {
+	
+	var resultHtml = '<style media="screen" type="text/css">'+
+			'.countBlock, .countBlock {'+
+			'	position: relative;'+
+			'	height: 90px;'+
+			'	width: 10%;'+
+			'	font-size: 48px;'+
+			'	text-align: center;'+
+			'	display: table-cell;'+
+			'	vertical-align: middle;'+
+			'}'+
+		'</style>';
+
+	var blockStyle = 'countBlock';
+	var val = analyseOutput.length
+
 	resultHtml += "<div class='" + blockStyle + "'>" + val + "</div>";
 
 	return resultHtml;
@@ -276,41 +341,36 @@ function launcher() {
   }
 };
 
-function addConfigs(callback) {
+function addConfigs(pluginName, pluginConfigs, callback) {
 	var err = null;
 	function loopFun (conf, callback) {
 		var confName = conf.configName;
 		var confDescription = conf.description;
 		var confConfig = conf.config;
-		
-		var pluginName = 'TestPlugin';
-		
+				
 		db.savePluginConfig(pluginName, confName, confDescription, confConfig, function(res) {
 			console.log('Added configuration "' + confName + '" for plugin "' + pluginName);
 			callback(res);
 		});
 	};
 	
-	async.mapSeries(testPluginConfigs, loopFun, function(res) {
-		console.log('OK - saving configurations!');
-		// db.getPluginConfigs('TestPlugin', function(res) { 
-		// console.log('TEST: ' + res); 
-		// });
-		callback(err, 'OK - saving configurations!');
+	async.mapSeries(pluginConfigs, 
+		loopFun,
+		function(res) {
+			console.log('OK - saving configurations!');
+			callback(err, 'OK - saving configurations!');
 	});
 };
 
-function addPerspectiveFns(callback) {
+function addPerspectiveFns(pluginName, pluginPerspectives, callback) {
 	var err = null;
 	function loopFun (persp, callback) {
 		var perspName = persp.perspName;
 		var perspDescription = persp.description;
 		var fnString = persp.fn;
-		
-		var pluginName = 'TestPlugin';
-		
+				
 		//fn = eval(fnString);
-		var fn = dummyPerspFns[fnString];
+		var fn = standaardPerspFns[fnString];
 		fnPool.addFn(fn, function (fnID) {
 			db.savePluginPersp(pluginName, pluginName+": "+perspName, perspDescription, fnID, function (res) {
 				console.log('Added perspective function "' + perspName + '" with id='+ fnID +' for plugin "' + pluginName);
@@ -319,12 +379,11 @@ function addPerspectiveFns(callback) {
 		});
 	};
 	
-	async.mapSeries(testPerspectiveFns, loopFun, function(res) {
-		console.log('OK - saving perspective functions!');
-		// fnPool.getFn(2, function(fn) {
-		// 	console.log('TEST: ' + fn);
-		// });
-		callback(err, 'OK - saving perspective functions!');
+	async.mapSeries(pluginPerspectives, 
+		loopFun,
+		function(res) {
+			console.log('OK - saving perspective functions TestPlugin!');
+			callback(err, 'OK - saving perspective functions TestPlugin!');
 	});
 };
 
@@ -333,19 +392,21 @@ async.series([
 		resetDb(callback);
 	},
 	function(callback){
-		addConfigs(callback);
+		addConfigs('TestPlugin', testPluginConfigs, callback);
 	},
 	function(callback){
-		addPerspectiveFns(callback);
+		addConfigs('JSLint', JSLintConfigs, callback);
+	},
+	function(callback){
+		addPerspectiveFns('TestPlugin', testPerspectiveFns, callback);
+	},
+	function(callback){
+		addPerspectiveFns('JSLint', JSLintPerspectiveFns, callback);
 	}
 ],
 // optional callback
 function(err, results){
 	console.log('\n Dummy data added to database! \n \n Done!');
-	// fnPool.getFn(2, function(r) {
-	// 	console.log('!!! \n' + r(9999));
-	// });
-	//process.exit(code=0);
 	require('./app');
 });
 

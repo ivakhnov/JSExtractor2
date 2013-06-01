@@ -1,29 +1,32 @@
-var JSLintPlugin = function() {
-	// method executed on creation, normaly none
+// Import the actual tool
+var jslint = require('node-jslint')
 
-	// public members --------------------
+// Create plugin for it
+var JSLintPlugin = function() {
+	//////////////////////
+	// public members  //
+	//////////////////////
+	
 	this.getInputView = function(){
 		return _inputView;
 	};
 	
-	this.start = function(configJson, site, callback){
+	this.start = function(configJson, codeArray, callback){
 		var err = null;
-		var result = [
-						{
-							"title": "Test property 1",
-							"type": "boolean",
-							"value": "true"
-						},
-						{
-							"title": "Test property 2",
-							"type": "boolean",
-							"value": "false"
-						}
-					];
-		callback(err, result);
+		// Run the plugin first
+		jslint.JSLINT(codeArray, configJson);
+		// now take the detected errors in the code
+		var results = jslint.JSLINT.errors;
+		
+		console.log(results);
+		
+		// terminate
+		callback(err, results);
 	};
 
-	// private members ------------------
+	//////////////////////
+	// private members //
+	//////////////////////
 
 	var _inputView = [
 		{	"type": "text",

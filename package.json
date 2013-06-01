@@ -1,24 +1,24 @@
 {
-  "name"    : "JSExtractor2",
-  "version" : "0.0.1",
-  "author"  : "Evgeni Ivakhnov <ivachnov@hotmail.com>",
-  "description": "http://soft.vub.ac.be/soft/edu/mscprojects/2012_2013/js_extractor",
-  "private" : true,
-  "scripts" : {
-    "start" : "node app"
-  },
-  "repository"  : {
-    "type"      : "git",
-    "url"       : "https://github.com/ivakhnov/JSExtractor2.git"
-  },
-  "dependencies"  : {
-    "async"       : "0.1.22",
-    "express"     : "3.0.0",
-    "jade"        : "0.27.7",
-    "jsdom"       : "0.2.19",
-    "jslint"      : "0.1.9",
-    "redis"       : "0.8.2",
-    "request"     : "2.12.0",
-    "showdown"    : "0.3.1"
-  }
+	"name"    : "JSExtractor2",
+	"version" : "0.0.1",
+	"author"  : "Evgeni Ivakhnov <ivachnov@hotmail.com>",
+	"description": "http://soft.vub.ac.be/soft/edu/mscprojects/2012_2013/js_extractor",
+	"private" : true,
+	"scripts" : {
+		"start" : "node app"
+	},
+	"repository"  : {
+		"type"      : "git",
+		"url"       : "https://github.com/ivakhnov/JSExtractor2.git"
+	},
+	"dependencies"  : {
+		"async"			: "0.1.22",
+		"express"		: "3.0.0",
+		"jade"			: "0.27.7",
+		"jsdom"			: "0.2.19",
+		"node-jslint"	: "0.1.1",
+		"redis"			: "0.8.2",
+		"request"		: "2.12.0",
+		"showdown"		: "0.3.1"
+	}
 }
