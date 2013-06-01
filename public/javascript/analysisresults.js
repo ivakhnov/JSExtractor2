@@ -59,8 +59,7 @@ $(document).ready(function () {
 	$('#siteSelect').select2({
 		placeholder: 'Query sites',
 		allowClear: true,
-		minimumInputLength: 1,
-		maximumSelectionSize: 1
+		minimumInputLength: 1
 	});
 	$('#perspectiveSelect').select2({
 		placeholder: 'Select perspective functions',

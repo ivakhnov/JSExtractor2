@@ -26,10 +26,10 @@ module.exports = function(app){
 
 	app.get('/analysisresults/browse', function(req, res){
 		// take the string with the urls and selected plugins (config)
-		var urlsString = req.query["urls"];		
+		var urlsArray = req.query["urls"];	
 		// Separate the urls in the string and create array of strings 
 		// delimiters: comma, semicolon and whitespace
-		var urlsArray = urlsString.split(/\s*[,;]\s*|\s{1,}|[\r\n]+/);
+		// var urlsArray = urlsString.split(/\s*[,;]\s*|\s{1,}|[\r\n]+/);
 
 		var perspFns = req.query["perspFns"];
 				

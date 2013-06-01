@@ -1,18 +1,23 @@
 $(document).ready(function () {
 	
-	function getCodeList(arr) { 
-		var resultHtml = "<ul>";
+	function getCodeList(arr, getterFun) { 
+		var ObjUl = $('<ul></ul>');
 		for (var i = 0; i < arr.length; i++) {
-			resultHtml += "<li>"+ JSON.parse(arr[i]).code +"</li>";
+			var Objli = $('<li></li>');
+			var Objc = $('<samp></samp>');
+			
+			Objc.text(getterFun(arr[i]));
+			Objli.append(Objc);
+
+			ObjUl.append(Objli);
+			ObjUl.append($("<br>"));
 		};
-		resultHtml += "</ul>";
-		return resultHtml;
+		return ObjUl;
 	};
 			
 	function startButton() {
 
-		$('#scripts-block').remove();
-		$('#events-block').remove();
+		$('#code-block').remove();
 		
 		var urlsString = $('#siteSelect').val();
 		
@@ -21,29 +26,37 @@ $(document).ready(function () {
 		}).done(function (codeResults){			
 			var scripts = codeResults.scripts;
 			var events = codeResults.events;
-
-			var htmlDivScripts = $("<div id='scripts-block'></div>");
 			
-			var htmlScriptsInplace = $("<h3 id='scripts-block' class='ui-acc-header'>"+
+			var htmlBlock = $("<h3 id='js-block' class='ui-acc-header'>"+
 				"<a href='#'> Scripts: inplace </a></h3>"+
-				"<div style='text-align: left;'>"+ getCodeList(scripts.inplace) +"</div>");
-			var htmlScriptsFile = $("<h3 id='scripts-block' class='ui-acc-header'>"+
-				"<a href='#'> Scripts: external file </a></h3>"+
-				"<div style='text-align: left;'>"+ getCodeList(scripts.sourceFiles) +"</div>");
-			var htmlScriptsFileCross = $("<h3 id='scripts-block' class='ui-acc-header'>"+
-				"<a href='#'> Scripts: external file (cross-domain) </a></h3>"+
-				"<div style='text-align: left;'>"+ getCodeList(scripts.sourceFilesCrossDomain) +"</div>");
+				"<div style='text-align: left;'></div>");
 			
-			$(htmlDivScripts).append(htmlScriptsInplace);
-			$(htmlDivScripts).append(htmlScriptsFile);
-			$(htmlDivScripts).append(htmlScriptsFileCross);
+			var htmlScriptsInplace = htmlBlock.clone();
+			$(htmlScriptsInplace[1]).append(getCodeList(scripts.inplace, function(x) {
+				return JSON.parse(x).code;
+			}));
+			var htmlScriptsFile = htmlBlock.clone();
+			$(htmlScriptsFile[1]).append(getCodeList(scripts.sourceFiles, function(x) {
+				return JSON.parse(x).code;
+			}));
+			var htmlScriptsFileCross = htmlBlock.clone();
+			$(htmlScriptsFileCross[1]).append(getCodeList(scripts.sourceFilesCrossDomain, function(x) {
+				return JSON.parse(x).code;
+			}));
 			
-			var htmlDivEvents = $("<h3 id='events-block' class='ui-acc-header'>"+
-				"<a href='#'> Events </a></h3>"+
-				"<div class='ui-acc-content'></div>");
+			var htmlEventsFuns = htmlBlock.clone();
+			$(htmlEventsFuns[1]).append(getCodeList(events, function(x) {
+				return JSON.parse(x).listeners.func;
+			}));
 			
-			$('#code-accordion').append(htmlDivScripts);
-			$('#code-accordion').append(htmlDivEvents);
+			var codeBlock = $("<div id='code-block'></div>");
+			
+			$(codeBlock).append(htmlScriptsInplace);
+			$(codeBlock).append(htmlScriptsFile);
+			$(codeBlock).append(htmlScriptsFileCross);
+			$(codeBlock).append(htmlEventsFuns);
+			
+			$('#code-accordion').append(codeBlock);
 			
 		});		
 	};
