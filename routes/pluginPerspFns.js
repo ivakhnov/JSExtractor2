@@ -32,7 +32,7 @@ module.exports = function(app){
 
 		fn = eval(fnString);
 		fnPool.addFn(fn, function (fnID) {
-			db.savePluginPersp(pluginName, perspName, perspDescription, fnID, function (result) {
+			db.savePluginPersp(pluginName, pluginName+": "+perspName, perspDescription, fnID, function (result) {
 				console.log('New perspective function added to database!');
 				res.send('New perspective function added to database!');
 			});

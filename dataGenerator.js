@@ -312,7 +312,7 @@ function addPerspectiveFns(callback) {
 		//fn = eval(fnString);
 		var fn = dummyPerspFns[fnString];
 		fnPool.addFn(fn, function (fnID) {
-			db.savePluginPersp(pluginName, perspName, perspDescription, fnID, function (res) {
+			db.savePluginPersp(pluginName, pluginName+": "+perspName, perspDescription, fnID, function (res) {
 				console.log('Added perspective function "' + perspName + '" with id='+ fnID +' for plugin "' + pluginName);
 				callback(res);
 			});

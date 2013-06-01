@@ -36,7 +36,7 @@ $(document).ready(function () {
 			'<table id="comparisonTable" cellpadding="10" cellspacing="10" border="10" class="table table-striped table-bordered">'+
 			'</table></div>'));
 		
-		var urlsString = $('#form-content input:text.urls').val();
+		var urlsString = $('#siteSelect').val();
 		
 		$.get('/analysisresults/browse', { 
 			urls 		: urlsString,
@@ -56,6 +56,12 @@ $(document).ready(function () {
 		});		
 	};
 
+	$('#siteSelect').select2({
+		placeholder: 'Query sites',
+		allowClear: true,
+		minimumInputLength: 1,
+		maximumSelectionSize: 1
+	});
 	$('#perspectiveSelect').select2({
 		placeholder: 'Select perspective functions',
 		allowClear: true

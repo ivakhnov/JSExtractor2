@@ -39,13 +39,16 @@ block content
 						h1.page-title Browse the analysis results
 						br
 						p.lead
-							| Query the websites by typing the whole url or just a part of it, and an asterix in front or behind it.
+							| Query the websites by typing the whole url or just a part of it.
 
 						form#browseConfig-form
 							#form-content
 								fieldset
 									.fieldgroup
-										input.input-xxlarge.urls(type='text', name='urls', value='webmail.ulb.ac.be')
+										select#siteSelect.select(style='width:600px', name='urls', multiple='multiple')
+											option
+											- each url in urlsList
+												option(value= url)= url
 										br
 									.fieldgroup
 										br

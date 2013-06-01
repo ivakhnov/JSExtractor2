@@ -13,10 +13,12 @@ module.exports = function(app){
 	app.get('/analysisresults', function(req, res){
 		pluginManager.getNames(function(plugins){
 			db.getAllPerspFnNames(function(err, perspFnNames){
-				console.log('testlengte: ' + perspFnNames);
-				res.render('analysisresults', { 
-					"pluginsList"	: plugins,
-					"perspFnNames" 	: perspFnNames
+				db.getUrls(function(err, urls){
+					res.render('analysisresults', { 
+						"urlsList"	: urls,
+						"pluginsList"	: plugins,
+						"perspFnNames" 	: perspFnNames
+					});
 				});
 			});
 		});
