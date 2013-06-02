@@ -47,27 +47,29 @@ module.exports = function(app){
  */
 function getSiteAnalyses (url, perspFns, callback) {
 	var siteResults = { };
-	
-	async.map(perspFns, 
-		function (perspName, callb) {
-			// get the ID of the perspective function
-			db.getPerspID(perspName, function (err, fnID) {
-				// now get the actual perspective function from the pool with this ID
-				fnPool.getFn(fnID, function (perspFn) {
-					db.getPluginOfPerspFn(perspName, function (err, pluginName) {
-						db.getAnalysis(url, pluginName, function (err, siteRes) {
+
+	async.map(perspFns, function (perspName, callb) {
+		// get the ID of the perspective function
+		db.getPerspID(perspName, function (err, fnID) {
+			// now get the actual perspective function from the pool with this ID
+			fnPool.getFn(fnID, function (perspFn) {
+				db.getPluginOfPerspFn(perspName, function (err, pluginName) {
+					db.getAnalysis(url, pluginName, function (err, siteRes) {
+						try {
 							siteResults[perspName] = perspFn(siteRes.analyseResults);
-							callb(err, 'ok!');
-						})
+						} catch (e) {
+							siteResults[perspName] = null;
+						} finally {
+							callb(err, 'ok');
+						}
 					})
-				});
+				})
 			});
-			
-		}, 
-		function (err, resl) {
-			callback(err, {
-				"siteName" 	: url,
-				"siteOutput": siteResults
-			});
+		});
+	}, function (err, resl) {
+		callback(err, {
+			"siteName" 	: url,
+			"siteOutput": siteResults
+		});
 	});
 };
