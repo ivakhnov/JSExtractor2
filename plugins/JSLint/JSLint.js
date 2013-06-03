@@ -65,7 +65,7 @@ var JSLintPlugin = function() {
 						{ "value": "false",
 						  "description": "false" }
 					  ],
-			"description": "Tolerate 'continue'. #true if the 'continue' statement should be allowed."
+			"description": "Tolerate continue. #true if the continue statement should be allowed."
 		},
 		{	"type": "select",
 			"name": "debug",
@@ -197,7 +197,7 @@ var JSLintPlugin = function() {
 						{ "value": "false",
 						  "description": "false" }
 					  ],
-			"description": " Tolerate missing 'use strict' pragma. #true if the ES5 'use strict'; pragma is not required. Do not use this pragma unless you know what you are doing."
+			"description": " Tolerate missing use strict pragma. #true if the ES5 use strict; pragma is not required. Do not use this pragma unless you know what you are doing."
 		},
 		{	"type": "select",
 			"name": "stupid",
@@ -208,7 +208,7 @@ var JSLintPlugin = function() {
 						{ "value": "false",
 						  "description": "false" }
 					  ],
-			"description": " Tolerate stupidity. #true if blocking ('...Sync') methods can be used."
+			"description": " Tolerate stupidity. #true if blocking (...Sync) methods can be used."
 		},
 		{	"type": "select",
 			"name": "sub",
