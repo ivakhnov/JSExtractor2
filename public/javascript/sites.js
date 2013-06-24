@@ -27,24 +27,33 @@ $(document).ready(function () {
 			var scripts = codeResults.scripts;
 			var events = codeResults.events;
 			
-			var htmlBlock = $("<h3 id='js-block' class='ui-acc-header'>"+
+			var htmlBlockI = $("<h3 id='js-block' class='ui-acc-header'>"+
 				"<a href='#'> Scripts: inplace </a></h3>"+
 				"<div style='text-align: left;'></div>");
+			var htmlBlockSF = $("<h3 id='js-block' class='ui-acc-header'>"+
+				"<a href='#'> Scripts: source file </a></h3>"+
+				"<div style='text-align: left;'></div>");
+			var htmlBlockSFCD = $("<h3 id='js-block' class='ui-acc-header'>"+
+				"<a href='#'> Scripts: source file cross-domain </a></h3>"+
+				"<div style='text-align: left;'></div>");
+			var htmlBlockEV = $("<h3 id='js-block' class='ui-acc-header'>"+
+				"<a href='#'> Events </a></h3>"+
+				"<div style='text-align: left;'></div>");
 			
-			var htmlScriptsInplace = htmlBlock.clone();
+			var htmlScriptsInplace = htmlBlockI.clone();
 			$(htmlScriptsInplace[1]).append(getCodeList(scripts.inplace, function(x) {
 				return JSON.parse(x).code;
 			}));
-			var htmlScriptsFile = htmlBlock.clone();
+			var htmlScriptsFile = htmlBlockSF.clone();
 			$(htmlScriptsFile[1]).append(getCodeList(scripts.sourceFiles, function(x) {
 				return JSON.parse(x).code;
 			}));
-			var htmlScriptsFileCross = htmlBlock.clone();
+			var htmlScriptsFileCross = htmlBlockSFCD.clone();
 			$(htmlScriptsFileCross[1]).append(getCodeList(scripts.sourceFilesCrossDomain, function(x) {
 				return JSON.parse(x).code;
 			}));
 			
-			var htmlEventsFuns = htmlBlock.clone();
+			var htmlEventsFuns = htmlBlockEV.clone();
 			$(htmlEventsFuns[1]).append(getCodeList(events, function(x) {
 				return JSON.parse(x).listeners.func;
 			}));
@@ -64,7 +73,6 @@ $(document).ready(function () {
 	$('#siteSelect').select2({
 		placeholder: 'Query sites',
 		allowClear: true,
-		minimumInputLength: 1,
 		maximumSelectionSize: 1
 	});
 

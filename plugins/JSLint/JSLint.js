@@ -13,13 +13,21 @@ var JSLintPlugin = function() {
 	
 	this.start = function(configJson, codeArray, callback){
 		var err = null;
-		// Run the plugin first
-		jslint.JSLINT(codeArray, configJson);
-		// now take the detected errors in the code
-		var results = jslint.JSLINT.errors;
 		
-		console.log(results);
+		var codeString = "";
+		for(var i = 0; i < codeArray.length; i ++) {
+			codeString += JSON.parse(codeArray[i]).code;
+		}
 		
+		// Firstly run the plugin
+		jslint.JSLINT(codeString, configJson);
+		// Then take the detected errors in the code
+		var results = jslint.JSLINT.error_report(jslint.JSLINT.data());
+		// var results = jslint.JSLINT.errors;
+		if(results === "") {
+			results = "No Errors";
+		}
+		console.log('___________________________________');
 		// terminate
 		callback(err, results);
 	};

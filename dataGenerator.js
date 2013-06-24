@@ -3,87 +3,13 @@ var urlLib = require('./lib/urlLib');
 var db = require('./lib/dbManager');
 var async = require('async');
 var fnPool = require('./lib/fnPool');
+var analyseConfig = require('./routes/analyseconfig.js');
 
+				
+var urlsArray =['www.google.com',
+				'webmail.vub.ac.be',
+				'hln.be'];
 
-
-var sites =['ted.com',
-			'google.com',
-			'facebook.com',
-			'yahoo.com',
-			'youtube.com',
-			'live.com',
-			'wikipedia.com',
-			'Blogger.com',
-			'msn.com',
-			'myspace.com',
-			'Twitter.com',
-			'WordPress.com',
-			'Bing.com',
-			'RapidShare.com',
-			'flickr.com',
-			'amazon.com',
-			'ebay.com',
-			'Craigslist.org',
-			'LinkedIn.com',
-			'hln.be',
-			'Go.com',
-			'imdb.com',
-			'aol.com',
-			'nytimes.com',
-			'economist.com',
-			'photobucket.com',
-			'blogspot.com',
-			'Ask.com',
-			'MediaFire.com',
-			'about.com',
-			'ImageShack.com',
-			'orkut.com',
-			'livejournal.com',
-			'4shared.com',
-			'archive.org',
-			'Hotfile.com',
-			'digg.com',
-			'Delicious.com',
-			'Answers.com',
-			'Skyrock.com',
-			'popurls.com',
-			'Tagged.com',
-			'Hulu.com',
-			'ehow.com',
-			'Metacafe.com',
-			'ft.com',
-			'ezinearticles.com',
-			'businessweek.com',
-			'wsj.com',
-			'Metacritic.com',
-			'thefreedictionary.com',
-			'howstuffworks.com',
-			'fotolog.com',
-			'CNET.com',
-			'sciencemag.org',
-			'Discovery.com',
-			'nationalgeographic.com',
-			'WebMD.com',
-			'MedHelp.org',
-			'MayoClinic.com',
-			'NIH.gov',
-			'wordreference.com',
-			'EW.com',
-			'Plentyoffish.com',
-			'StumbleUpon.com',
-			'reddit.com',
-			'Guardian.com',
-			'Reuters.com',
-			'ICQ.com',
-			'GameSpot.com',
-			'IGN.com',
-			'gamefaqs.com',
-			'ediets.com',
-			'models.com',
-			'Cosmopolitan.com',
-			'womensforum.com',
-			'NFL.com',
-			'SI.com'];
 			
 var testPluginConfigs = [
 	{
@@ -146,7 +72,9 @@ var JSLintConfigs = [
 			"node":"true",
 			"white":"true", 
 			"regexp":"true", 
-			"todo":"true"
+			"todo":"true",
+			"vars":"true",
+			"plusplus":"true"
 		}
 	},
 	{
@@ -186,14 +114,19 @@ var testPerspectiveFns = [
 
 var JSLintPerspectiveFns = [
 	{
-		"perspName": "Errors-Warnings Pie",
+		"perspName": "Scan Pie",
 		"description": "Cillum tattooed pickled, meggings non nostrud enim dolor blog freegan mustache sint actually Austin. Nostrud mustache tempor sed post-ironic. Swag labore quinoa helvetica, vero proident excepteur dreamcatcher godard photo booth stumptown VHS reprehenderit +1 mixtape. Sustainable irony vero, esse tempor before they sold out salvia skateboard lo-fi elit non. +1 typewriter shoreditch intelligentsia hoodie chambray. Assumenda ugh commodo VHS locavore, narwhal squid sapiente chillwave pork belly carles dreamcatcher. Chambray wes anderson irony art party, beard you probably haven't heard of them minim officia. Mcsweeney's skateboard umami marfa, whatever irony stumptown cliche salvia tousled ut exercitation intelligentsia hoodie put a bird on it. Stumptown fashion axe cupidatat letterpress, quis echo park tousled consectetur mollit post-ironic. Ea fixie tempor sapiente labore 3 wolf moon. Incididunt flannel pickled small batch, voluptate put a bird on it in echo park sustainable DIY. Banjo hella VHS four loko est. Ethnic scenester next level occupy, culpa chillwave pork belly. Est assumenda voluptate, exercitation tempor swag beard et four loko helvetica readymade consectetur.",
-		"fn": "ErrWarPie"
+		"fn": "ScanPie"
 	},
 	{
-		"perspName": "Count of remarks",
+		"perspName": "Number of remarks",
 		"description": "Cred letterpress non irure, nisi aliquip portland. Wolf master cleanse leggings, blue bottle swag banksy laborum cillum terry richardson accusamus fixie pork belly umami ullamco. Ullamco raw denim placeat irony master cleanse, quinoa sint odio proident scenester flannel etsy. Lo-fi tonx VHS hoodie incididunt. Beard keffiyeh raw denim officia. Laboris eiusmod high life organic mlkshk try-hard. Terry richardson salvia cupidatat organic, ea cray aesthetic laborum.",
-		"fn": "RemarksCount"
+		"fn": "RemarksNumber"
+	},
+	{
+		"perspName": "Error Report",
+		"description": "Cred letterpress non irure, nisi aliquip portland. Wolf master cleanse leggings, blue bottle swag banksy laborum cillum terry richardson accusamus fixie pork belly umami ullamco. Ullamco raw denim placeat irony master cleanse, quinoa sint odio proident scenester flannel etsy. Lo-fi tonx VHS hoodie incididunt. Beard keffiyeh raw denim officia. Laboris eiusmod high life organic mlkshk try-hard. Terry richardson salvia cupidatat organic, ea cray aesthetic laborum.",
+		"fn": "ErrorReport"
 	}
 ];
 
@@ -235,48 +168,45 @@ standaardPerspFns.testfunctie1 = function(analyseOutput) {
 	return resultHtml;
 };
 
-standaardPerspFns.ErrWarPie = function(analyseOutput) {
-	
-	var resultHtml = '<style media="screen" type="text/css">'+
-			'.falseBlock, .trueBlock {'+
-			'	position: relative;'+
-			'	height: 90px;'+
-			'	width: 10%;'+
-			'	font-size: 48px;'+
-			'	text-align: center;'+
-			'	display: table-cell;'+
-			'	vertical-align: middle;'+
-			'}'+
-			'.falseBlock {'+
-			'	color: #B40404;'+
-			'	background: #F99D9F;'+
-			'}'+
-			'.trueBlock {'+
-			'	color: #0B610B;'+
-			'	background: #B3E0B1;'+
-			'}'+
-		'</style>';
-
-	var blockStyle = null;
-	var val = analyseOutput[0].value
-	
-	if (val == 'true') { 
-		val = 'true';
-		blockStyle = 'trueBlock';
-	} else { 
-		val = 'false';
-		blockStyle = 'falseBlock';
+standaardPerspFns.ScanPie = function (analyseOutput) {
+				
+	var valScanned = analyseOutput.match(/(?:\S+\s)?\S*scanned/g);
+	var val = "";
+	if(valScanned.length > 0) {
+		valScanned = valScanned[0].substr(1);
+		val = valScanned.split(" ")[0];
+	} else {
+		val = "100%";
 	}
-	resultHtml += "<div class='" + blockStyle + "'>" + val + "</div>";
+	val = parseInt(val);
+	
+	var data = [{
+					value: val,
+					color:"#58F331"
+				},
+				{
+					value : 100,
+					color : "#E0E4CC"
+				}];
+	
+	var js = "<script type='text/javascript'>"+
+			'$($(".toParsePieChart").get(0)).replaceWith($("<canvas class=\'pieChart\'></canvas>"));'+
+			'var ctx = $(".pieChart").last()[0].getContext("2d");'+
+			'new Chart(ctx).Pie('+ JSON.stringify(data) +');'+
+		"</script>";
+
+	resultHtml = "<canvas class='toParsePieChart'></canvas>";
+	resultHtml += js;
+	
+	console.log(resultHtml);
 
 	return resultHtml;
 };
 
-standaardPerspFns.RemarksCount = function(analyseOutput) {
+standaardPerspFns.RemarksNumber = function(analyseOutput) {
 	
 	var resultHtml = '<style media="screen" type="text/css">'+
-			'.countBlock, .countBlock {'+
-			'	position: relative;'+
+			'.countBlock {'+
 			'	height: 90px;'+
 			'	width: 10%;'+
 			'	font-size: 48px;'+
@@ -287,7 +217,30 @@ standaardPerspFns.RemarksCount = function(analyseOutput) {
 		'</style>';
 
 	var blockStyle = 'countBlock';
-	var val = analyseOutput.length
+	// the g in the regular expression says to search the whole string 
+	// rather than just find the first occurrence
+	var val = analyseOutput.match(/<cite>/g).length;
+
+	resultHtml += "<div class='" + blockStyle + "'>" + val + "</div>";
+
+	return resultHtml;
+};
+
+standaardPerspFns.ErrorReport = function(analyseOutput) {
+	
+	var resultHtml = '<style media="screen" type="text/css">'+
+			'.errorReportBlock {'+
+			'	height: 90px;'+
+			'	width: 10%;'+
+			'	font-size: 11px;'+
+			'	text-align: left;'+
+			'	display: table-cell;'+
+			'	vertical-align: middle;'+
+			'}'+
+		'</style>';
+
+	var blockStyle = 'errorReportBlock';
+	var val = analyseOutput;
 
 	resultHtml += "<div class='" + blockStyle + "'>" + val + "</div>";
 
@@ -303,6 +256,19 @@ function resetDb(callback) {
 	var err = null;
 	db.resetDb();
 	callback(err, 'Database resetted!');
+};
+
+function addExtractions(plugins, callback) {
+	async.forEachSeries(urlsArray, 
+		function (url, callb) { 
+			analyseConfig.parsePage(url, function (err) {
+				if(err != null) { callb (err); }
+				else { analyseConfig.analyseSite(url, plugins, callb); }
+			});
+		}, 
+		function (err, results){
+			callback(err, 'OK - extracting JS')
+	});
 };
 
 function async(arg, callback) {
@@ -322,7 +288,7 @@ function async(arg, callback) {
 };
 function final() { console.log('Done'); };
 
-var items = sites;
+var items = urlsArray;
 var running = 0;
 var limit = 1;
 
@@ -402,7 +368,11 @@ async.series([
 	},
 	function(callback){
 		addPerspectiveFns('JSLint', JSLintPerspectiveFns, callback);
-	}
+	},
+	function(callback){
+		var plugins = [ { pluginID: '1', configName: 'Config for NodeJS' } ];
+		addExtractions(plugins, callback);
+	},
 ],
 // optional callback
 function(err, results){

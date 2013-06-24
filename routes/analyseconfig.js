@@ -40,7 +40,7 @@ module.exports = function(app){
 		async.map(urlsArray, 
 			function (url, callback) { 
 				parsePage(url, function (err) {
-					if(err) { callback (err); }
+					if(err != null) { callback (err); }
 					else { analyseSite(url, plugins, callback); }
 				});
 			}, 
@@ -75,7 +75,8 @@ function parsePage(url, callback){
 			var scripts = results.scripts;
 			var events = results.events;
 
-			console.log("Script tags: " + scripts.length);
+			console.log("Url: " + url);
+			console.log("Scripts: " + scripts.length);
 			console.log("DOM Events: " + events.length);
 			
 			db.savePage(url, scripts, events, function(err, reply) {
@@ -89,20 +90,22 @@ function parsePage(url, callback){
 function triggerPlugin(plugin, url, callback){
 	var pluginID = plugin.pluginID;
 	var pluginName = pluginManager.getPluginName(pluginID);
-	var pluginConfig = plugin.configNameSelect;
+	var configName = plugin.configName;
 
-	pluginManager.startPlugin(pluginID, pluginConfig, url, function(err, analyseResults) {
-		if(err != null) {
-			callback(err);
-		} else {
-			// add results to database
-			db.saveAnalyse(url, pluginName, pluginConfig, analyseResults, function(err, saveResp){
-				callback(err, {
-					'pluginName':		pluginName,
-					'analyseResults':	analyseResults
+	db.getPluginConfig(configName, function (err, pluginConfig) {
+		pluginManager.startPlugin(pluginID, JSON.parse(pluginConfig), url, function(err, analyseResults) {
+			if(err != null) {
+				callback(err);
+			} else {
+				// add results to database
+				db.saveAnalyse(url, pluginName, configName, analyseResults, function(err, saveResp){
+					callback(err, {
+						'pluginName':		pluginName,
+						'analyseResults':	analyseResults
+					});
 				});
-			});
-		}
+			}
+		});
 	});
 };
 
@@ -118,3 +121,6 @@ function analyseSite(url, plugins, callback){
 		});
 	});
 };
+
+module.exports.parsePage 		= parsePage;
+module.exports.analyseSite	 	= analyseSite;

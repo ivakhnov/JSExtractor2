@@ -23,9 +23,13 @@ $(document).ready(function () {
 		return aoColumnDefs;
 	};
 
-	/* Init the table */
-	
-	
+	function executeScripts() {
+		var scriptsArr = $("#comparisonTable").find("script");
+		for (var i = 0; i < scriptsArr.length; i++) {
+			var script = scriptsArr[i].innerHTML;
+			eval(script);
+		}
+	};	
 	
 	function startButton() {
 		// get the array of all selected perspectives
@@ -53,13 +57,13 @@ $(document).ready(function () {
 				"aaData": analyseResults,
 				"aoColumnDefs": initColumnDefs()
 			});
-		});		
+			executeScripts();
+		});
 	};
 
 	$('#siteSelect').select2({
 		placeholder: 'Query sites',
-		allowClear: true,
-		minimumInputLength: 1
+		allowClear: true
 	});
 	$('#perspectiveSelect').select2({
 		placeholder: 'Select perspective functions',
